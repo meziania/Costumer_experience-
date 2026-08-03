@@ -114,15 +114,37 @@ a {
 .logo {
   display: flex;
   align-items: center;
+  gap: 0.75rem;
   flex-shrink: 0;
 }
 
-.logo-img {
-  height: 48px;
-  width: auto;
-  max-width: min(220px, 52vw);
-  object-fit: contain;
-  border-radius: 0;
+.logo-mark {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+}
+
+.logo-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  line-height: 1.1;
+}
+
+.logo-text strong {
+  font-size: 0.98rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: #fff;
+}
+
+.logo-text em {
+  font-style: normal;
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
 }
 
 .nav {
@@ -875,14 +897,28 @@ a {
 
 .footer-brand {
   display: flex;
+  gap: 0.85rem;
   align-items: center;
 }
 
-.footer-logo {
-  height: 64px;
-  width: auto;
-  max-width: 280px;
-  object-fit: contain;
+.footer-brand img {
+  border-radius: 11px;
+}
+
+.footer-brand strong {
+  display: block;
+  color: #fff;
+  font-size: 1rem;
+  letter-spacing: -0.02em;
+}
+
+.footer-brand p {
+  margin: 0.2rem 0 0;
+  color: var(--accent);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 
 .footer-cols {
@@ -1036,10 +1072,10 @@ a {
 }
 
 @media (max-width: 760px) {
-  .nav,
-  .header-cta {
+  .logo-text em {
     display: none;
   }
+}
 
   .nav.is-open {
     display: flex;

@@ -1,14 +1,27 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none" role="img" aria-label="CX Systems">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 96" fill="none" role="img" aria-label="CX Systems">
   <defs>
-    <linearGradient id="cxGrad" x1="12" y1="8" x2="108" y2="112" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#0B3D5C"/>
-      <stop offset="0.55" stop-color="#0E7C86"/>
-      <stop offset="1" stop-color="#F07A3A"/>
+    <linearGradient id="cxRibbon" x1="8" y1="12" x2="86" y2="84" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0A6B72"/>
+      <stop offset="0.45" stop-color="#00C2CE"/>
+      <stop offset="1" stop-color="#7AEEF5"/>
+    </linearGradient>
+    <linearGradient id="cxX" x1="48" y1="18" x2="88" y2="78" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#E8F7F8"/>
+      <stop offset="1" stop-color="#A8D4D8"/>
     </linearGradient>
   </defs>
-  <rect width="120" height="120" rx="28" fill="#071824"/>
-  <path d="M38 30c-14 8-22 22-22 38s8 30 22 38" stroke="url(#cxGrad)" stroke-width="10" stroke-linecap="round"/>
-  <path d="M58 38h18c14 0 24 10 24 22s-10 22-24 22H58V38z" stroke="url(#cxGrad)" stroke-width="10" stroke-linejoin="round"/>
-  <circle cx="86" cy="82" r="8" fill="#F07A3A"/>
-  <circle cx="98" cy="94" r="4.5" fill="#0E7C86"/>
+
+  <!-- Mark -->
+  <g transform="translate(4 8)">
+    <!-- C ribbon -->
+    <path d="M62 12C42 8 22 18 16 38c-6 20 4 42 26 50 10 4 22 3 30-2"
+          stroke="url(#cxRibbon)" stroke-width="14" stroke-linecap="round" fill="none"/>
+    <!-- X bars -->
+    <path d="M52 22L84 70" stroke="url(#cxRibbon)" stroke-width="12" stroke-linecap="round"/>
+    <path d="M78 22L48 70" stroke="url(#cxX)" stroke-width="12" stroke-linecap="round"/>
+  </g>
+
+  <!-- Wordmark -->
+  <text x="118" y="48" fill="#F4FBFC" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="34" font-weight="700" letter-spacing="-0.5">CX Systems</text>
+  <text x="120" y="74" fill="#00C2CE" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="11" font-weight="600" letter-spacing="3.2">ENGINEERING DIGITAL SYSTEMS</text>
 </svg>

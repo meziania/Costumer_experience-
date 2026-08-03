@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1584" height="396" viewBox="0 0 1584 396" fill="none" role="img" aria-label="CX Systems LinkedIn Banner">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1584" y2="396" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#050B12"/>
+      <stop offset="0.55" stop-color="#081824"/>
+      <stop offset="1" stop-color="#0A1E28"/>
+    </linearGradient>
+    <linearGradient id="glow" x1="1100" y1="0" x2="1584" y2="396" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#00C2CE" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#00C2CE" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="ribbon" x1="520" y1="90" x2="760" y2="300" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0A6B72"/>
+      <stop offset="0.45" stop-color="#00C2CE"/>
+      <stop offset="1" stop-color="#7AEEF5"/>
+    </linearGradient>
+    <linearGradient id="xLight" x1="640" y1="110" x2="780" y2="290" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F4FBFC"/>
+      <stop offset="1" stop-color="#A8D4D8"/>
+    </linearGradient>
+    <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M48 0H0V48" stroke="#FFFFFF" stroke-opacity="0.04" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1584" height="396" fill="url(#bg)"/>
+  <rect width="1584" height="396" fill="url(#grid)"/>
+  <ellipse cx="1280" cy="80" rx="420" ry="220" fill="url(#glow)"/>
+  <ellipse cx="200" cy="360" rx="320" ry="160" fill="#00C2CE" fill-opacity="0.08"/>
+
+  <!-- Accent line -->
+  <rect x="0" y="0" width="1584" height="4" fill="#00C2CE"/>
+
+  <!-- Large mark -->
+  <g transform="translate(470 78) scale(1.15)">
+    <path d="M62 12C42 8 22 18 16 38c-6 20 4 42 26 50 10 4 22 3 30-2"
+          stroke="url(#ribbon)" stroke-width="14" stroke-linecap="round" fill="none"/>
+    <path d="M52 22L84 70" stroke="url(#ribbon)" stroke-width="12" stroke-linecap="round"/>
+    <path d="M78 22L48 70" stroke="url(#xLight)" stroke-width="12" stroke-linecap="round"/>
+  </g>
+
+  <!-- Wordmark -->
+  <text x="620" y="188" fill="#F4FBFC" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="64" font-weight="700" letter-spacing="-1.2">CX Systems</text>
+  <text x="624" y="232" fill="#00C2CE" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="18" font-weight="600" letter-spacing="6">ENGINEERING DIGITAL SYSTEMS</text>
+
+  <!-- Right side subtle system nodes -->
+  <g opacity="0.55" stroke="#00C2CE" stroke-width="1.5" fill="none">
+    <circle cx="1280" cy="150" r="8"/>
+    <circle cx="1360" cy="200" r="6"/>
+    <circle cx="1220" cy="230" r="5"/>
+    <circle cx="1410" cy="140" r="4"/>
+    <path d="M1280 150L1360 200L1410 140M1280 150L1220 230L1360 200"/>
+  </g>
+</svg>
