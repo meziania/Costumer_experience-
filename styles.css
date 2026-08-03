@@ -879,6 +879,69 @@ a {
   margin-top: 0.35rem;
 }
 
+.form-status {
+  margin: 0.35rem 0 0;
+  font-size: 0.88rem;
+  font-weight: 500;
+}
+
+.form-status.is-ok {
+  color: #3ddc97;
+}
+
+.form-status.is-error {
+  color: #ff8f7a;
+}
+
+.form button:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+
+/* Toast success — stays on site, no FormSubmit page */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 1.5rem;
+  z-index: 80;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.85rem 1.15rem;
+  border-radius: 999px;
+  background: #0f2a2c;
+  border: 1px solid rgba(0, 194, 206, 0.35);
+  color: #f4fbfc;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+  transform: translate(-50%, 16px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.28s ease, transform 0.28s ease;
+}
+
+.toast.is-visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.toast__icon {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #00c2ce;
+  color: #081018;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.toast__text {
+  font-size: 0.9rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
 /* ——— Footer ——— */
 .footer {
   background: #050a10;
@@ -1075,7 +1138,11 @@ a {
   .logo-text em {
     display: none;
   }
-}
+
+  .nav,
+  .header-cta {
+    display: none;
+  }
 
   .nav.is-open {
     display: flex;

@@ -322,7 +322,7 @@
           </a>
         </div>
 
-        <form class="form" id="contact-form" method="POST">
+        <form class="form" id="contact-form" action="#" method="post" novalidate>
           <input type="hidden" name="_subject" value="Nouveau message — CX Systems" />
           <input type="hidden" name="_captcha" value="false" />
           <input type="hidden" name="_template" value="table" />
@@ -336,13 +336,19 @@
           <label>Message<textarea name="message" rows="5" required placeholder="Contexte, objectifs, délais…"></textarea></label>
 
           <div class="form-actions">
-            <button type="submit" class="btn btn--solid btn--light">Envoyer le message</button>
+            <button type="submit" class="btn btn--solid btn--light" id="submit-btn">Envoyer le message</button>
             <a class="btn btn--wa" id="whatsapp-btn" href="https://wa.me/212699254247" target="_blank" rel="noopener noreferrer">WhatsApp</a>
           </div>
+          <p class="form-status" id="form-status" role="status" aria-live="polite" hidden></p>
         </form>
       </div>
     </section>
   </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden>
+    <span class="toast__icon" aria-hidden="true">✓</span>
+    <span class="toast__text">Message envoyé avec succès</span>
+  </div>
 
   <footer class="footer">
     <div class="shell footer-grid">
