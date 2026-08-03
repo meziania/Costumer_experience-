@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none" role="img" aria-label="CX Systems">
+  <defs>
+    <linearGradient id="cxGrad" x1="12" y1="8" x2="108" y2="112" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0B3D5C"/>
+      <stop offset="0.55" stop-color="#0E7C86"/>
+      <stop offset="1" stop-color="#F07A3A"/>
+    </linearGradient>
+  </defs>
+  <rect width="120" height="120" rx="28" fill="#071824"/>
+  <path d="M38 30c-14 8-22 22-22 38s8 30 22 38" stroke="url(#cxGrad)" stroke-width="10" stroke-linecap="round"/>
+  <path d="M58 38h18c14 0 24 10 24 22s-10 22-24 22H58V38z" stroke="url(#cxGrad)" stroke-width="10" stroke-linejoin="round"/>
+  <circle cx="86" cy="82" r="8" fill="#F07A3A"/>
+  <circle cx="98" cy="94" r="4.5" fill="#0E7C86"/>
+</svg>
