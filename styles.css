@@ -6,8 +6,8 @@
   --muted: #5c6b78;
   --line: rgba(12, 18, 24, 0.1);
   --line-strong: rgba(12, 18, 24, 0.18);
-  --accent: #0f6e6a;
-  --accent-2: #c45c26;
+  --accent: #00b8c4;
+  --accent-2: #2ec4ce;
   --hero: #081018;
   --hero-text: #f3f0ea;
   --hero-muted: rgba(243, 240, 234, 0.62);
@@ -75,9 +75,31 @@ a {
 }
 
 .header.is-scrolled {
-  background: rgba(246, 244, 240, 0.88);
+  background: rgba(8, 16, 24, 0.88);
   backdrop-filter: blur(16px);
-  border-bottom-color: var(--line);
+  border-bottom-color: rgba(243, 240, 234, 0.08);
+}
+
+.header.is-scrolled .logo,
+.header.is-scrolled .nav a {
+  color: rgba(243, 240, 234, 0.85);
+}
+
+.header.is-scrolled .nav a:hover {
+  color: #fff;
+}
+
+.header.is-scrolled .header-cta {
+  background: #fff;
+  color: var(--ink);
+}
+
+.header.is-scrolled .menu-btn {
+  border-color: rgba(243, 240, 234, 0.25);
+}
+
+.header.is-scrolled .menu-btn span {
+  background: #fff;
 }
 
 .header-inner {
@@ -92,14 +114,15 @@ a {
 .logo {
   display: flex;
   align-items: center;
-  gap: 0.7rem;
-  font-weight: 700;
-  letter-spacing: -0.03em;
-  font-size: 1.02rem;
+  flex-shrink: 0;
 }
 
-.logo img {
-  border-radius: 9px;
+.logo-img {
+  height: 48px;
+  width: auto;
+  max-width: min(220px, 52vw);
+  object-fit: contain;
+  border-radius: 0;
 }
 
 .nav {
@@ -852,23 +875,14 @@ a {
 
 .footer-brand {
   display: flex;
-  gap: 0.85rem;
-  align-items: flex-start;
+  align-items: center;
 }
 
-.footer-brand img {
-  border-radius: 10px;
-}
-
-.footer-brand strong {
-  display: block;
-  color: #fff;
-  font-size: 1rem;
-  letter-spacing: -0.02em;
-}
-
-.footer-brand p {
-  margin: 0.2rem 0 0;
+.footer-logo {
+  height: 64px;
+  width: auto;
+  max-width: 280px;
+  object-fit: contain;
 }
 
 .footer-cols {
@@ -1036,13 +1050,13 @@ a {
     flex-direction: column;
     gap: 0;
     padding: 0.75rem;
-    background: rgba(246, 244, 240, 0.97);
-    border-bottom: 1px solid var(--line);
+    background: rgba(8, 16, 24, 0.97);
+    border-bottom: 1px solid rgba(243, 240, 234, 0.1);
   }
 
   .nav.is-open a {
     padding: 0.9rem 1rem;
-    color: var(--ink);
+    color: rgba(243, 240, 234, 0.9);
   }
 
   .menu-btn {
@@ -1052,7 +1066,7 @@ a {
 
   .header.is-scrolled .nav.is-open,
   .nav.is-open {
-    background: rgba(246, 244, 240, 0.98);
+    background: rgba(8, 16, 24, 0.98);
   }
 
   .hero {
