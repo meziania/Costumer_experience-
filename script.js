@@ -12,18 +12,54 @@
 
   const menuBtn = document.querySelector(".menu-btn");
   const nav = document.querySelector(".nav");
+
+  const closeMenu = () => {
+    nav?.classList.remove("is-open");
+    menuBtn?.classList.remove("is-open");
+    menuBtn?.setAttribute("aria-expanded", "false");
+  };
+
   if (menuBtn && nav) {
-    menuBtn.addEventListener("click", () => {
+    menuBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
       const open = nav.classList.toggle("is-open");
+      menuBtn.classList.toggle("is-open", open);
       menuBtn.setAttribute("aria-expanded", String(open));
     });
+
     nav.querySelectorAll("a").forEach((a) => {
-      a.addEventListener("click", () => {
-        nav.classList.remove("is-open");
-        menuBtn.setAttribute("aria-expanded", "false");
-      });
+      a.addEventListener("click", closeMenu);
+    });
+
+    document.addEventListener("click", (e) => {
+      if (!nav.classList.contains("is-open")) return;
+      if (nav.contains(e.target) || menuBtn.contains(e.target)) return;
+      closeMenu();
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeMenu();
     });
   }
+
+  const t = (key) => {
+    const lang = window.CX_LANG || "fr";
+    return window.CX_I18N?.[lang]?.[key] || window.CX_I18N?.fr?.[key] || key;
+  };
+
+  // Language switch FR / EN
+  const savedLang = localStorage.getItem("cx-lang") || "fr";
+  if (typeof window.applyCxLang === "function") {
+    window.applyCxLang(savedLang);
+  }
+  document.querySelectorAll(".lang-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const lang = btn.getAttribute("data-lang");
+      if (lang && typeof window.applyCxLang === "function") {
+        window.applyCxLang(lang);
+      }
+    });
+  });
 
   const form = document.getElementById("contact-form");
   const waBtn = document.getElementById("whatsapp-btn");
@@ -39,18 +75,29 @@
     const email = form?.elements.namedItem("email")?.value?.trim() || "";
     const phone = form?.elements.namedItem("phone")?.value?.trim() || "";
     const message = form?.elements.namedItem("message")?.value?.trim() || "";
-    const text = [
-      "Bonjour CX Systems,",
-      "",
-      message || "Je souhaite échanger sur un projet.",
-      "",
-      name && `Nom / Société : ${name}`,
-      email && `E-mail : ${email}`,
-      phone && `Téléphone : ${phone}`,
-    ]
-      .filter(Boolean)
-      .join("\n");
-    return `https://wa.me/212699254247?text=${encodeURIComponent(text)}`;
+    const isFr = (window.CX_LANG || "fr") === "fr";
+    const text = isFr
+      ? [
+          "Bonjour CX Systems,",
+          "",
+          message || "Je souhaite échanger sur un projet.",
+          "",
+          name && `Nom / Société : ${name}`,
+          email && `E-mail : ${email}`,
+          phone && `Téléphone : ${phone}`,
+        ]
+      : [
+          "Hello CX Systems,",
+          "",
+          message || "I would like to discuss a project.",
+          "",
+          name && `Name / Company: ${name}`,
+          email && `Email: ${email}`,
+          phone && `Phone: ${phone}`,
+        ];
+    return `https://wa.me/212699254247?text=${encodeURIComponent(
+      text.filter(Boolean).join("\n")
+    )}`;
   };
 
   waBtn?.addEventListener("click", (e) => {
@@ -60,10 +107,7 @@
 
   // Close mobile menu when switching to desktop
   window.addEventListener("resize", () => {
-    if (window.innerWidth > 760 && nav?.classList.contains("is-open")) {
-      nav.classList.remove("is-open");
-      menuBtn?.setAttribute("aria-expanded", "false");
-    }
+    if (window.innerWidth > 980) closeMenu();
   });
 
   const showToast = (message) => {
@@ -110,7 +154,7 @@
 
     if (submitBtn) {
       submitBtn.disabled = true;
-      submitBtn.textContent = "Envoi…";
+      submitBtn.textContent = t("form.sending");
     }
     setStatus("");
 
@@ -128,17 +172,14 @@
       if (!res.ok || payload.success === "false") throw new Error("send_failed");
 
       form.reset();
-      setStatus("Message envoyé avec succès.", "ok");
-      showToast("Message envoyé avec succès");
+      setStatus(t("form.ok"), "ok");
+      showToast(t("form.toast"));
     } catch {
-      setStatus(
-        "Envoi impossible pour le moment. Utilisez WhatsApp, merci.",
-        "error"
-      );
+      setStatus(t("form.err"), "error");
     } finally {
       if (submitBtn) {
         submitBtn.disabled = false;
-        submitBtn.textContent = "Envoyer le message";
+        submitBtn.textContent = t("form.submit");
       }
     }
 
