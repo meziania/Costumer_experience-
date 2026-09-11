@@ -1,5 +1,4 @@
 import { defaultProjects } from "@/lib/default-projects";
-import { parseGallery } from "@/lib/gallery";
 import HomeView, { type PublicProject } from "@/components/public/HomeView";
 
 export const dynamic = "force-dynamic";
@@ -17,7 +16,6 @@ function toPublic(
     summaryEn: string;
     stack: string;
     image: string;
-    gallery?: string | string[];
     problem: string;
     problemEn: string;
     solution: string;
@@ -39,7 +37,6 @@ function toPublic(
     summaryEn: p.summaryEn,
     stack: p.stack,
     image: p.image,
-    gallery: parseGallery(p.gallery),
     problem: p.problem,
     problemEn: p.problemEn,
     solution: p.solution,
