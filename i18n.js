@@ -5,6 +5,7 @@ const CX_I18N = {
       "CX Systems conçoit, développe et déploie des systèmes digitaux pour les entreprises — applications web, mobile, desktop, SaaS et data.",
     "nav.expertise": "Expertise",
     "nav.work": "Réalisations",
+    "nav.clients": "Clients",
     "nav.method": "Méthode",
     "nav.contact": "Contact",
     "nav.cta": "Parler à un expert",
@@ -49,46 +50,10 @@ const CX_I18N = {
     "work.title": "Systèmes livrés. Impact réel.",
     "work.lede":
       "Une sélection de missions pour des entreprises et organisations — du SaaS en production aux systèmes data d’entreprise.",
-    "case.1.status": "En ligne · 4 applications",
-    "case.1.sector": "Retail · SaaS · Fidélité",
-    "case.1.p":
-      "Plateforme de fidélité digitale pour commerces marocains. QR code sans application à télécharger. Architecture monorepo : PWA client, dashboard commerçant, admin et API REST — avec anti-fraude QR à rotation.",
-    "case.1.s1": "visites / mois",
-    "case.1.s2": "points fidélité",
-    "case.2.status": "Mission entreprise",
-    "case.2.sector": "Food Group Trading · Data / ERP",
-    "case.2.t": "Entrepôt de données ERP/CRM",
-    "case.2.p":
-      "Structuration de 77 tables ERP/CRM (Ventes, Achats, Stock, CRM, RH, Finance), pipelines ETL et dashboards Power BI sur Microsoft Dynamics 365 Business Central.",
-    "case.3.status": "En production",
-    "case.3.sector": "Distribution auto · Desktop",
-    "case.3.p":
-      "Application desktop complète : point de vente, stock, crédit client, fournisseurs, factures PDF et reporting financier.",
-    "case.4.status": "Mission entreprise",
-    "case.4.sector": "Recrutement · Plateforme",
-    "case.4.p":
-      "Backend Django pour plateforme de recrutement : entretiens vidéo WebRTC, auth multi-fournisseurs, candidatures et files Celery/Redis.",
-    "case.5.status": "Livré",
-    "case.5.sector": "RH · SaaS B2B",
-    "case.5.p":
-      "Pointage employés par géolocalisation et QR dynamiques, avec dashboards analytiques RH et reporting opérationnel.",
-    "case.6.status": "Livré",
-    "case.6.sector": "Santé · Business Intelligence",
-    "case.6.t": "Profiling hospitalier",
-    "case.6.p":
-      "Outil de détection automatique d’anomalies sur sources Excel, avec reporting consolidé pour la direction hospitalière.",
-    "case.7.status": "En développement",
-    "case.7.sector": "Commerce · SaaS multi-tenant",
-    "case.7.p":
-      "Plateforme multi-tenant pour restaurants, dépôts et boutiques : opérations quotidiennes, stock et parcours métier.",
-    "case.8.status": "Livré",
-    "case.8.sector": "Optique · Desktop",
-    "case.8.p":
-      "Application desktop Windows et Mac pour magasin d’optique : clients, ordonnances, devis et factures PDF, mutuelles (CNOPS / CNSS), catalogue et rappels WhatsApp / SMS. Données en local (SQLite).",
-    "case.9.status": "Mission entreprise",
-    "case.9.sector": "Food Group Trading · IT interne",
-    "case.9.p":
-      "Gestion de parc et support informatique : inventaire des équipements, tickets avec SLA, trois rôles (admin, technicien, utilisateur) et copilote IA (Ollama) avec repli heuristique. MVP réalisé en stage.",
+    "clients.kicker": "Clients",
+    "clients.title": "Besoins accompagnés, profils et contexte.",
+    "clients.lede":
+      "Chaque fiche reprend le nom, le profil et le besoin — reformulé pour rester lisible.",
     "method.kicker": "Méthode",
     "method.title": "Une livraison structurée, de l’intention à l’exploitation.",
     "method.1.t": "Découvrir",
@@ -130,6 +95,8 @@ const CX_I18N = {
     "footer.remote": "Livraison remote-ready",
     "footer.rights": "Tous droits réservés.",
     "footer.built": "Conçu pour la delivery entreprise.",
+    "case.mock.visits": "visites / mois",
+    "case.mock.points": "points fidélité",
   },
   en: {
     "meta.title": "CX Systems | Enterprise Digital Systems",
@@ -137,6 +104,7 @@ const CX_I18N = {
       "CX Systems designs, builds, and deploys digital systems for businesses — web, mobile, desktop, SaaS, and data.",
     "nav.expertise": "Expertise",
     "nav.work": "Work",
+    "nav.clients": "Clients",
     "nav.method": "Method",
     "nav.contact": "Contact",
     "nav.cta": "Talk to an expert",
@@ -181,46 +149,10 @@ const CX_I18N = {
     "work.title": "Shipped systems. Real impact.",
     "work.lede":
       "A selection of engagements for companies and organizations — from live SaaS to enterprise data systems.",
-    "case.1.status": "Live · 4 applications",
-    "case.1.sector": "Retail · SaaS · Loyalty",
-    "case.1.p":
-      "Digital loyalty platform for Moroccan businesses. QR code with no app download. Monorepo architecture: client PWA, merchant dashboard, admin, and REST API — with rotating QR anti-fraud.",
-    "case.1.s1": "visits / month",
-    "case.1.s2": "loyalty points",
-    "case.2.status": "Enterprise mission",
-    "case.2.sector": "Food Group Trading · Data / ERP",
-    "case.2.t": "ERP/CRM data warehouse",
-    "case.2.p":
-      "Structured 77 ERP/CRM tables (Sales, Purchasing, Inventory, CRM, HR, Finance), ETL pipelines, and Power BI dashboards on Microsoft Dynamics 365 Business Central.",
-    "case.3.status": "In production",
-    "case.3.sector": "Auto distribution · Desktop",
-    "case.3.p":
-      "Complete desktop application: point of sale, inventory, customer credit, suppliers, PDF invoices, and financial reporting.",
-    "case.4.status": "Enterprise mission",
-    "case.4.sector": "Recruitment · Platform",
-    "case.4.p":
-      "Django backend for a recruitment platform: WebRTC video interviews, multi-provider auth, applications, and Celery/Redis queues.",
-    "case.5.status": "Delivered",
-    "case.5.sector": "HR · B2B SaaS",
-    "case.5.p":
-      "Employee time tracking with geolocation and dynamic QR codes, plus HR analytics dashboards and operational reporting.",
-    "case.6.status": "Delivered",
-    "case.6.sector": "Healthcare · Business Intelligence",
-    "case.6.t": "Hospital data profiling",
-    "case.6.p":
-      "Automatic anomaly detection tool for raw Excel sources, with consolidated reporting for hospital management.",
-    "case.7.status": "In development",
-    "case.7.sector": "Commerce · Multi-tenant SaaS",
-    "case.7.p":
-      "Multi-tenant platform for restaurants, warehouses, and shops: daily operations, inventory, and business workflows.",
-    "case.8.status": "Delivered",
-    "case.8.sector": "Optical · Desktop",
-    "case.8.p":
-      "Windows and Mac desktop app for optical shops: clients, prescriptions, quotes and PDF invoices, insurance follow-up (CNOPS / CNSS), catalog, and WhatsApp / SMS reminders. Data stays local (SQLite).",
-    "case.9.status": "Enterprise mission",
-    "case.9.sector": "Food Group Trading · Internal IT",
-    "case.9.p":
-      "IT asset management and service desk: equipment inventory, SLA-backed tickets, three roles (admin, technician, user), and an AI copilot (Ollama) with a heuristic fallback. Internship MVP.",
+    "clients.kicker": "Clients",
+    "clients.title": "Needs we framed, profiles and context.",
+    "clients.lede":
+      "Each card shows the name, profile, and the need — rewritten so it stays readable.",
     "method.kicker": "Method",
     "method.title": "Structured delivery, from intent to operations.",
     "method.1.t": "Discover",
@@ -262,6 +194,8 @@ const CX_I18N = {
     "footer.remote": "Remote-ready delivery",
     "footer.rights": "All rights reserved.",
     "footer.built": "Built for enterprise delivery.",
+    "case.mock.visits": "visits / month",
+    "case.mock.points": "loyalty points",
   },
 };
 
@@ -313,4 +247,6 @@ window.applyCxLang = function applyCxLang(lang) {
 
   const toastText = document.querySelector(".toast__text");
   if (toastText) toastText.textContent = dict["form.toast"];
+
+  if (typeof window.renderCxCatalog === "function") window.renderCxCatalog();
 };

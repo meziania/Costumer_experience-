@@ -26,6 +26,7 @@
       <nav class="nav" id="site-nav" aria-label="Principal">
         <a href="#capabilities" data-i18n="nav.expertise">Expertise</a>
         <a href="#work" data-i18n="nav.work">Réalisations</a>
+        <a href="#clients" id="nav-clients" hidden data-i18n="nav.clients">Clients</a>
         <a href="#method" data-i18n="nav.method">Méthode</a>
         <a href="#contact" data-i18n="nav.contact">Contact</a>
         <a href="#contact" class="nav-cta-mobile" data-i18n="nav.cta">Parler à un expert</a>
@@ -141,154 +142,20 @@
           </p>
         </div>
 
-        <div class="cases">
-          <article class="case case--hero">
-            <div class="case-top">
-              <span class="case-num">01</span>
-              <span class="case-status" data-i18n="case.1.status">En ligne · 4 applications</span>
-            </div>
-            <div class="case-body">
-              <div class="case-copy">
-                <p class="case-sector" data-i18n="case.1.sector">Retail · SaaS · Fidélité</p>
-                <h3>FidApp</h3>
-                <p data-i18n="case.1.p">
-                  Plateforme de fidélité digitale pour commerces marocains. QR code sans application à télécharger. Architecture monorepo : PWA client, dashboard commerçant, admin et API REST — avec anti-fraude QR à rotation.
-                </p>
-                <ul class="tags">
-                  <li>React</li><li>Node.js</li><li>PostgreSQL</li><li>Prisma</li><li>PWA</li>
-                </ul>
-              </div>
-              <div class="case-visual case-visual--a" aria-hidden="true">
-                <div class="mock">
-                  <div class="mock-stat"><strong>128</strong><span data-i18n="case.1.s1">visites / mois</span></div>
-                  <div class="mock-stat"><strong>42</strong><span data-i18n="case.1.s2">points fidélité</span></div>
-                  <div class="mock-row"></div>
-                  <div class="mock-row mock-row--short"></div>
-                </div>
-              </div>
-            </div>
-          </article>
+        <div class="cases" id="work-list"></div>
+      </div>
+    </section>
 
-          <article class="case">
-            <div class="case-top">
-              <span class="case-num">02</span>
-              <span class="case-status" data-i18n="case.2.status">Mission entreprise</span>
-            </div>
-            <p class="case-sector" data-i18n="case.2.sector">Food Group Trading · Data / ERP</p>
-            <h3 data-i18n="case.2.t">Entrepôt de données ERP/CRM</h3>
-            <p data-i18n="case.2.p">
-              Structuration de 77 tables ERP/CRM (Ventes, Achats, Stock, CRM, RH, Finance), pipelines ETL et dashboards Power BI sur Microsoft Dynamics 365 Business Central.
-            </p>
-            <ul class="tags">
-              <li>SQL Server</li><li>Power BI</li><li>Dynamics 365</li><li>n8n</li>
-            </ul>
-          </article>
-
-          <article class="case">
-            <div class="case-top">
-              <span class="case-num">03</span>
-              <span class="case-status" data-i18n="case.3.status">En production</span>
-            </div>
-            <p class="case-sector" data-i18n="case.3.sector">Distribution auto · Desktop</p>
-            <h3>2R Parts Auto Accessoires</h3>
-            <p data-i18n="case.3.p">
-              Application desktop complète : point de vente, stock, crédit client, fournisseurs, factures PDF et reporting financier.
-            </p>
-            <ul class="tags">
-              <li>Python</li><li>PyQt5</li><li>SQLite</li><li>ReportLab</li>
-            </ul>
-          </article>
-
-          <article class="case">
-            <div class="case-top">
-              <span class="case-num">04</span>
-              <span class="case-status" data-i18n="case.4.status">Mission entreprise</span>
-            </div>
-            <p class="case-sector" data-i18n="case.4.sector">Recrutement · Plateforme</p>
-            <h3>JobGate — Studio vidéo</h3>
-            <p data-i18n="case.4.p">
-              Backend Django pour plateforme de recrutement : entretiens vidéo WebRTC, auth multi-fournisseurs, candidatures et files Celery/Redis.
-            </p>
-            <ul class="tags">
-              <li>Django</li><li>WebRTC</li><li>PostgreSQL</li><li>Celery</li>
-            </ul>
-          </article>
-
-          <article class="case">
-            <div class="case-top">
-              <span class="case-num">05</span>
-              <span class="case-status" data-i18n="case.5.status">Livré</span>
-            </div>
-            <p class="case-sector" data-i18n="case.5.sector">RH · SaaS B2B</p>
-            <h3>TimeTrack Pro</h3>
-            <p data-i18n="case.5.p">
-              Pointage employés par géolocalisation et QR dynamiques, avec dashboards analytiques RH et reporting opérationnel.
-            </p>
-            <ul class="tags">
-              <li>Next.js</li><li>TypeScript</li><li>Firebase</li>
-            </ul>
-          </article>
-
-          <article class="case">
-            <div class="case-top">
-              <span class="case-num">06</span>
-              <span class="case-status" data-i18n="case.6.status">Livré</span>
-            </div>
-            <p class="case-sector" data-i18n="case.6.sector">Santé · Business Intelligence</p>
-            <h3 data-i18n="case.6.t">Profiling hospitalier</h3>
-            <p data-i18n="case.6.p">
-              Outil de détection automatique d’anomalies sur sources Excel, avec reporting consolidé pour la direction hospitalière.
-            </p>
-            <ul class="tags">
-              <li>Python</li><li>Pandas</li><li>BI</li>
-            </ul>
-          </article>
-
-          <article class="case">
-            <div class="case-top">
-              <span class="case-num">07</span>
-              <span class="case-status case-status--wip" data-i18n="case.7.status">En développement</span>
-            </div>
-            <p class="case-sector" data-i18n="case.7.sector">Commerce · SaaS multi-tenant</p>
-            <h3>GestiPro</h3>
-            <p data-i18n="case.7.p">
-              Plateforme multi-tenant pour restaurants, dépôts et boutiques : opérations quotidiennes, stock et parcours métier.
-            </p>
-            <ul class="tags">
-              <li>Next.js 14</li><li>Supabase</li><li>Vercel</li>
-            </ul>
-          </article>
-
-          <article class="case">
-            <div class="case-top">
-              <span class="case-num">08</span>
-              <span class="case-status" data-i18n="case.8.status">Livré</span>
-            </div>
-            <p class="case-sector" data-i18n="case.8.sector">Optique · Desktop</p>
-            <h3>Opti Gest</h3>
-            <p data-i18n="case.8.p">
-              Application desktop Windows et Mac pour magasin d’optique : clients, ordonnances, devis et factures PDF, mutuelles (CNOPS / CNSS), catalogue et rappels WhatsApp / SMS. Données en local (SQLite).
-            </p>
-            <ul class="tags">
-              <li>Electron</li><li>React</li><li>Express</li><li>Prisma</li><li>SQLite</li>
-            </ul>
-          </article>
-
-          <article class="case">
-            <div class="case-top">
-              <span class="case-num">09</span>
-              <span class="case-status" data-i18n="case.9.status">Mission entreprise</span>
-            </div>
-            <p class="case-sector" data-i18n="case.9.sector">Food Group Trading · IT interne</p>
-            <h3>GPSI</h3>
-            <p data-i18n="case.9.p">
-              Gestion de parc et support informatique : inventaire des équipements, tickets avec SLA, trois rôles (admin, technicien, utilisateur) et copilote IA (Ollama) avec repli heuristique. MVP réalisé en stage.
-            </p>
-            <ul class="tags">
-              <li>Laravel</li><li>Inertia</li><li>React</li><li>TypeScript</li><li>PostgreSQL</li>
-            </ul>
-          </article>
+    <section class="clients-sec" id="clients" hidden>
+      <div class="shell">
+        <div class="section-intro">
+          <p class="kicker" data-i18n="clients.kicker">Clients</p>
+          <h2 data-i18n="clients.title">Besoins accompagnés, profils et contexte.</h2>
+          <p class="lede" data-i18n="clients.lede">
+            Chaque fiche reprend le nom, le profil et le besoin — reformulé pour rester lisible.
+          </p>
         </div>
+        <div class="clients-grid" id="client-list"></div>
       </div>
     </section>
 
@@ -371,6 +238,11 @@
     </section>
   </main>
 
+  <dialog class="photo-modal" id="photo-modal">
+    <button type="button" class="photo-modal-close" id="photo-modal-close" aria-label="Fermer">×</button>
+    <img id="photo-modal-img" alt="" />
+  </dialog>
+
   <div class="toast" id="toast" role="status" aria-live="polite" hidden>
     <span class="toast__icon" aria-hidden="true">✓</span>
     <span class="toast__text" data-i18n="form.toast">Message envoyé avec succès</span>
@@ -390,6 +262,7 @@
           <h4 data-i18n="footer.company">Société</h4>
           <a href="#capabilities" data-i18n="nav.expertise">Expertise</a>
           <a href="#work" data-i18n="nav.work">Réalisations</a>
+          <a href="#clients" class="footer-clients" hidden data-i18n="nav.clients">Clients</a>
           <a href="#method" data-i18n="nav.method">Méthode</a>
         </div>
         <div>

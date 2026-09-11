@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CX Systems — Admin</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/logo-mark.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+  <div id="login-view" class="login-view">
+    <form class="login-card" id="login-form">
+      <img src="../assets/logo-mark.svg" alt="" width="44" height="44" />
+      <h1>Espace admin</h1>
+      <p>Clients, besoins et projets du site.</p>
+      <label>
+        Mot de passe
+        <input type="password" id="login-pass" required autocomplete="current-password" />
+      </label>
+      <button type="submit">Entrer</button>
+      <p class="err" id="login-err" hidden>Mot de passe incorrect</p>
+      <a href="../">← Retour au site</a>
+    </form>
+  </div>
+
+  <div id="app-view" class="app-view" hidden>
+    <aside class="side">
+      <div class="brand">
+        <img src="../assets/logo-mark.svg" alt="" width="36" height="36" />
+        <div>
+          <strong>CX Systems</strong>
+          <span>Gestion</span>
+        </div>
+      </div>
+      <nav>
+        <button type="button" class="nav-btn is-active" data-tab="clients">Clients</button>
+        <button type="button" class="nav-btn" data-tab="projects">Projets</button>
+      </nav>
+      <a class="side-link" href="../">Voir le site</a>
+      <button type="button" class="side-link logout" id="logout">Déconnexion</button>
+    </aside>
+
+    <main class="main">
+      <section id="tab-clients">
+        <header class="head">
+          <div>
+            <p class="kicker">Clients</p>
+            <h2>Besoins &amp; profils</h2>
+          </div>
+          <button type="button" class="btn" id="new-client">+ Nouveau client</button>
+        </header>
+        <div class="grid" id="client-list"></div>
+      </section>
+
+      <section id="tab-projects" hidden>
+        <header class="head">
+          <div>
+            <p class="kicker">Projets</p>
+            <h2>Réalisations affichées</h2>
+          </div>
+          <button type="button" class="btn" id="new-project">+ Nouveau projet</button>
+        </header>
+        <div class="grid" id="project-list"></div>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="editor" class="editor">
+    <form id="editor-form" class="editor-form"></form>
+  </dialog>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>

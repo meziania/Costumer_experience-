@@ -1,6 +1,14 @@
 {
-  "framework": null,
-  "installCommand": null,
-  "buildCommand": null,
-  "outputDirectory": "."
+  "cleanUrls": true,
+  "functions": {
+    "api/store.js": {
+      "includeFiles": "{data/store.json,lib/**}"
+    },
+    "api/login.js": {
+      "includeFiles": "lib/**"
+    },
+    "api/rewrite.js": {
+      "includeFiles": "lib/**"
+    }
+  }
 }
