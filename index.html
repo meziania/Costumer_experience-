@@ -3,348 +3,272 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CX Systems | Systèmes digitaux d’entreprise</title>
-  <meta name="description" content="CX Systems conçoit, développe et déploie des systèmes digitaux pour les entreprises — applications web, mobile, desktop, SaaS et data." />
+  <title>CX Systems — Atelier logiciel, Casablanca</title>
+  <meta name="description" content="CX Systems conçoit des logiciels sur mesure à Casablanca : web, desktop, data et SaaS. Des systèmes réellement utilisés en production." />
   <link rel="icon" type="image/svg+xml" href="assets/logo-mark.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div class="noise" aria-hidden="true"></div>
-
   <header class="header" id="top">
     <div class="header-inner">
-      <a class="logo" href="#top" aria-label="CX Systems — Accueil">
-        <img src="assets/logo-mark.svg" alt="" class="logo-mark" width="40" height="40" />
-        <span class="logo-text">
-          <strong>CX Systems</strong>
-          <em data-i18n="logo.tag">Engineering Digital Systems</em>
-        </span>
+      <a class="logo" href="#top" aria-label="CX Systems">
+        <img src="assets/logo-mark.svg" alt="" width="36" height="36" />
+        <span>CX Systems</span>
       </a>
       <nav class="nav" id="site-nav" aria-label="Principal">
-        <a href="#capabilities" data-i18n="nav.expertise">Expertise</a>
-        <a href="#work" data-i18n="nav.work">Réalisations</a>
-        <a href="#method" data-i18n="nav.method">Méthode</a>
+        <a href="#studio" data-i18n="nav.studio">L’atelier</a>
+        <a href="#work" data-i18n="nav.work">Travaux</a>
+        <a href="#craft" data-i18n="nav.craft">Savoir-faire</a>
         <a href="#contact" data-i18n="nav.contact">Contact</a>
-        <a href="#contact" class="nav-cta-mobile" data-i18n="nav.cta">Parler à un expert</a>
+        <a href="#contact" class="nav-cta-mobile" data-i18n="nav.cta">Écrire</a>
       </nav>
       <div class="lang-switch" role="group" aria-label="Language">
         <button type="button" class="lang-btn is-active" data-lang="fr" aria-pressed="true">FR</button>
         <button type="button" class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
       </div>
-      <a class="header-cta" href="#contact" data-i18n="nav.cta">Parler à un expert</a>
-      <button class="menu-btn" type="button" data-i18n-aria="nav.menu" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="site-nav">
+      <a class="header-cta" href="#contact" data-i18n="nav.cta">Écrire</a>
+      <button class="menu-btn" type="button" data-i18n-aria="nav.menu" aria-label="Menu" aria-expanded="false" aria-controls="site-nav">
         <span></span><span></span>
       </button>
     </div>
   </header>
 
   <main>
+    <!-- HERO: one composition, brand first -->
     <section class="hero">
-      <div class="hero-media" aria-hidden="true">
-        <div class="hero-wash"></div>
-        <div class="hero-lines"></div>
-        <div class="hero-glow"></div>
-      </div>
-      <div class="hero-inner">
-        <p class="hero-logo-word">CX Systems</p>
-        <h1 data-i18n="hero.title">Des systèmes digitaux qui grandissent avec votre business.</h1>
-        <p class="hero-sub" data-i18n="hero.sub">
-          Conception, développement et mise en production de logiciels d’entreprise — web, mobile, desktop et data.
+      <div class="hero-stage">
+        <p class="stamp" data-i18n="hero.stamp">Casablanca · atelier logiciel · 2024—</p>
+        <p class="hero-brand">CX Systems</p>
+        <h1 data-i18n="hero.title">On construit des logiciels qui survivent au quotidien réel.</h1>
+        <p class="hero-lead" data-i18n="hero.lead">
+          Pas des démos jetables. Des outils que vos équipes ouvrent le lundi matin —
+          caisse, stock, fidélité, data, support — et qui tiennent.
         </p>
-        <div class="hero-cta">
-          <a class="btn btn--solid" href="#contact" data-i18n="hero.cta1">Démarrer une conversation</a>
-          <a class="btn btn--line" href="#work" data-i18n="hero.cta2">Explorer nos réalisations</a>
+        <div class="hero-actions">
+          <a class="btn btn-ink" href="#work" data-i18n="hero.cta1">Voir les travaux</a>
+          <a class="btn btn-ghost" href="#contact" data-i18n="hero.cta2">Parler du prochain</a>
         </div>
       </div>
-      <div class="hero-footer">
-        <p data-i18n="hero.footer">Casablanca · Remote-ready · Maroc &amp; International</p>
-        <div class="hero-scroll" aria-hidden="true"><span></span></div>
-      </div>
-    </section>
-
-    <section class="strip" aria-label="Domaines">
-      <div class="strip-track">
-        <span data-i18n="strip.web">Applications Web</span><span aria-hidden="true">·</span>
-        <span data-i18n="strip.saas">Plateformes SaaS</span><span aria-hidden="true">·</span>
-        <span data-i18n="strip.mobile">Mobile &amp; PWA</span><span aria-hidden="true">·</span>
-        <span data-i18n="strip.desktop">Logiciels Desktop</span><span aria-hidden="true">·</span>
-        <span data-i18n="strip.data">Data &amp; BI</span><span aria-hidden="true">·</span>
-        <span data-i18n="strip.erp">ERP / CRM</span><span aria-hidden="true">·</span>
-        <span data-i18n="strip.api">API &amp; Intégrations</span><span aria-hidden="true">·</span>
-        <span data-i18n="strip.web">Applications Web</span><span aria-hidden="true">·</span>
-        <span data-i18n="strip.saas">Plateformes SaaS</span><span aria-hidden="true">·</span>
-        <span data-i18n="strip.mobile">Mobile &amp; PWA</span><span aria-hidden="true">·</span>
-        <span data-i18n="strip.desktop">Logiciels Desktop</span><span aria-hidden="true">·</span>
-        <span data-i18n="strip.data">Data &amp; BI</span><span aria-hidden="true">·</span>
-        <span data-i18n="strip.erp">ERP / CRM</span><span aria-hidden="true">·</span>
-        <span data-i18n="strip.api">API &amp; Intégrations</span>
-      </div>
-    </section>
-
-    <section class="capabilities" id="capabilities">
-      <div class="shell">
-        <div class="section-intro">
-          <p class="kicker" data-i18n="cap.kicker">Expertise</p>
-          <h2 data-i18n="cap.title">Des capacités de bout en bout pour transformer vos opérations.</h2>
-          <p class="lede" data-i18n="cap.lede">
-            Nous intervenons là où la technologie crée de la valeur mesurable — produits digitaux, systèmes métier et intelligence des données.
-          </p>
+      <aside class="hero-side" aria-hidden="true">
+        <div class="sketch">
+          <svg viewBox="0 0 280 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="24" y="28" width="180" height="120" rx="4" stroke="currentColor" stroke-width="1.5" opacity=".55"/>
+            <path d="M40 56h120M40 72h88M40 88h104" stroke="currentColor" stroke-width="1.2" opacity=".4"/>
+            <rect x="72" y="168" width="160" height="140" rx="4" stroke="currentColor" stroke-width="1.5" opacity=".7"/>
+            <circle cx="96" cy="208" r="14" stroke="currentColor" stroke-width="1.4" opacity=".65"/>
+            <path d="M128 204h72M128 220h56" stroke="currentColor" stroke-width="1.2" opacity=".45"/>
+            <path d="M88 292c28-36 76-40 112-8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" opacity=".5"/>
+            <text x="28" y="318" fill="currentColor" font-size="11" font-family="IBM Plex Mono, monospace" opacity=".55">v0.9 · live</text>
+          </svg>
         </div>
+        <p class="side-note" data-i18n="hero.side">Croquis de produit — FidApp, tableau commerçant.</p>
+      </aside>
+    </section>
 
-        <div class="cap-grid">
-          <article class="cap">
-            <span class="cap-idx">01</span>
-            <h3 data-i18n="cap.1.t">Ingénierie produit</h3>
-            <p data-i18n="cap.1.p">Applications web et plateformes SaaS multi-tenant, conçues pour la performance, la sécurité et la croissance.</p>
-          </article>
-          <article class="cap">
-            <span class="cap-idx">02</span>
-            <h3 data-i18n="cap.2.t">Expériences mobile</h3>
-            <p data-i18n="cap.2.p">PWA et parcours mobiles : QR, géolocalisation, offline-first — sans friction pour l’utilisateur final.</p>
-          </article>
-          <article class="cap">
-            <span class="cap-idx">03</span>
-            <h3 data-i18n="cap.3.t">Desktop entreprise</h3>
-            <p data-i18n="cap.3.p">Logiciels Windows métier : POS, stock, facturation et reporting pour opérations critiques au quotidien.</p>
-          </article>
-          <article class="cap">
-            <span class="cap-idx">04</span>
-            <h3 data-i18n="cap.4.t">Data &amp; Intelligence</h3>
-            <p data-i18n="cap.4.p">Entrepôts de données, ETL, Power BI et intégration ERP/CRM (Dynamics 365 Business Central).</p>
-          </article>
-          <article class="cap">
-            <span class="cap-idx">05</span>
-            <h3 data-i18n="cap.5.t">Plateforme &amp; APIs</h3>
-            <p data-i18n="cap.5.p">Backends sécurisés, authentification, automatisations et intégration de votre stack existante.</p>
-          </article>
-          <article class="cap">
-            <span class="cap-idx">06</span>
-            <h3 data-i18n="cap.6.t">Livraison &amp; Support</h3>
-            <p data-i18n="cap.6.p">De la roadmap à la production : déploiement, formation, maintenance et évolution continue.</p>
-          </article>
+    <section class="studio" id="studio">
+      <div class="shell studio-grid">
+        <div class="studio-label">
+          <span class="mono" data-i18n="studio.label">01 — L’atelier</span>
+        </div>
+        <div class="studio-body">
+          <h2 data-i18n="studio.title">Une boîte petite. Des livraisons concrètes.</h2>
+          <div class="prose">
+            <p data-i18n="studio.p1">
+              CX Systems est née à Casablanca : pas d’open-space miroir, pas de pitch deck
+              de 40 slides. Juste un atelier qui écoute le métier, code, déploie, puis reste
+              joignable quand quelque chose casse un vendredi à 18h.
+            </p>
+            <p data-i18n="studio.p2">
+              On travaille surtout pour des commerces, distributeurs et équipes internes
+              qui ont besoin d’un système fiable — souvent après avoir souffert d’Excel,
+              de logiciels trop génériques, ou de prototypes abandonnés.
+            </p>
+          </div>
+          <dl class="facts">
+            <div>
+              <dt data-i18n="studio.f1t">Base</dt>
+              <dd data-i18n="studio.f1d">Casablanca, Maroc</dd>
+            </div>
+            <div>
+              <dt data-i18n="studio.f2t">Focus</dt>
+              <dd data-i18n="studio.f2d">Web · Desktop · Data</dd>
+            </div>
+            <div>
+              <dt data-i18n="studio.f3t">Contact</dt>
+              <dd>WhatsApp &amp; mail</dd>
+            </div>
+          </dl>
         </div>
       </div>
     </section>
 
     <section class="work" id="work">
       <div class="shell">
-        <div class="section-intro section-intro--row">
-          <div>
-            <p class="kicker" data-i18n="work.kicker">Réalisations</p>
-            <h2 data-i18n="work.title">Systèmes livrés. Impact réel.</h2>
-          </div>
+        <div class="section-head">
+          <span class="mono" data-i18n="work.label">02 — Travaux sélectionnés</span>
+          <h2 data-i18n="work.title">Ce qui tourne déjà quelque part.</h2>
           <p class="lede" data-i18n="work.lede">
-            Une sélection de missions pour des entreprises et organisations — du SaaS en production aux systèmes data d’entreprise.
+            Une sélection honnête — pas une galerie de maquettes. Chaque ligne correspond
+            à un usage réel, une contrainte métier, une mise en production.
           </p>
         </div>
 
-        <div class="cases">
-          <article class="case case--hero">
-            <div class="case-top">
-              <span class="case-num">01</span>
-              <span class="case-status" data-i18n="case.1.status">En ligne · 4 applications</span>
+        <ol class="work-index">
+          <li class="work-item work-item--lead">
+            <div class="work-meta">
+              <span class="year">2025</span>
+              <span class="pill" data-i18n="case.1.status">4 apps live</span>
             </div>
-            <div class="case-body">
-              <div class="case-copy">
-                <p class="case-sector" data-i18n="case.1.sector">Retail · SaaS · Fidélité</p>
-                <h3>FidApp</h3>
-                <p data-i18n="case.1.p">
-                  Plateforme de fidélité digitale pour commerces marocains. QR code sans application à télécharger. Architecture monorepo : PWA client, dashboard commerçant, admin et API REST — avec anti-fraude QR à rotation.
-                </p>
-                <ul class="tags">
-                  <li>React</li><li>Node.js</li><li>PostgreSQL</li><li>Prisma</li><li>PWA</li>
-                </ul>
-              </div>
-              <div class="case-visual case-visual--a" aria-hidden="true">
-                <div class="mock">
-                  <div class="mock-stat"><strong>128</strong><span data-i18n="case.1.s1">visites / mois</span></div>
-                  <div class="mock-stat"><strong>42</strong><span data-i18n="case.1.s2">points fidélité</span></div>
-                  <div class="mock-row"></div>
-                  <div class="mock-row mock-row--short"></div>
-                </div>
-              </div>
-            </div>
-          </article>
+            <h3>FidApp</h3>
+            <p class="work-sector" data-i18n="case.1.sector">Fidélité · commerces marocains</p>
+            <p data-i18n="case.1.p">
+              Le client scanne un QR, cumule des visites, sans installer d’app.
+              Monorepo : PWA client, dashboard commerçant, admin, API — QR anti-fraude à rotation.
+            </p>
+            <p class="stack">React · Node · PostgreSQL · Prisma · PWA</p>
+          </li>
 
-          <article class="case">
-            <div class="case-top">
-              <span class="case-num">02</span>
-              <span class="case-status" data-i18n="case.2.status">Mission entreprise</span>
+          <li class="work-item">
+            <div class="work-meta">
+              <span class="year">2025</span>
+              <span class="pill" data-i18n="case.2.status">Mission</span>
             </div>
-            <p class="case-sector" data-i18n="case.2.sector">Food Group Trading · Data / ERP</p>
-            <h3 data-i18n="case.2.t">Entrepôt de données ERP/CRM</h3>
+            <h3 data-i18n="case.2.t">Entrepôt ERP/CRM — Food Group</h3>
+            <p class="work-sector" data-i18n="case.2.sector">Distribution · Dynamics 365 BC</p>
             <p data-i18n="case.2.p">
-              Structuration de 77 tables ERP/CRM (Ventes, Achats, Stock, CRM, RH, Finance), pipelines ETL et dashboards Power BI sur Microsoft Dynamics 365 Business Central.
+              77 tables documentées à la main (ventes, stock, CRM, RH, finance), pipelines ETL
+              et dashboards Power BI là où il n’y avait presque rien d’écrit.
             </p>
-            <ul class="tags">
-              <li>SQL Server</li><li>Power BI</li><li>Dynamics 365</li><li>n8n</li>
-            </ul>
-          </article>
+            <p class="stack">SQL Server · n8n · Power BI · T-SQL</p>
+          </li>
 
-          <article class="case">
-            <div class="case-top">
-              <span class="case-num">03</span>
-              <span class="case-status" data-i18n="case.3.status">En production</span>
+          <li class="work-item">
+            <div class="work-meta">
+              <span class="year">2025</span>
+              <span class="pill" data-i18n="case.3.status">Prod</span>
             </div>
-            <p class="case-sector" data-i18n="case.3.sector">Distribution auto · Desktop</p>
-            <h3>2R Parts Auto Accessoires</h3>
+            <h3>2R Parts</h3>
+            <p class="work-sector" data-i18n="case.3.sector">Pièces auto · desktop</p>
             <p data-i18n="case.3.p">
-              Application desktop complète : point de vente, stock, crédit client, fournisseurs, factures PDF et reporting financier.
+              Caisse, stock, crédit client, fournisseurs, factures PDF — un logiciel Windows
+              fait pour le comptoir, pas pour une démo.
             </p>
-            <ul class="tags">
-              <li>Python</li><li>PyQt5</li><li>SQLite</li><li>ReportLab</li>
-            </ul>
-          </article>
+            <p class="stack">Python · PyQt5 · SQLite</p>
+          </li>
 
-          <article class="case">
-            <div class="case-top">
-              <span class="case-num">04</span>
-              <span class="case-status" data-i18n="case.4.status">Mission entreprise</span>
+          <li class="work-item">
+            <div class="work-meta">
+              <span class="year">2025</span>
+              <span class="pill" data-i18n="case.4.status">Mission</span>
             </div>
-            <p class="case-sector" data-i18n="case.4.sector">Recrutement · Plateforme</p>
-            <h3>JobGate — Studio vidéo</h3>
+            <h3>JobGate — studio vidéo</h3>
+            <p class="work-sector" data-i18n="case.4.sector">Recrutement</p>
             <p data-i18n="case.4.p">
-              Backend Django pour plateforme de recrutement : entretiens vidéo WebRTC, auth multi-fournisseurs, candidatures et files Celery/Redis.
+              Backend Django : entretiens vidéo WebRTC, auth multi-fournisseurs,
+              candidatures et files Celery/Redis.
             </p>
-            <ul class="tags">
-              <li>Django</li><li>WebRTC</li><li>PostgreSQL</li><li>Celery</li>
-            </ul>
-          </article>
+            <p class="stack">Django · WebRTC · PostgreSQL · Celery</p>
+          </li>
 
-          <article class="case">
-            <div class="case-top">
-              <span class="case-num">05</span>
-              <span class="case-status" data-i18n="case.5.status">Livré</span>
+          <li class="work-item">
+            <div class="work-meta">
+              <span class="year">2025</span>
+              <span class="pill" data-i18n="case.8.status">Livré</span>
             </div>
-            <p class="case-sector" data-i18n="case.5.sector">RH · SaaS B2B</p>
-            <h3>TimeTrack Pro</h3>
-            <p data-i18n="case.5.p">
-              Pointage employés par géolocalisation et QR dynamiques, avec dashboards analytiques RH et reporting opérationnel.
-            </p>
-            <ul class="tags">
-              <li>Next.js</li><li>TypeScript</li><li>Firebase</li>
-            </ul>
-          </article>
-
-          <article class="case">
-            <div class="case-top">
-              <span class="case-num">06</span>
-              <span class="case-status" data-i18n="case.6.status">Livré</span>
-            </div>
-            <p class="case-sector" data-i18n="case.6.sector">Santé · Business Intelligence</p>
-            <h3 data-i18n="case.6.t">Profiling hospitalier</h3>
-            <p data-i18n="case.6.p">
-              Outil de détection automatique d’anomalies sur sources Excel, avec reporting consolidé pour la direction hospitalière.
-            </p>
-            <ul class="tags">
-              <li>Python</li><li>Pandas</li><li>BI</li>
-            </ul>
-          </article>
-
-          <article class="case">
-            <div class="case-top">
-              <span class="case-num">07</span>
-              <span class="case-status case-status--wip" data-i18n="case.7.status">En développement</span>
-            </div>
-            <p class="case-sector" data-i18n="case.7.sector">Commerce · SaaS multi-tenant</p>
-            <h3>GestiPro</h3>
-            <p data-i18n="case.7.p">
-              Plateforme multi-tenant pour restaurants, dépôts et boutiques : opérations quotidiennes, stock et parcours métier.
-            </p>
-            <ul class="tags">
-              <li>Next.js 14</li><li>Supabase</li><li>Vercel</li>
-            </ul>
-          </article>
-
-          <article class="case">
-            <div class="case-top">
-              <span class="case-num">08</span>
-              <span class="case-status" data-i18n="case.8.status">Livré</span>
-            </div>
-            <p class="case-sector" data-i18n="case.8.sector">Optique · Desktop</p>
             <h3>Opti Gest</h3>
+            <p class="work-sector" data-i18n="case.8.sector">Optique · Windows / Mac</p>
             <p data-i18n="case.8.p">
-              Application desktop Windows et Mac pour magasin d’optique : clients, ordonnances, devis et factures PDF, mutuelles (CNOPS / CNSS), catalogue et rappels WhatsApp / SMS. Données en local (SQLite).
+              Clients, ordonnances, devis, mutuelles CNOPS/CNSS, rappels WhatsApp —
+              données en local (SQLite), sans dépendance cloud obligatoire.
             </p>
-            <ul class="tags">
-              <li>Electron</li><li>React</li><li>Express</li><li>Prisma</li><li>SQLite</li>
-            </ul>
-          </article>
+            <p class="stack">Electron · React · Express · Prisma</p>
+          </li>
 
-          <article class="case">
-            <div class="case-top">
-              <span class="case-num">09</span>
-              <span class="case-status" data-i18n="case.9.status">Mission entreprise</span>
+          <li class="work-item">
+            <div class="work-meta">
+              <span class="year">2025–26</span>
+              <span class="pill" data-i18n="case.9.status">Mission</span>
             </div>
-            <p class="case-sector" data-i18n="case.9.sector">Food Group Trading · IT interne</p>
             <h3>GPSI</h3>
+            <p class="work-sector" data-i18n="case.9.sector">Parc IT · Food Group</p>
             <p data-i18n="case.9.p">
-              Gestion de parc et support informatique : inventaire des équipements, tickets avec SLA, trois rôles (admin, technicien, utilisateur) et copilote IA (Ollama) avec repli heuristique. MVP réalisé en stage.
+              Inventaire équipements, tickets SLA, rôles admin/technicien/utilisateur,
+              copilote IA local (Ollama) avec repli heuristique.
             </p>
-            <ul class="tags">
-              <li>Laravel</li><li>Inertia</li><li>React</li><li>TypeScript</li><li>PostgreSQL</li>
-            </ul>
-          </article>
-        </div>
-      </div>
-    </section>
+            <p class="stack">Laravel · Inertia · React · PostgreSQL</p>
+          </li>
 
-    <section class="method" id="method">
-      <div class="shell">
-        <div class="section-intro">
-          <p class="kicker" data-i18n="method.kicker">Méthode</p>
-          <h2 data-i18n="method.title">Une livraison structurée, de l’intention à l’exploitation.</h2>
-        </div>
-        <ol class="method-list">
-          <li>
-            <strong data-i18n="method.1.t">Découvrir</strong>
-            <span data-i18n="method.1.p">Cadrage métier, risques, objectifs et critères de succès.</span>
-          </li>
-          <li>
-            <strong data-i18n="method.2.t">Concevoir</strong>
-            <span data-i18n="method.2.p">Architecture, expérience utilisateur et plan de livraison.</span>
-          </li>
-          <li>
-            <strong data-i18n="method.3.t">Construire</strong>
-            <span data-i18n="method.3.p">Développement itératif, qualité, sécurité dès la conception.</span>
-          </li>
-          <li>
-            <strong data-i18n="method.4.t">Lancer</strong>
-            <span data-i18n="method.4.p">Mise en production, formation et transfert opérationnel.</span>
-          </li>
-          <li>
-            <strong data-i18n="method.5.t">Faire évoluer</strong>
-            <span data-i18n="method.5.p">Support, monitoring et évolutions produit.</span>
+          <li class="work-item">
+            <div class="work-meta">
+              <span class="year">2026</span>
+              <span class="pill pill--soft" data-i18n="case.7.status">En cours</span>
+            </div>
+            <h3>GestiPro</h3>
+            <p class="work-sector" data-i18n="case.7.sector">SaaS multi-tenant · commerces</p>
+            <p data-i18n="case.7.p">
+              Plateforme pour restaurants, dépôts et boutiques : opérations du jour,
+              stock, parcours métier — encore en construction.
+            </p>
+            <p class="stack">Next.js · Supabase · Vercel</p>
           </li>
         </ol>
       </div>
     </section>
 
+    <section class="craft" id="craft">
+      <div class="shell">
+        <div class="section-head">
+          <span class="mono" data-i18n="craft.label">03 — Savoir-faire</span>
+          <h2 data-i18n="craft.title">Trois façons de travailler avec nous.</h2>
+        </div>
+        <div class="craft-rows">
+          <article class="craft-row">
+            <h3 data-i18n="craft.1.t">Produit &amp; SaaS</h3>
+            <p data-i18n="craft.1.p">
+              Plateformes web multi-utilisateurs, PWA, dashboards — quand le métier
+              a besoin d’un outil partagé, pas d’un site vitrine.
+            </p>
+          </article>
+          <article class="craft-row">
+            <h3 data-i18n="craft.2.t">Logiciel de comptoir</h3>
+            <p data-i18n="craft.2.p">
+              Applications desktop Windows (et parfois Mac) : POS, stock, facturation.
+              Pensées pour la vitesse au clavier, hors ligne si besoin.
+            </p>
+          </article>
+          <article class="craft-row">
+            <h3 data-i18n="craft.3.t">Data &amp; ERP</h3>
+            <p data-i18n="craft.3.p">
+              Remettre de l’ordre dans les données : ETL, Power BI, Dynamics 365 BC,
+              documentation de schémas que personne n’avait écrite.
+            </p>
+          </article>
+        </div>
+        <blockquote class="note" data-i18n="craft.note">
+          On préfère un périmètre clair et un outil en production à un “MVP” qui ne sert personne.
+        </blockquote>
+      </div>
+    </section>
+
     <section class="contact" id="contact">
-      <div class="shell contact-shell">
-        <div class="contact-left">
-          <p class="kicker kicker--light" data-i18n="contact.kicker">Contact</p>
-          <h2 data-i18n="contact.title">Prêts quand vous l’êtes.</h2>
-          <p class="contact-lede" data-i18n="contact.lede">
-            Décrivez votre besoin via le formulaire, ou contactez-nous directement sur WhatsApp.
+      <div class="shell contact-layout">
+        <div class="contact-copy">
+          <span class="mono mono-light" data-i18n="contact.label">04 — Contact</span>
+          <h2 data-i18n="contact.title">Racontez le problème. On vous dit si on peut aider.</h2>
+          <p data-i18n="contact.lede">
+            Pas de formulaire marketing de 12 champs. Un message, et on répond —
+            souvent plus vite sur WhatsApp.
           </p>
-          <a class="wa-direct" href="https://wa.me/212699254247" target="_blank" rel="noopener noreferrer">
-            <span class="wa-direct__label" data-i18n="contact.waLabel">WhatsApp direct</span>
-            <span class="wa-direct__num">+212 699 254 247</span>
-            <span class="wa-direct__cta" data-i18n="contact.waCta">Ouvrir la conversation →</span>
+          <a class="wa-block" href="https://wa.me/212699254247" target="_blank" rel="noopener noreferrer">
+            <span data-i18n="contact.waLabel">WhatsApp</span>
+            <strong>+212 699 254 247</strong>
           </a>
           <div class="social-row">
-            <a class="social-chip" href="https://www.linkedin.com/in/cx-systems-418985395/" target="_blank" rel="noopener noreferrer">
-              <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.47-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
-              LinkedIn
-            </a>
-            <a class="social-chip" href="https://www.instagram.com/cx_sys_tems/" target="_blank" rel="noopener noreferrer">
-              <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M12 2.16c3.2 0 3.58.01 4.85.07 3.25.15 4.77 1.69 4.92 4.92.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.15 3.23-1.66 4.77-4.92 4.92-1.27.06-1.64.07-4.85.07s-3.58-.01-4.85-.07c-3.26-.15-4.77-1.7-4.92-4.92-.06-1.27-.07-1.64-.07-4.85s.01-3.58.07-4.85C2.38 3.92 3.9 2.38 7.15 2.23 8.42 2.17 8.8 2.16 12 2.16M12 0C8.74 0 8.33.01 7.05.07 2.7.27.27 2.69.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.2 4.36 2.62 6.78 6.98 6.98C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c4.35-.2 6.78-2.62 6.98-6.98.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95C23.73 2.69 21.31.27 16.95.07 15.67.01 15.26 0 12 0zm0 5.84A6.16 6.16 0 1 0 18.16 12 6.16 6.16 0 0 0 12 5.84zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.41-10.85a1.44 1.44 0 1 0 1.44 1.44 1.44 1.44 0 0 0-1.44-1.44z"/></svg>
-              Instagram
-            </a>
+            <a href="https://www.linkedin.com/in/cx-systems-418985395/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a href="https://www.instagram.com/cx_sys_tems/" target="_blank" rel="noopener noreferrer">Instagram</a>
           </div>
         </div>
 
@@ -354,16 +278,21 @@
           <input type="hidden" name="_template" value="table" />
           <input type="text" name="_honey" class="honey" tabindex="-1" autocomplete="off" />
 
-          <div class="form-row">
-            <label><span data-i18n="form.name">Nom / Société</span><input type="text" name="name" required data-i18n-placeholder="form.namePh" placeholder="Votre nom" /></label>
-            <label><span data-i18n="form.email">Votre e-mail</span><input type="email" name="email" required data-i18n-placeholder="form.emailPh" placeholder="vous@entreprise.com" /></label>
-          </div>
-          <label><span data-i18n="form.phone">Téléphone</span> <em data-i18n="form.phoneOpt">(optionnel)</em><input type="tel" name="phone" data-i18n-placeholder="form.phonePh" placeholder="+212 …" /></label>
-          <label><span data-i18n="form.message">Message</span><textarea name="message" rows="5" required data-i18n-placeholder="form.messagePh" placeholder="Contexte, objectifs, délais…"></textarea></label>
-
+          <label><span data-i18n="form.name">Nom / Société</span>
+            <input type="text" name="name" required data-i18n-placeholder="form.namePh" placeholder="Votre nom" />
+          </label>
+          <label><span data-i18n="form.email">E-mail</span>
+            <input type="email" name="email" required data-i18n-placeholder="form.emailPh" placeholder="vous@entreprise.com" />
+          </label>
+          <label><span data-i18n="form.phone">Téléphone</span> <em data-i18n="form.phoneOpt">(optionnel)</em>
+            <input type="tel" name="phone" data-i18n-placeholder="form.phonePh" placeholder="+212 …" />
+          </label>
+          <label><span data-i18n="form.message">Message</span>
+            <textarea name="message" rows="5" required data-i18n-placeholder="form.messagePh" placeholder="Ce qui coince aujourd’hui…"></textarea>
+          </label>
           <div class="form-actions">
-            <button type="submit" class="btn btn--solid btn--light" id="submit-btn" data-i18n="form.submit">Envoyer le message</button>
-            <a class="btn btn--wa" id="whatsapp-btn" href="https://wa.me/212699254247" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+            <button type="submit" class="btn btn-ink" id="submit-btn" data-i18n="form.submit">Envoyer</button>
+            <a class="btn btn-ghost" id="whatsapp-btn" href="https://wa.me/212699254247" target="_blank" rel="noopener noreferrer">WhatsApp</a>
           </div>
           <p class="form-status" id="form-status" role="status" aria-live="polite" hidden></p>
         </form>
@@ -372,54 +301,17 @@
   </main>
 
   <div class="toast" id="toast" role="status" aria-live="polite" hidden>
-    <span class="toast__icon" aria-hidden="true">✓</span>
-    <span class="toast__text" data-i18n="form.toast">Message envoyé avec succès</span>
+    <span class="toast__text" data-i18n="form.toast">Message bien reçu — merci.</span>
   </div>
 
   <footer class="footer">
-    <div class="shell footer-grid">
-      <div class="footer-brand">
-        <img src="assets/logo-mark.svg" alt="" width="44" height="44" />
-        <div>
-          <strong>CX Systems</strong>
-          <p data-i18n="logo.tag">Engineering Digital Systems</p>
-        </div>
+    <div class="shell footer-row">
+      <div>
+        <strong>CX Systems</strong>
+        <p data-i18n="footer.line">Atelier logiciel · Casablanca</p>
       </div>
-      <div class="footer-cols">
-        <div>
-          <h4 data-i18n="footer.company">Société</h4>
-          <a href="#capabilities" data-i18n="nav.expertise">Expertise</a>
-          <a href="#work" data-i18n="nav.work">Réalisations</a>
-          <a href="#method" data-i18n="nav.method">Méthode</a>
-        </div>
-        <div>
-          <h4 data-i18n="footer.contact">Contact</h4>
-          <a href="https://wa.me/212699254247" target="_blank" rel="noopener noreferrer">WhatsApp</a>
-          <a href="#contact" data-i18n="footer.form">Formulaire</a>
-        </div>
-        <div>
-          <h4 data-i18n="footer.social">Réseaux</h4>
-          <a href="https://www.linkedin.com/in/cx-systems-418985395/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-          <a href="https://www.instagram.com/cx_sys_tems/" target="_blank" rel="noopener noreferrer">Instagram</a>
-        </div>
-        <div>
-          <h4 data-i18n="footer.loc">Localisation</h4>
-          <p data-i18n="footer.city">Casablanca, Maroc</p>
-          <p data-i18n="footer.remote">Livraison remote-ready</p>
-        </div>
-      </div>
-    </div>
-    <div class="shell footer-bottom">
-      <p>© <span id="year"></span> CX Systems. <span data-i18n="footer.rights">Tous droits réservés.</span></p>
-      <div class="footer-social">
-        <a href="https://www.linkedin.com/in/cx-systems-418985395/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn CX Systems">
-          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.47-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
-        </a>
-        <a href="https://www.instagram.com/cx_sys_tems/" target="_blank" rel="noopener noreferrer" aria-label="Instagram CX Systems">
-          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M12 2.16c3.2 0 3.58.01 4.85.07 3.25.15 4.77 1.69 4.92 4.92.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.15 3.23-1.66 4.77-4.92 4.92-1.27.06-1.64.07-4.85.07s-3.58-.01-4.85-.07c-3.26-.15-4.77-1.7-4.92-4.92-.06-1.27-.07-1.64-.07-4.85s.01-3.58.07-4.85C2.38 3.92 3.9 2.38 7.15 2.23 8.42 2.17 8.8 2.16 12 2.16M12 0C8.74 0 8.33.01 7.05.07 2.7.27.27 2.69.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.2 4.36 2.62 6.78 6.98 6.98C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c4.35-.2 6.78-2.62 6.98-6.98.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95C23.73 2.69 21.31.27 16.95.07 15.67.01 15.26 0 12 0zm0 5.84A6.16 6.16 0 1 0 18.16 12 6.16 6.16 0 0 0 12 5.84zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.41-10.85a1.44 1.44 0 1 0 1.44 1.44 1.44 1.44 0 0 0-1.44-1.44z"/></svg>
-        </a>
-      </div>
-      <p data-i18n="footer.built">Conçu pour la delivery entreprise.</p>
+      <p class="footer-sign" data-i18n="footer.sign">Fait à la main, itéré sur le terrain — pas une landing générée.</p>
+      <p>© <span id="year"></span></p>
     </div>
   </footer>
 

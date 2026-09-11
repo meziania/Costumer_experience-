@@ -187,7 +187,7 @@
   });
 
   const revealEls = document.querySelectorAll(
-    ".cap, .case, .method-list li, .contact-shell > *"
+    ".work-item, .craft-row, .studio-body, .contact-layout > *"
   );
   revealEls.forEach((el) => el.classList.add("reveal"));
 
