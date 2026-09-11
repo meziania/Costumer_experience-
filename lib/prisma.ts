@@ -6,13 +6,18 @@ function resolveDatabaseUrl() {
   const url = process.env.DATABASE_URL || "";
   if (/postgres|neon|prisma\+/i.test(url)) return url;
 
+  const bundled = path.join(process.cwd(), "prisma", "dev.db");
   if (process.env.VERCEL) {
     const dest = "/tmp/cx.db";
-    const src = path.join(process.cwd(), "prisma", "dev.db");
-    if (!existsSync(dest) && existsSync(src)) {
-      copyFileSync(src, dest);
+    if (existsSync(bundled) && !existsSync(dest)) {
+      try {
+        copyFileSync(bundled, dest);
+      } catch {
+        /* read-only bundle — query the bundled file instead */
+      }
     }
-    return `file:${dest}`;
+    if (existsSync(dest)) return `file:${dest}`;
+    if (existsSync(bundled)) return `file:${bundled}`;
   }
 
   return url || "file:./prisma/dev.db";
