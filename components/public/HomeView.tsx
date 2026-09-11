@@ -3,6 +3,7 @@
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { i18n, type I18nKey, type Lang } from "@/lib/i18n";
 import { statusLabel } from "@/lib/status";
+import { projectPhotos } from "@/lib/gallery";
 
 export type PublicProject = {
   id: string;
@@ -16,6 +17,7 @@ export type PublicProject = {
   summaryEn: string;
   stack: string;
   image: string;
+  gallery: string[];
   problem: string;
   problemEn: string;
   solution: string;
@@ -36,6 +38,7 @@ export default function HomeView({ projects }: { projects: PublicProject[] }) {
   const [scrolled, setScrolled] = useState(false);
   const [slide, setSlide] = useState(0);
   const [active, setActive] = useState<PublicProject | null>(null);
+  const [photo, setPhoto] = useState(0);
   const [toast, setToast] = useState("");
   const [status, setStatus] = useState("");
   const [statusType, setStatusType] = useState<"ok" | "error" | "">("");
@@ -68,6 +71,31 @@ export default function HomeView({ projects }: { projects: PublicProject[] }) {
     () => projects.filter((p) => p.image).slice(0, 3),
     [projects]
   );
+
+  const grouped = useMemo(() => {
+    const years = Array.from(new Set(projects.map((p) => p.year || "—"))).sort((a, b) => {
+      const na = parseInt(a, 10);
+      const nb = parseInt(b, 10);
+      if (Number.isFinite(na) && Number.isFinite(nb) && a !== "—" && b !== "—") return nb - na;
+      return String(b).localeCompare(String(a));
+    });
+    return years.map((year) => ({
+      year,
+      items: projects.filter((p) => (p.year || "—") === year),
+    }));
+  }, [projects]);
+
+  const sectorCount = useMemo(
+    () => new Set(projects.map((p) => p.sector).filter(Boolean)).size,
+    [projects]
+  );
+
+  const openProject = (p: PublicProject) => {
+    setActive(p);
+    setPhoto(0);
+  };
+
+  const activePhotos = active ? projectPhotos(active) : [];
 
   useEffect(() => {
     if (slides.length < 2) return;
@@ -259,31 +287,52 @@ export default function HomeView({ projects }: { projects: PublicProject[] }) {
               <span className="mono">{t("work.label")}</span>
               <h2>{t("work.title")}</h2>
               <p className="lede">{t("work.lede")}</p>
+              <dl className="work-stats">
+                <div>
+                  <dt>{t("work.statYears")}</dt>
+                  <dd>{t("work.statYearsV")}</dd>
+                </div>
+                <div>
+                  <dt>{t("work.statCount")}</dt>
+                  <dd>{projects.length}</dd>
+                </div>
+                <div>
+                  <dt>{t("work.statSectors")}</dt>
+                  <dd>{sectorCount}</dd>
+                </div>
+              </dl>
             </div>
             <div className="work-index">
-              {projects.map((p) => (
-                <button
-                  key={p.id}
-                  type="button"
-                  className={`work-item${p.featured ? " work-item--lead" : ""}`}
-                  onClick={() => setActive(p)}
-                >
-                  {p.image ? (
-                    <div className="work-thumb"><img src={p.image} alt="" /></div>
-                  ) : (
-                    <div className="work-thumb work-thumb--empty">CX</div>
-                  )}
-                  <div className="work-body">
-                    <div className="work-meta">
-                      <span className="year">{p.year}</span>
-                      <span className={`pill pill--${p.status}`}>{statusLabel(p.status, lang)}</span>
-                    </div>
-                    <h3>{p.title}</h3>
-                    <p className="work-sector">{pick(p, lang, "sector", "sectorEn")}</p>
-                    <p className="work-summary">{pick(p, lang, "summary", "summaryEn")}</p>
-                    {p.stack ? <p className="stack">{p.stack}</p> : null}
-                  </div>
-                </button>
+              {grouped.map((group) => (
+                <div key={group.year} className="work-year">
+                  <p className="work-year-label">{group.year}</p>
+                  {group.items.map((p) => (
+                    <button
+                      key={p.id}
+                      type="button"
+                      className={`work-item${p.featured ? " work-item--lead" : ""}`}
+                      onClick={() => openProject(p)}
+                    >
+                      {projectPhotos(p)[0] ? (
+                        <div className="work-thumb"><img src={projectPhotos(p)[0]} alt="" /></div>
+                      ) : (
+                        <div className="work-thumb work-thumb--empty">CX</div>
+                      )}
+                      <div className="work-body">
+                        <div className="work-meta">
+                          <span className={`pill pill--${p.status}`}>{statusLabel(p.status, lang)}</span>
+                          {projectPhotos(p).length > 1 ? (
+                            <span className="year">{projectPhotos(p).length} {t("work.photos")}</span>
+                          ) : null}
+                        </div>
+                        <h3>{p.title}</h3>
+                        <p className="work-sector">{pick(p, lang, "sector", "sectorEn")}</p>
+                        <p className="work-summary">{pick(p, lang, "summary", "summaryEn")}</p>
+                        {p.stack ? <p className="stack">{p.stack}</p> : null}
+                      </div>
+                    </button>
+                  ))}
+                </div>
               ))}
             </div>
           </div>
@@ -365,13 +414,37 @@ export default function HomeView({ projects }: { projects: PublicProject[] }) {
         <dialog className="project-modal" open onClick={(e) => { if (e.target === e.currentTarget) setActive(null); }}>
           <div className="project-modal-inner">
             <button type="button" className="modal-close" onClick={() => setActive(null)} aria-label="Fermer">×</button>
-            <div className={`modal-media${active.image ? "" : " modal-media--empty"}`}>
-              {active.image ? <img src={active.image} alt={active.title} /> : "CX"}
+            <div
+              className={`modal-media${activePhotos.length ? "" : " modal-media--empty"}${activePhotos.length > 1 ? " modal-media--cycle" : ""}`}
+              onClick={() => {
+                if (activePhotos.length > 1) setPhoto((i) => (i + 1) % activePhotos.length);
+              }}
+            >
+              {activePhotos.length ? (
+                <img src={activePhotos[photo] || activePhotos[0]} alt={active.title} />
+              ) : (
+                "CX"
+              )}
             </div>
+            {activePhotos.length > 1 ? (
+              <div className="modal-thumbs" aria-label={t("modal.gallery")}>
+                {activePhotos.map((src, i) => (
+                  <button
+                    key={src + i}
+                    type="button"
+                    className={i === photo ? "is-active" : ""}
+                    onClick={() => setPhoto(i)}
+                  >
+                    <img src={src} alt="" />
+                  </button>
+                ))}
+              </div>
+            ) : null}
             <div className="modal-body">
               <p className="mono">{active.year} · {statusLabel(active.status, lang)} · {pick(active, lang, "sector", "sectorEn")}</p>
               <h3>{active.title}</h3>
               <p className="modal-stack">{active.stack}</p>
+              <p className="work-summary">{pick(active, lang, "summary", "summaryEn")}</p>
               <div className="modal-grid">
                 <div>
                   <h4>{t("modal.problem")}</h4>

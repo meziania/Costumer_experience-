@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/require-admin";
+import { parseGallery } from "@/lib/gallery";
 
 function slugify(title: string) {
   return (
@@ -21,7 +22,9 @@ export async function GET() {
     include: { client: true },
     orderBy: { sortOrder: "asc" },
   });
-  return NextResponse.json(projects);
+  return NextResponse.json(
+    projects.map((p) => ({ ...p, gallery: parseGallery(p.gallery) }))
+  );
 }
 
 export async function POST(req: Request) {
@@ -44,6 +47,7 @@ export async function POST(req: Request) {
       summaryEn: body.summaryEn || body.summary || "",
       stack: body.stack || "",
       image: body.image || "",
+      gallery: Array.isArray(body.gallery) ? JSON.stringify(body.gallery) : (body.gallery || "[]"),
       problem: body.problem || "",
       problemEn: body.problemEn || body.problem || "",
       solution: body.solution || "",

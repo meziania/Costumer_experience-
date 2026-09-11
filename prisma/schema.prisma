@@ -34,6 +34,7 @@ model Project {
   summaryEn String   @default("")
   stack     String   @default("")
   image     String   @default("")
+  gallery   String   @default("[]")
   problem   String   @default("")
   problemEn String   @default("")
   solution  String   @default("")

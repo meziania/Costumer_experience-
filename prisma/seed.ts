@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { defaultProjects } from "../lib/default-projects";
+import { defaultProjects } from "../lib/projects-data";
 
 const prisma = new PrismaClient();
 

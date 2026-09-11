@@ -19,6 +19,7 @@ export async function PATCH(req: Request, { params }: Ctx) {
     "summaryEn",
     "stack",
     "image",
+    "gallery",
     "problem",
     "problemEn",
     "solution",
@@ -32,7 +33,11 @@ export async function PATCH(req: Request, { params }: Ctx) {
     "clientId",
   ];
   for (const key of fields) {
-    if (key in body) data[key] = body[key] === "" && key === "clientId" ? null : body[key];
+    if (key in body) {
+      if (key === "clientId") data[key] = body[key] === "" ? null : body[key];
+      else if (key === "gallery" && Array.isArray(body[key])) data[key] = JSON.stringify(body[key]);
+      else data[key] = body[key];
+    }
   }
   const project = await prisma.project.update({
     where: { id: params.id },

@@ -310,7 +310,7 @@
 .back-link { color: var(--muted); font-size: 0.85rem; }
 
 .admin-dialog {
-  width: min(96vw, 560px);
+  width: min(96vw, 680px);
   border: 1px solid var(--line);
   border-radius: 14px;
   background: #fff;
@@ -332,6 +332,60 @@
 .check input { width: auto; }
 .dialog-actions { display: flex; gap: 0.5rem; margin-top: 0.3rem; }
 .preview img { max-width: 140px; border-radius: 8px; }
+.photo-count {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: var(--muted);
+}
+.gallery-editor {
+  display: grid;
+  gap: 0.45rem;
+}
+.gallery-hint {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+.gallery-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+.gallery-item {
+  width: 96px;
+}
+.gallery-item img {
+  width: 96px;
+  height: 72px;
+  object-fit: cover;
+  object-position: top center;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  display: block;
+}
+.gallery-item.is-cover img {
+  border-color: var(--copper);
+}
+.gallery-item-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.4rem;
+  margin-top: 0.3rem;
+}
+.gallery-item-actions span,
+.gallery-item-actions button {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.02em;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--muted);
+  cursor: pointer;
+}
+.gallery-item-actions .danger-text {
+  color: #9f3a2f;
+}
 .lead-row {
   display: grid;
   gap: 0.2rem;

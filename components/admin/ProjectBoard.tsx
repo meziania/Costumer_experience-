@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useEffect, useState } from "react";
+import { parseGallery, projectPhotos } from "@/lib/gallery";
 import { STATUS_OPTIONS, statusLabel } from "@/lib/status";
 
 type Project = {
@@ -15,6 +16,7 @@ type Project = {
   summaryEn: string;
   stack: string;
   image: string;
+  gallery: string[] | string;
   problem: string;
   problemEn: string;
   solution: string;
@@ -39,6 +41,7 @@ const empty: Partial<Project> = {
   summaryEn: "",
   stack: "",
   image: "",
+  gallery: [],
   problem: "",
   problemEn: "",
   solution: "",
@@ -50,6 +53,10 @@ const empty: Partial<Project> = {
   notes: "",
   clientId: null,
 };
+
+function withPhotos(project: Partial<Project>, urls: string[]): Partial<Project> {
+  return { ...project, image: urls[0] || "", gallery: urls };
+}
 
 async function uploadFile(file: File) {
   const data = new FormData();
@@ -64,6 +71,7 @@ export default function ProjectBoard() {
   const [clients, setClients] = useState<Client[]>([]);
   const [editing, setEditing] = useState<Partial<Project> | null>(null);
   const [saving, setSaving] = useState(false);
+  const [uploading, setUploading] = useState(false);
 
   const load = async () => {
     const [p, c] = await Promise.all([
@@ -82,7 +90,8 @@ export default function ProjectBoard() {
     e.preventDefault();
     if (!editing?.title) return;
     setSaving(true);
-    const payload = { ...empty, ...editing };
+    const photos = projectPhotos({ image: editing.image, gallery: editing.gallery });
+    const payload = { ...empty, ...editing, image: photos[0] || "", gallery: photos };
     const url = editing.id ? `/api/admin/projects/${editing.id}` : "/api/admin/projects";
     const method = editing.id ? "PATCH" : "POST";
     await fetch(url, {
@@ -119,7 +128,7 @@ export default function ProjectBoard() {
           <p className="admin-kicker">Atelier</p>
           <h1>Projets</h1>
         </div>
-        <button type="button" className="copper-btn" onClick={() => setEditing({ ...empty })}>
+        <button type="button" className="copper-btn" onClick={() => setEditing({ ...empty, gallery: [] })}>
           + Nouveau projet
         </button>
       </header>
@@ -145,13 +154,16 @@ export default function ProjectBoard() {
         <div className="card-grid">
           {projects.map((p) => (
             <article key={p.id} className="proj-card">
-              <div className={`proj-card-media${p.image ? "" : " empty"}`}>
-                {p.image ? <img src={p.image} alt="" /> : "CX"}
+              <div className={`proj-card-media${projectPhotos(p)[0] ? "" : " empty"}`}>
+                {projectPhotos(p)[0] ? <img src={projectPhotos(p)[0]} alt="" /> : "CX"}
               </div>
               <div className="proj-card-body">
                 <div className="proj-meta">
                   <span className={`pill pill--${p.status}`}>{statusLabel(p.status)}</span>
                   <span className="year">{p.year}</span>
+                  {projectPhotos(p).length ? (
+                    <span className="photo-count">{projectPhotos(p).length} photo{projectPhotos(p).length > 1 ? "s" : ""}</span>
+                  ) : null}
                 </div>
                 <h3>{p.title}</h3>
                 <p className="stack-line">{p.stack || p.sector}</p>
@@ -160,7 +172,11 @@ export default function ProjectBoard() {
                   {p.published ? "Publié" : "Brouillon"}
                 </label>
                 <div className="card-actions">
-                  <button type="button" className="ghost-btn" onClick={() => setEditing(p)}>
+                  <button
+                    type="button"
+                    className="ghost-btn"
+                    onClick={() => setEditing({ ...p, gallery: parseGallery(p.gallery) })}
+                  >
                     Éditer
                   </button>
                   <button type="button" className="danger-btn" onClick={() => remove(p.id)}>
@@ -254,22 +270,75 @@ export default function ProjectBoard() {
                 ))}
               </select>
             </label>
-            <label>
-              Image
-              <input
-                type="file"
-                accept="image/*"
-                onChange={async (e) => {
-                  const file = e.target.files?.[0];
-                  if (!file) return;
-                  const { url } = await uploadFile(file);
-                  setEditing({ ...editing, image: url });
-                }}
-              />
-            </label>
-            {editing.image ? (
-              <div className="preview"><img src={editing.image} alt="" /></div>
-            ) : null}
+            <div className="gallery-editor">
+              <label>
+                Photos du projet
+                <input
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  disabled={uploading}
+                  onChange={async (e) => {
+                    const files = Array.from(e.target.files || []);
+                    e.target.value = "";
+                    if (!files.length || !editing) return;
+                    setUploading(true);
+                    try {
+                      const uploaded: string[] = [];
+                      for (const file of files) {
+                        const { url } = await uploadFile(file);
+                        uploaded.push(url);
+                      }
+                      const next = [...projectPhotos(editing), ...uploaded];
+                      setEditing(withPhotos(editing, next));
+                    } catch {
+                      alert("Impossible d'envoyer une ou plusieurs photos.");
+                    } finally {
+                      setUploading(false);
+                    }
+                  }}
+                />
+              </label>
+              <p className="gallery-hint">
+                Plusieurs images. La première est la couverture du site. Formats PNG, JPG, WebP — 8 Mo max.
+              </p>
+              {uploading ? <p className="gallery-hint">Envoi des photos…</p> : null}
+              {projectPhotos(editing).length ? (
+                <div className="gallery-grid">
+                  {projectPhotos(editing).map((src, i) => (
+                    <div key={src + i} className={`gallery-item${i === 0 ? " is-cover" : ""}`}>
+                      <img src={src} alt="" />
+                      <div className="gallery-item-actions">
+                        {i === 0 ? (
+                          <span>Couverture</span>
+                        ) : (
+                          <button
+                            type="button"
+                            onClick={() => {
+                              const photos = projectPhotos(editing);
+                              const next = [photos[i], ...photos.filter((_, idx) => idx !== i)];
+                              setEditing(withPhotos(editing, next));
+                            }}
+                          >
+                            Couverture
+                          </button>
+                        )}
+                        <button
+                          type="button"
+                          className="danger-text"
+                          onClick={() => {
+                            const next = projectPhotos(editing).filter((_, idx) => idx !== i);
+                            setEditing(withPhotos(editing, next));
+                          }}
+                        >
+                          Retirer
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : null}
+            </div>
             <label>
               Notes internes
               <textarea rows={2} value={editing.notes || ""} onChange={(e) => setEditing({ ...editing, notes: e.target.value })} />
@@ -283,7 +352,7 @@ export default function ProjectBoard() {
               Publié sur le site
             </label>
             <div className="dialog-actions">
-              <button type="submit" className="copper-btn" disabled={saving}>{saving ? "…" : "Enregistrer"}</button>
+              <button type="submit" className="copper-btn" disabled={saving || uploading}>{saving ? "…" : "Enregistrer"}</button>
               <button type="button" className="ghost-btn" onClick={() => setEditing(null)}>Annuler</button>
             </div>
           </form>
