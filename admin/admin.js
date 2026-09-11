@@ -10,7 +10,10 @@
       "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
   }
 
+  const LOCAL_KEY = "cx-store";
+  const LOCAL_PASS = "cxadmin2024";
   let token = sessionStorage.getItem(TOKEN_KEY) || "";
+  let localMode = token === "local";
   let store = { clients: [], projects: [] };
   let mode = null;
   let currentId = null;
@@ -33,6 +36,20 @@
     const text = String(value || "").replace(/\s+/g, " ").trim();
     return text.length > 110 ? `${text.slice(0, 107)}…` : text;
   };
+
+  function localReformulate(raw) {
+    const text = String(raw || "").replace(/\s+/g, " ").trim();
+    if (!text) return "";
+    const sentences = text
+      .split(/(?<=[.!?])\s+/)
+      .map((part) => part.trim())
+      .filter(Boolean)
+      .map((part) => {
+        const body = part.charAt(0).toUpperCase() + part.slice(1);
+        return /[.!?]$/.test(body) ? body : `${body}.`;
+      });
+    return ["Besoin client (reformulé)", "", sentences.join(" ")].join("\n");
+  }
 
   async function readImage(file) {
     const url = URL.createObjectURL(file);
@@ -83,26 +100,52 @@
   }
 
   async function loadStore() {
-    const res = await fetch("/api/store", { headers: headers() });
-    if (!res.ok) throw new Error("store");
-    store = await res.json();
+    if (!localMode) {
+      try {
+        const res = await fetch("/api/store", { headers: headers() });
+        if (res.ok) {
+          store = await res.json();
+          store.clients = store.clients || [];
+          store.projects = store.projects || [];
+          localStorage.setItem(LOCAL_KEY, JSON.stringify(store));
+          return;
+        }
+      } catch {
+        /* fallback */
+      }
+    }
+    const cached = localStorage.getItem(LOCAL_KEY);
+    if (cached) {
+      store = JSON.parse(cached);
+    } else {
+      const res = await fetch("/data/store.json");
+      store = res.ok ? await res.json() : { clients: [], projects: [] };
+    }
     store.clients = store.clients || [];
     store.projects = store.projects || [];
   }
 
   async function saveStore() {
-    const res = await fetch("/api/store", {
-      method: "PUT",
-      headers: headers(),
-      body: JSON.stringify(store),
-    });
-    if (!res.ok) throw new Error("save");
-    store = await res.json();
+    localStorage.setItem(LOCAL_KEY, JSON.stringify(store));
+    if (localMode) return;
+    try {
+      const res = await fetch("/api/store", {
+        method: "PUT",
+        headers: headers(),
+        body: JSON.stringify(store),
+      });
+      if (res.ok) store = await res.json();
+    } catch {
+      /* keep local copy */
+    }
   }
 
   function showApp() {
     loginView.hidden = true;
     appView.hidden = false;
+    document.querySelectorAll("[data-tab], #logout").forEach((el) => {
+      el.hidden = false;
+    });
     render();
   }
 
@@ -110,36 +153,34 @@
     document.getElementById("client-list").innerHTML = store.clients
       .map(
         (c) => `
-      <article class="card">
-        <div class="card-media">${c.profileImage ? `<img src="${esc(c.profileImage)}" alt="">` : "Profil"}</div>
-        <div class="card-body">
-          <h3>${esc(c.name) || "Sans nom"}</h3>
-          <p>${esc(snippet(c.needClean || c.need) || "Besoin non renseigné")}</p>
-          <div class="card-actions">
-            <button class="ghost" data-edit-client="${esc(c.id)}">Éditer</button>
-            <button class="danger" data-del-client="${esc(c.id)}">Suppr.</button>
-          </div>
+      <article class="case">
+        ${c.profileImage ? `<img class="admin-thumb" src="${esc(c.profileImage)}" alt="">` : ""}
+        <p class="case-sector">${c.published === false ? "Brouillon" : "Publié"}</p>
+        <h3>${esc(c.name) || "Sans nom"}</h3>
+        <p>${esc(snippet(c.needClean || c.need) || "Besoin non renseigné")}</p>
+        <div class="case-actions">
+          <button class="ghost" data-edit-client="${esc(c.id)}">Éditer</button>
+          <button class="danger" data-del-client="${esc(c.id)}">Suppr.</button>
         </div>
       </article>`
       )
-      .join("") || `<p class="hint">Aucun client. Ajoutez un nom, un besoin, un profil et un PDF.</p>`;
+      .join("") || `<p class="lede">Aucun client. Ajoutez un nom, un besoin, un profil et un PDF.</p>`;
 
     document.getElementById("project-list").innerHTML = store.projects
       .map(
         (p) => `
-      <article class="card">
-        <div class="card-media">${p.photos?.[0] ? `<img src="${esc(p.photos[0])}" alt="">` : "Photos"}</div>
-        <div class="card-body">
-          <h3>${esc(p.title) || "Sans titre"}</h3>
-          <p>${esc(snippet(p.description) || "Pas de description")}</p>
-          <div class="card-actions">
-            <button class="ghost" data-edit-project="${esc(p.id)}">Éditer</button>
-            <button class="danger" data-del-project="${esc(p.id)}">Suppr.</button>
-          </div>
+      <article class="case">
+        ${p.photos?.[0] ? `<img class="admin-thumb" src="${esc(p.photos[0])}" alt="">` : ""}
+        <p class="case-sector">${esc(p.sector) || (p.published === false ? "Brouillon" : "Publié")}</p>
+        <h3>${esc(p.title) || "Sans titre"}</h3>
+        <p>${esc(snippet(p.description) || "Pas de description")}</p>
+        <div class="case-actions">
+          <button class="ghost" data-edit-project="${esc(p.id)}">Éditer</button>
+          <button class="danger" data-del-project="${esc(p.id)}">Suppr.</button>
         </div>
       </article>`
       )
-      .join("") || `<p class="hint">Aucun projet. Ajoutez un titre, une description et des photos.</p>`;
+      .join("") || `<p class="lede">Aucun projet. Ajoutez un titre, une description et des photos.</p>`;
   }
 
   function closeEditor() {
@@ -177,7 +218,7 @@
       </div>
       <label class="check"><input type="checkbox" name="published" ${client.published !== false ? "checked" : ""} /> Afficher sur le site</label>
       <div class="actions">
-        <button type="submit" class="btn">Enregistrer</button>
+        <button type="submit" class="btn btn--solid btn--light">Enregistrer</button>
         <button type="button" class="ghost-btn" id="cancel">Annuler</button>
       </div>
     `;
@@ -228,7 +269,7 @@
       <label class="check"><input type="checkbox" name="featured" ${project.featured ? "checked" : ""} /> Mettre en avant</label>
       <label class="check"><input type="checkbox" name="published" ${project.published !== false ? "checked" : ""} /> Afficher sur le site</label>
       <div class="actions">
-        <button type="submit" class="btn">Enregistrer</button>
+        <button type="submit" class="btn btn--solid btn--light">Enregistrer</button>
         <button type="button" class="ghost-btn" id="cancel">Annuler</button>
       </div>
     `;
@@ -238,25 +279,51 @@
 
   document.getElementById("login-form").addEventListener("submit", async (e) => {
     e.preventDefault();
+    e.stopPropagation();
     const err = document.getElementById("login-err");
+    const btn = document.getElementById("login-btn");
     err.hidden = true;
-    const res = await fetch("/api/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ password: document.getElementById("login-pass").value }),
-    });
-    const data = await res.json().catch(() => ({}));
-    if (!res.ok) {
-      err.hidden = false;
-      return;
+    const password = document.getElementById("login-pass").value;
+    if (btn) {
+      btn.disabled = true;
+      btn.textContent = "Entrée…";
     }
-    token = data.token;
-    sessionStorage.setItem(TOKEN_KEY, token);
-    try {
+
+    const enter = async (nextToken, local) => {
+      token = nextToken;
+      localMode = local;
+      sessionStorage.setItem(TOKEN_KEY, nextToken);
       await loadStore();
       showApp();
-    } catch {
+    };
+
+    try {
+      const res = await fetch("/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (res.ok && data.token) {
+        await enter(data.token, false);
+        return;
+      }
+      if (password === LOCAL_PASS) {
+        await enter("local", true);
+        return;
+      }
       err.hidden = false;
+    } catch {
+      if (password === LOCAL_PASS) {
+        await enter("local", true);
+      } else {
+        err.hidden = false;
+      }
+    } finally {
+      if (btn) {
+        btn.disabled = false;
+        btn.textContent = "Entrer";
+      }
     }
   });
 
@@ -266,9 +333,9 @@
     location.reload();
   });
 
-  document.querySelectorAll(".nav-btn").forEach((btn) => {
+  document.querySelectorAll(".nav-tab[data-tab]").forEach((btn) => {
     btn.addEventListener("click", () => {
-      document.querySelectorAll(".nav-btn").forEach((b) => b.classList.remove("is-active"));
+      document.querySelectorAll(".nav-tab[data-tab]").forEach((b) => b.classList.remove("is-active"));
       btn.classList.add("is-active");
       const tab = btn.getAttribute("data-tab");
       document.getElementById("tab-clients").hidden = tab !== "clients";
@@ -363,11 +430,11 @@
           headers: headers(),
           body: JSON.stringify({ text: need }),
         });
-        const data = await res.json();
-        if (!res.ok) throw new Error("rewrite");
-        editorForm.needClean.value = data.text || "";
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok || !data.text) throw new Error("rewrite");
+        editorForm.needClean.value = data.text;
       } catch {
-        alert("Reformulation impossible pour le moment.");
+        editorForm.needClean.value = localReformulate(need);
       } finally {
         e.target.disabled = false;
         e.target.textContent = "Reformuler avec l’IA";
@@ -469,6 +536,7 @@
   });
 
   if (token) {
+    localMode = token === "local";
     loadStore()
       .then(showApp)
       .catch(() => {

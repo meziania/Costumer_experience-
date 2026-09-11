@@ -339,6 +339,12 @@
         window.CX_STORE = { clients: [], projects: [] };
       }
     }
+    try {
+      const local = localStorage.getItem("cx-store");
+      if (local) window.CX_STORE = JSON.parse(local);
+    } catch {
+      /* keep fetched store */
+    }
     window.renderCxCatalog();
   })();
 })();
