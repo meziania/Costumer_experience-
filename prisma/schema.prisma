@@ -1,0 +1,61 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "rhel-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Client {
+  id                 String    @id @default(cuid())
+  name               String
+  sector             String    @default("")
+  profileImage       String    @default("")
+  specsPdf           String    @default("")
+  specsPdfName       String    @default("")
+  projectDescription String    @default("")
+  notes              String    @default("")
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+  projects           Project[]
+}
+
+model Project {
+  id        String   @id @default(cuid())
+  slug      String   @unique
+  title     String
+  year      String   @default("")
+  status    String   @default("mission")
+  sector    String   @default("")
+  sectorEn  String   @default("")
+  summary   String   @default("")
+  summaryEn String   @default("")
+  stack     String   @default("")
+  image     String   @default("")
+  problem   String   @default("")
+  problemEn String   @default("")
+  solution  String   @default("")
+  solutionEn String  @default("")
+  result    String   @default("")
+  resultEn  String   @default("")
+  featured  Boolean  @default(false)
+  published Boolean  @default(true)
+  sortOrder Int      @default(0)
+  notes     String   @default("")
+  clientId  String?
+  client    Client?  @relation(fields: [clientId], references: [id], onDelete: SetNull)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Lead {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String   @default("")
+  message   String
+  source    String   @default("form")
+  createdAt DateTime @default(now())
+}

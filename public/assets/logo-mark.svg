@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" fill="none" role="img" aria-label="CX">
+  <defs>
+    <linearGradient id="mRibbon" x1="10" y1="14" x2="82" y2="82" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0A6B72"/>
+      <stop offset="0.5" stop-color="#00C2CE"/>
+      <stop offset="1" stop-color="#7AEEF5"/>
+    </linearGradient>
+    <linearGradient id="mX" x1="40" y1="18" x2="78" y2="78" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F4FBFC"/>
+      <stop offset="1" stop-color="#A8D4D8"/>
+    </linearGradient>
+  </defs>
+  <rect width="96" height="96" rx="22" fill="#081018"/>
+  <path d="M58 18C38 14 18 24 12 44c-6 20 4 40 24 48 10 4 22 3 30-2"
+        stroke="url(#mRibbon)" stroke-width="12" stroke-linecap="round" fill="none"/>
+  <path d="M48 26L78 70" stroke="url(#mRibbon)" stroke-width="11" stroke-linecap="round"/>
+  <path d="M74 26L46 70" stroke="url(#mX)" stroke-width="11" stroke-linecap="round"/>
+</svg>
