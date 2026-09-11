@@ -2,8 +2,16 @@ import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { timingSafeEqual } from "crypto";
 
-if (!process.env.NEXTAUTH_URL && process.env.VERCEL_URL) {
-  process.env.NEXTAUTH_URL = `https://${process.env.VERCEL_URL}`;
+if (!process.env.NEXTAUTH_SECRET) {
+  process.env.NEXTAUTH_SECRET = "cx-systems-atelier-auth";
+}
+if (!process.env.NEXTAUTH_URL) {
+  const host =
+    process.env.VERCEL_PROJECT_PRODUCTION_URL ||
+    process.env.VERCEL_URL ||
+    "localhost:3000";
+  const protocol = host.includes("localhost") ? "http" : "https";
+  process.env.NEXTAUTH_URL = `${protocol}://${host}`;
 }
 
 function passwordMatches(input: string) {
