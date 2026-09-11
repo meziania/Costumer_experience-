@@ -15,7 +15,14 @@ const CX_I18N = {
       "Pas des démos jetables. Des outils que vos équipes ouvrent le lundi matin — caisse, stock, fidélité, data, support — et qui tiennent.",
     "hero.cta1": "Voir les travaux",
     "hero.cta2": "Parler du prochain",
-    "hero.side": "Croquis de produit — FidApp, tableau commerçant.",
+    "hero.side": "Captures réelles — FidApp · 2R Parts · Opti Gest",
+    "clients.label": "Secteurs accompagnés",
+    "clients.1": "Distribution alimentaire",
+    "clients.2": "Retail & fidélité",
+    "clients.3": "Pièces auto",
+    "clients.4": "Optique",
+    "clients.5": "Recrutement",
+    "clients.6": "Support IT interne",
     "studio.label": "01 — L’atelier",
     "studio.title": "Une boîte petite. Des livraisons concrètes.",
     "studio.p1":
@@ -30,36 +37,10 @@ const CX_I18N = {
     "work.label": "02 — Travaux sélectionnés",
     "work.title": "Ce qui tourne déjà quelque part.",
     "work.lede":
-      "Une sélection honnête — pas une galerie de maquettes. Chaque ligne correspond à un usage réel, une contrainte métier, une mise en production.",
-    "case.1.status": "4 apps live",
-    "case.1.sector": "Fidélité · commerces marocains",
-    "case.1.p":
-      "Le client scanne un QR, cumule des visites, sans installer d’app. Monorepo : PWA client, dashboard commerçant, admin, API — QR anti-fraude à rotation.",
-    "case.2.status": "Mission",
-    "case.2.sector": "Distribution · Dynamics 365 BC",
-    "case.2.t": "Entrepôt ERP/CRM — Food Group",
-    "case.2.p":
-      "77 tables documentées à la main (ventes, stock, CRM, RH, finance), pipelines ETL et dashboards Power BI là où il n’y avait presque rien d’écrit.",
-    "case.3.status": "Prod",
-    "case.3.sector": "Pièces auto · desktop",
-    "case.3.p":
-      "Caisse, stock, crédit client, fournisseurs, factures PDF — un logiciel Windows fait pour le comptoir, pas pour une démo.",
-    "case.4.status": "Mission",
-    "case.4.sector": "Recrutement",
-    "case.4.p":
-      "Backend Django : entretiens vidéo WebRTC, auth multi-fournisseurs, candidatures et files Celery/Redis.",
-    "case.7.status": "En cours",
-    "case.7.sector": "SaaS multi-tenant · commerces",
-    "case.7.p":
-      "Plateforme pour restaurants, dépôts et boutiques : opérations du jour, stock, parcours métier — encore en construction.",
-    "case.8.status": "Livré",
-    "case.8.sector": "Optique · Windows / Mac",
-    "case.8.p":
-      "Clients, ordonnances, devis, mutuelles CNOPS/CNSS, rappels WhatsApp — données en local (SQLite), sans dépendance cloud obligatoire.",
-    "case.9.status": "Mission",
-    "case.9.sector": "Parc IT · Food Group",
-    "case.9.p":
-      "Inventaire équipements, tickets SLA, rôles admin/technicien/utilisateur, copilote IA local (Ollama) avec repli heuristique.",
+      "Une sélection honnête — pas une galerie de maquettes. Clique une ligne pour le détail.",
+    "modal.problem": "Problème",
+    "modal.solution": "Solution",
+    "modal.result": "Résultat",
     "craft.label": "03 — Savoir-faire",
     "craft.title": "Trois façons de travailler avec nous.",
     "craft.1.t": "Produit & SaaS",
@@ -111,7 +92,14 @@ const CX_I18N = {
       "Not throwaway demos. Tools your team opens on Monday morning — POS, stock, loyalty, data, support — and that hold up.",
     "hero.cta1": "See the work",
     "hero.cta2": "Talk about the next one",
-    "hero.side": "Product sketch — FidApp merchant board.",
+    "hero.side": "Real captures — FidApp · 2R Parts · Opti Gest",
+    "clients.label": "Sectors we work with",
+    "clients.1": "Food distribution",
+    "clients.2": "Retail & loyalty",
+    "clients.3": "Auto parts",
+    "clients.4": "Optics",
+    "clients.5": "Recruitment",
+    "clients.6": "Internal IT support",
     "studio.label": "01 — Studio",
     "studio.title": "A small shop. Concrete deliveries.",
     "studio.p1":
@@ -126,36 +114,10 @@ const CX_I18N = {
     "work.label": "02 — Selected work",
     "work.title": "Things that already run somewhere.",
     "work.lede":
-      "An honest selection — not a mockup gallery. Each line maps to a real use case, a business constraint, a go-live.",
-    "case.1.status": "4 apps live",
-    "case.1.sector": "Loyalty · Moroccan retail",
-    "case.1.p":
-      "Customers scan a QR, collect visits, no app install. Monorepo: client PWA, merchant dashboard, admin, API — rotating anti-fraud QR.",
-    "case.2.status": "Mission",
-    "case.2.sector": "Distribution · Dynamics 365 BC",
-    "case.2.t": "ERP/CRM warehouse — Food Group",
-    "case.2.p":
-      "77 tables documented by hand (sales, stock, CRM, HR, finance), ETL pipelines and Power BI dashboards where almost nothing was written.",
-    "case.3.status": "Prod",
-    "case.3.sector": "Auto parts · desktop",
-    "case.3.p":
-      "POS, stock, customer credit, suppliers, PDF invoices — Windows software made for the counter, not a demo.",
-    "case.4.status": "Mission",
-    "case.4.sector": "Recruitment",
-    "case.4.p":
-      "Django backend: WebRTC video interviews, multi-provider auth, applications, and Celery/Redis queues.",
-    "case.7.status": "In progress",
-    "case.7.sector": "Multi-tenant SaaS · retail",
-    "case.7.p":
-      "Platform for restaurants, warehouses, and shops: daily ops, stock, workflows — still under construction.",
-    "case.8.status": "Shipped",
-    "case.8.sector": "Optics · Windows / Mac",
-    "case.8.p":
-      "Clients, prescriptions, quotes, CNOPS/CNSS mutuals, WhatsApp reminders — local SQLite data, no mandatory cloud.",
-    "case.9.status": "Mission",
-    "case.9.sector": "IT fleet · Food Group",
-    "case.9.p":
-      "Asset inventory, SLA tickets, admin/tech/user roles, local AI copilote (Ollama) with heuristic fallback.",
+      "An honest selection — not a mockup gallery. Click a row for the detail.",
+    "modal.problem": "Problem",
+    "modal.solution": "Solution",
+    "modal.result": "Result",
     "craft.label": "03 — Craft",
     "craft.title": "Three ways to work with us.",
     "craft.1.t": "Product & SaaS",
@@ -234,4 +196,8 @@ window.applyCxLang = function applyCxLang(lang) {
 
   const toastText = document.querySelector(".toast__text");
   if (toastText) toastText.textContent = dict["form.toast"];
+
+  if (typeof window.CX_RENDER_WORK === "function") {
+    window.CX_RENDER_WORK();
+  }
 };

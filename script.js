@@ -47,6 +47,138 @@
     return window.CX_I18N?.[lang]?.[key] || window.CX_I18N?.fr?.[key] || key;
   };
 
+  const statusLabel = (status) => {
+    const map = {
+      live: { fr: "Live", en: "Live" },
+      prod: { fr: "Prod", en: "Prod" },
+      delivered: { fr: "Livré", en: "Shipped" },
+      mission: { fr: "Mission", en: "Mission" },
+      wip: { fr: "En cours", en: "In progress" },
+    };
+    const lang = window.CX_LANG || "fr";
+    return map[status]?.[lang] || status;
+  };
+
+  let projects = [];
+
+  const pick = (p, frKey, enKey) => {
+    const lang = window.CX_LANG || "fr";
+    if (lang === "en" && p[enKey]) return p[enKey];
+    return p[frKey] || "";
+  };
+
+  const modal = document.getElementById("project-modal");
+  const openProject = (p) => {
+    if (!modal || !p) return;
+    const media = document.getElementById("modal-media");
+    const meta = document.getElementById("modal-meta");
+    const title = document.getElementById("modal-title");
+    const stack = document.getElementById("modal-stack");
+    if (media) {
+      if (p.image) {
+        media.className = "modal-media";
+        media.innerHTML = `<img src="${p.image}" alt="${p.title}" />`;
+      } else {
+        media.className = "modal-media modal-media--empty";
+        media.textContent = "CX";
+      }
+    }
+    if (meta) {
+      meta.textContent = `${p.year || ""} · ${statusLabel(p.status)} · ${pick(p, "sector", "sectorEn")}`;
+    }
+    if (title) title.textContent = p.title || "";
+    if (stack) stack.textContent = p.stack || "";
+    const problem = document.getElementById("modal-problem");
+    const solution = document.getElementById("modal-solution");
+    const result = document.getElementById("modal-result");
+    if (problem) problem.textContent = pick(p, "problem", "problemEn");
+    if (solution) solution.textContent = pick(p, "solution", "solutionEn");
+    if (result) result.textContent = pick(p, "result", "resultEn");
+    if (typeof modal.showModal === "function") modal.showModal();
+  };
+
+  document.getElementById("modal-close")?.addEventListener("click", () => {
+    modal?.close();
+  });
+  modal?.addEventListener("click", (e) => {
+    if (e.target === modal) modal.close();
+  });
+
+  const renderWork = () => {
+    const root = document.getElementById("work-index");
+    if (!root) return;
+    const sorted = [...projects].sort(
+      (a, b) => (a.sortOrder || 99) - (b.sortOrder || 99)
+    );
+    root.innerHTML = "";
+    sorted.forEach((p) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = `work-item${p.featured ? " work-item--lead" : ""} reveal`;
+      const thumb = p.image
+        ? `<div class="work-thumb"><img src="${p.image}" alt="" loading="lazy" /></div>`
+        : `<div class="work-thumb work-thumb--empty">CX</div>`;
+      btn.innerHTML = `
+        ${thumb}
+        <div class="work-body">
+          <div class="work-meta">
+            <span class="year">${p.year || ""}</span>
+            <span class="pill pill--${p.status || "mission"}">${statusLabel(p.status)}</span>
+          </div>
+          <h3>${p.title || ""}</h3>
+          <p class="work-sector">${pick(p, "sector", "sectorEn")}</p>
+          <p class="work-summary">${pick(p, "summary", "summaryEn")}</p>
+          ${p.stack ? `<p class="stack">${p.stack}</p>` : ""}
+        </div>
+      `;
+      btn.addEventListener("click", () => openProject(p));
+      root.appendChild(btn);
+    });
+    observeReveals(root.querySelectorAll(".reveal"));
+  };
+
+  window.CX_RENDER_WORK = renderWork;
+
+  const loadProjects = async () => {
+    try {
+      const res = await fetch("data/projects.json", { cache: "no-store" });
+      if (!res.ok) throw new Error("fetch");
+      projects = await res.json();
+    } catch {
+      projects = [];
+    }
+    renderWork();
+  };
+
+  // Hero carousel
+  const carousel = document.getElementById("hero-carousel");
+  if (carousel) {
+    const slides = [...carousel.querySelectorAll(".hero-slide")];
+    const dots = [...carousel.querySelectorAll(".hero-dots button")];
+    let idx = 0;
+    let timer;
+
+    const go = (n) => {
+      idx = (n + slides.length) % slides.length;
+      slides.forEach((s, i) => s.classList.toggle("is-active", i === idx));
+      dots.forEach((d, i) => d.classList.toggle("is-active", i === idx));
+    };
+
+    const start = () => {
+      window.clearInterval(timer);
+      timer = window.setInterval(() => go(idx + 1), 4200);
+    };
+
+    dots.forEach((dot, i) => {
+      dot.addEventListener("click", () => {
+        go(i);
+        start();
+      });
+    });
+
+    start();
+  }
+
   // Language switch FR / EN
   const savedLang = localStorage.getItem("cx-lang") || "fr";
   if (typeof window.applyCxLang === "function") {
@@ -57,6 +189,7 @@
       const lang = btn.getAttribute("data-lang");
       if (lang && typeof window.applyCxLang === "function") {
         window.applyCxLang(lang);
+        renderWork();
       }
     });
   });
@@ -105,7 +238,6 @@
     window.open(waUrl(), "_blank", "noopener,noreferrer");
   });
 
-  // Close mobile menu when switching to desktop
   window.addEventListener("resize", () => {
     if (window.innerWidth > 980) closeMenu();
   });
@@ -186,25 +318,33 @@
     return false;
   });
 
-  const revealEls = document.querySelectorAll(
-    ".work-item, .craft-row, .studio-body, .contact-layout > *"
-  );
-  revealEls.forEach((el) => el.classList.add("reveal"));
+  const observeReveals = (els) => {
+    const list = [...els];
+    if (!list.length) return;
+    if ("IntersectionObserver" in window) {
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-in");
+              io.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.12, rootMargin: "0px 0px -48px 0px" }
+      );
+      list.forEach((el) => io.observe(el));
+    } else {
+      list.forEach((el) => el.classList.add("is-in"));
+    }
+  };
 
-  if ("IntersectionObserver" in window) {
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("is-in");
-            io.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.12, rootMargin: "0px 0px -48px 0px" }
-    );
-    revealEls.forEach((el) => io.observe(el));
-  } else {
-    revealEls.forEach((el) => el.classList.add("is-in"));
-  }
+  document
+    .querySelectorAll(".craft-row, .studio-body, .contact-layout > *")
+    .forEach((el) => el.classList.add("reveal"));
+  observeReveals(
+    document.querySelectorAll(".craft-row.reveal, .studio-body.reveal, .contact-layout > *.reveal")
+  );
+
+  loadProjects();
 })();

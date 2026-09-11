@@ -37,7 +37,6 @@
   </header>
 
   <main>
-    <!-- HERO: one composition, brand first -->
     <section class="hero">
       <div class="hero-stage">
         <p class="stamp" data-i18n="hero.stamp">Casablanca · atelier logiciel · 2024—</p>
@@ -52,19 +51,18 @@
           <a class="btn btn-ghost" href="#contact" data-i18n="hero.cta2">Parler du prochain</a>
         </div>
       </div>
-      <aside class="hero-side" aria-hidden="true">
-        <div class="sketch">
-          <svg viewBox="0 0 280 340" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="24" y="28" width="180" height="120" rx="4" stroke="currentColor" stroke-width="1.5" opacity=".55"/>
-            <path d="M40 56h120M40 72h88M40 88h104" stroke="currentColor" stroke-width="1.2" opacity=".4"/>
-            <rect x="72" y="168" width="160" height="140" rx="4" stroke="currentColor" stroke-width="1.5" opacity=".7"/>
-            <circle cx="96" cy="208" r="14" stroke="currentColor" stroke-width="1.4" opacity=".65"/>
-            <path d="M128 204h72M128 220h56" stroke="currentColor" stroke-width="1.2" opacity=".45"/>
-            <path d="M88 292c28-36 76-40 112-8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" opacity=".5"/>
-            <text x="28" y="318" fill="currentColor" font-size="11" font-family="IBM Plex Mono, monospace" opacity=".55">v0.9 · live</text>
-          </svg>
+      <aside class="hero-side">
+        <div class="hero-carousel" id="hero-carousel" aria-label="Captures produits">
+          <div class="hero-slide is-active"><img src="assets/shot-fidapp.png" alt="FidApp — dashboard commerçant" /></div>
+          <div class="hero-slide"><img src="assets/shot-2rparts.png" alt="2R Parts — caisse desktop" /></div>
+          <div class="hero-slide"><img src="assets/shot-optigest.png" alt="Opti Gest — gestion optique" /></div>
+          <div class="hero-dots" role="tablist">
+            <button type="button" class="is-active" aria-label="FidApp"></button>
+            <button type="button" aria-label="2R Parts"></button>
+            <button type="button" aria-label="Opti Gest"></button>
+          </div>
         </div>
-        <p class="side-note" data-i18n="hero.side">Croquis de produit — FidApp, tableau commerçant.</p>
+        <p class="side-note" data-i18n="hero.side">Captures réelles — FidApp · 2R Parts · Opti Gest</p>
       </aside>
     </section>
 
@@ -105,116 +103,30 @@
       </div>
     </section>
 
+    <section class="clients-strip" aria-label="Secteurs">
+      <div class="shell">
+        <p class="mono" data-i18n="clients.label">Secteurs accompagnés</p>
+        <ul class="clients-list">
+          <li data-i18n="clients.1">Distribution alimentaire</li>
+          <li data-i18n="clients.2">Retail &amp; fidélité</li>
+          <li data-i18n="clients.3">Pièces auto</li>
+          <li data-i18n="clients.4">Optique</li>
+          <li data-i18n="clients.5">Recrutement</li>
+          <li data-i18n="clients.6">Support IT interne</li>
+        </ul>
+      </div>
+    </section>
+
     <section class="work" id="work">
       <div class="shell">
         <div class="section-head">
           <span class="mono" data-i18n="work.label">02 — Travaux sélectionnés</span>
           <h2 data-i18n="work.title">Ce qui tourne déjà quelque part.</h2>
           <p class="lede" data-i18n="work.lede">
-            Une sélection honnête — pas une galerie de maquettes. Chaque ligne correspond
-            à un usage réel, une contrainte métier, une mise en production.
+            Une sélection honnête — pas une galerie de maquettes. Clique une ligne pour le détail.
           </p>
         </div>
-
-        <ol class="work-index">
-          <li class="work-item work-item--lead">
-            <div class="work-meta">
-              <span class="year">2025</span>
-              <span class="pill" data-i18n="case.1.status">4 apps live</span>
-            </div>
-            <h3>FidApp</h3>
-            <p class="work-sector" data-i18n="case.1.sector">Fidélité · commerces marocains</p>
-            <p data-i18n="case.1.p">
-              Le client scanne un QR, cumule des visites, sans installer d’app.
-              Monorepo : PWA client, dashboard commerçant, admin, API — QR anti-fraude à rotation.
-            </p>
-            <p class="stack">React · Node · PostgreSQL · Prisma · PWA</p>
-          </li>
-
-          <li class="work-item">
-            <div class="work-meta">
-              <span class="year">2025</span>
-              <span class="pill" data-i18n="case.2.status">Mission</span>
-            </div>
-            <h3 data-i18n="case.2.t">Entrepôt ERP/CRM — Food Group</h3>
-            <p class="work-sector" data-i18n="case.2.sector">Distribution · Dynamics 365 BC</p>
-            <p data-i18n="case.2.p">
-              77 tables documentées à la main (ventes, stock, CRM, RH, finance), pipelines ETL
-              et dashboards Power BI là où il n’y avait presque rien d’écrit.
-            </p>
-            <p class="stack">SQL Server · n8n · Power BI · T-SQL</p>
-          </li>
-
-          <li class="work-item">
-            <div class="work-meta">
-              <span class="year">2025</span>
-              <span class="pill" data-i18n="case.3.status">Prod</span>
-            </div>
-            <h3>2R Parts</h3>
-            <p class="work-sector" data-i18n="case.3.sector">Pièces auto · desktop</p>
-            <p data-i18n="case.3.p">
-              Caisse, stock, crédit client, fournisseurs, factures PDF — un logiciel Windows
-              fait pour le comptoir, pas pour une démo.
-            </p>
-            <p class="stack">Python · PyQt5 · SQLite</p>
-          </li>
-
-          <li class="work-item">
-            <div class="work-meta">
-              <span class="year">2025</span>
-              <span class="pill" data-i18n="case.4.status">Mission</span>
-            </div>
-            <h3>JobGate — studio vidéo</h3>
-            <p class="work-sector" data-i18n="case.4.sector">Recrutement</p>
-            <p data-i18n="case.4.p">
-              Backend Django : entretiens vidéo WebRTC, auth multi-fournisseurs,
-              candidatures et files Celery/Redis.
-            </p>
-            <p class="stack">Django · WebRTC · PostgreSQL · Celery</p>
-          </li>
-
-          <li class="work-item">
-            <div class="work-meta">
-              <span class="year">2025</span>
-              <span class="pill" data-i18n="case.8.status">Livré</span>
-            </div>
-            <h3>Opti Gest</h3>
-            <p class="work-sector" data-i18n="case.8.sector">Optique · Windows / Mac</p>
-            <p data-i18n="case.8.p">
-              Clients, ordonnances, devis, mutuelles CNOPS/CNSS, rappels WhatsApp —
-              données en local (SQLite), sans dépendance cloud obligatoire.
-            </p>
-            <p class="stack">Electron · React · Express · Prisma</p>
-          </li>
-
-          <li class="work-item">
-            <div class="work-meta">
-              <span class="year">2025–26</span>
-              <span class="pill" data-i18n="case.9.status">Mission</span>
-            </div>
-            <h3>GPSI</h3>
-            <p class="work-sector" data-i18n="case.9.sector">Parc IT · Food Group</p>
-            <p data-i18n="case.9.p">
-              Inventaire équipements, tickets SLA, rôles admin/technicien/utilisateur,
-              copilote IA local (Ollama) avec repli heuristique.
-            </p>
-            <p class="stack">Laravel · Inertia · React · PostgreSQL</p>
-          </li>
-
-          <li class="work-item">
-            <div class="work-meta">
-              <span class="year">2026</span>
-              <span class="pill pill--soft" data-i18n="case.7.status">En cours</span>
-            </div>
-            <h3>GestiPro</h3>
-            <p class="work-sector" data-i18n="case.7.sector">SaaS multi-tenant · commerces</p>
-            <p data-i18n="case.7.p">
-              Plateforme pour restaurants, dépôts et boutiques : opérations du jour,
-              stock, parcours métier — encore en construction.
-            </p>
-            <p class="stack">Next.js · Supabase · Vercel</p>
-          </li>
-        </ol>
+        <div class="work-index" id="work-index"></div>
       </div>
     </section>
 
@@ -299,6 +211,32 @@
       </div>
     </section>
   </main>
+
+  <dialog class="project-modal" id="project-modal">
+    <div class="project-modal-inner">
+      <button type="button" class="modal-close" id="modal-close" aria-label="Fermer">×</button>
+      <div class="modal-media" id="modal-media"></div>
+      <div class="modal-body">
+        <p class="mono" id="modal-meta"></p>
+        <h3 id="modal-title"></h3>
+        <p class="modal-stack" id="modal-stack"></p>
+        <div class="modal-grid">
+          <div>
+            <h4 data-i18n="modal.problem">Problème</h4>
+            <p id="modal-problem"></p>
+          </div>
+          <div>
+            <h4 data-i18n="modal.solution">Solution</h4>
+            <p id="modal-solution"></p>
+          </div>
+          <div>
+            <h4 data-i18n="modal.result">Résultat</h4>
+            <p id="modal-result"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </dialog>
 
   <div class="toast" id="toast" role="status" aria-live="polite" hidden>
     <span class="toast__text" data-i18n="form.toast">Message bien reçu — merci.</span>
