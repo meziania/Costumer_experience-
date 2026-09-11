@@ -1,8 +1,6 @@
 {
-  "framework": "nextjs",
-  "buildCommand": "export DATABASE_URL=file:./prisma/dev.db && prisma generate && prisma db push --skip-generate && npx tsx prisma/seed.ts && next build",
-  "env": {
-    "NEXTAUTH_URL": "https://costumer-experience.vercel.app",
-    "NEXTAUTH_SECRET": "cx-systems-atelier-auth"
-  }
+  "framework": null,
+  "installCommand": null,
+  "buildCommand": null,
+  "outputDirectory": "."
 }

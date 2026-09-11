@@ -133,33 +133,10 @@
     formStatus.classList.toggle("is-ok", type === "ok");
   };
 
-  const applyCustomValidity = (field) => {
-    field.setCustomValidity("");
-    if (field.validity.valueMissing) {
-      field.setCustomValidity(t("form.errorRequired"));
-      return;
-    }
-    if (field.type === "email" && field.validity.typeMismatch) {
-      field.setCustomValidity(t("form.errorEmail"));
-    }
-  };
-
-  const syncFormValidity = () => {
-    if (!form) return;
-    form.querySelectorAll("[required]").forEach(applyCustomValidity);
-  };
-  window.syncCxFormValidity = syncFormValidity;
-
-  form?.querySelectorAll("[required]").forEach((field) => {
-    field.addEventListener("input", () => applyCustomValidity(field));
-    field.addEventListener("blur", () => applyCustomValidity(field));
-  });
-
   form?.addEventListener("submit", async (e) => {
     e.preventDefault();
     e.stopPropagation();
 
-    syncFormValidity();
     if (!form.checkValidity()) {
       form.reportValidity();
       return false;
@@ -214,13 +191,7 @@
   );
   revealEls.forEach((el) => el.classList.add("reveal"));
 
-  const prefersReducedMotion = window.matchMedia(
-    "(prefers-reduced-motion: reduce)"
-  ).matches;
-
-  if (prefersReducedMotion) {
-    revealEls.forEach((el) => el.classList.add("is-in"));
-  } else if ("IntersectionObserver" in window) {
+  if ("IntersectionObserver" in window) {
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {

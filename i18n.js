@@ -16,7 +16,6 @@ const CX_I18N = {
     "hero.cta1": "Démarrer une conversation",
     "hero.cta2": "Explorer nos réalisations",
     "hero.footer": "Casablanca · Remote-ready · Maroc & International",
-    "hero.side": "FidApp — fidélité digitale en production",
     "strip.web": "Applications Web",
     "strip.saas": "Plateformes SaaS",
     "strip.mobile": "Mobile & PWA",
@@ -67,7 +66,6 @@ const CX_I18N = {
       "Application desktop complète : point de vente, stock, crédit client, fournisseurs, factures PDF et reporting financier.",
     "case.4.status": "Mission entreprise",
     "case.4.sector": "Recrutement · Plateforme",
-    "case.4.t": "JobGate — studio vidéo",
     "case.4.p":
       "Backend Django pour plateforme de recrutement : entretiens vidéo WebRTC, auth multi-fournisseurs, candidatures et files Celery/Redis.",
     "case.5.status": "Livré",
@@ -123,8 +121,6 @@ const CX_I18N = {
     "form.ok": "Message envoyé avec succès.",
     "form.err": "Envoi impossible pour le moment. Utilisez WhatsApp, merci.",
     "form.toast": "Message envoyé avec succès",
-    "form.errorRequired": "Ce champ est obligatoire.",
-    "form.errorEmail": "Saisissez une adresse e-mail valide.",
     "footer.company": "Société",
     "footer.contact": "Contact",
     "footer.form": "Formulaire",
@@ -152,7 +148,6 @@ const CX_I18N = {
     "hero.cta1": "Start a conversation",
     "hero.cta2": "Explore our work",
     "hero.footer": "Casablanca · Remote-ready · Morocco & International",
-    "hero.side": "FidApp — digital loyalty in production",
     "strip.web": "Web Applications",
     "strip.saas": "SaaS Platforms",
     "strip.mobile": "Mobile & PWA",
@@ -203,7 +198,6 @@ const CX_I18N = {
       "Complete desktop application: point of sale, inventory, customer credit, suppliers, PDF invoices, and financial reporting.",
     "case.4.status": "Enterprise mission",
     "case.4.sector": "Recruitment · Platform",
-    "case.4.t": "JobGate — video studio",
     "case.4.p":
       "Django backend for a recruitment platform: WebRTC video interviews, multi-provider auth, applications, and Celery/Redis queues.",
     "case.5.status": "Delivered",
@@ -259,8 +253,6 @@ const CX_I18N = {
     "form.ok": "Message sent successfully.",
     "form.err": "Unable to send right now. Please use WhatsApp.",
     "form.toast": "Message sent successfully",
-    "form.errorRequired": "This field is required.",
-    "form.errorEmail": "Enter a valid email address.",
     "footer.company": "Company",
     "footer.contact": "Contact",
     "footer.form": "Form",
@@ -321,28 +313,4 @@ window.applyCxLang = function applyCxLang(lang) {
 
   const toastText = document.querySelector(".toast__text");
   if (toastText) toastText.textContent = dict["form.toast"];
-
-  const ogTitle = document.querySelector('meta[property="og:title"]');
-  const ogDesc = document.querySelector('meta[property="og:description"]');
-  const twTitle = document.querySelector('meta[name="twitter:title"]');
-  const twDesc = document.querySelector('meta[name="twitter:description"]');
-  if (ogTitle && title) ogTitle.setAttribute("content", title);
-  if (ogDesc && desc) ogDesc.setAttribute("content", desc);
-  if (twTitle && title) twTitle.setAttribute("content", title);
-  if (twDesc && desc) twDesc.setAttribute("content", desc);
-
-  const jsonLd = document.getElementById("jsonld-business");
-  if (jsonLd) {
-    try {
-      const data = JSON.parse(jsonLd.textContent);
-      data.description = desc;
-      jsonLd.textContent = JSON.stringify(data);
-    } catch {
-      /* keep existing JSON-LD */
-    }
-  }
-
-  if (typeof window.syncCxFormValidity === "function") {
-    window.syncCxFormValidity();
-  }
 };

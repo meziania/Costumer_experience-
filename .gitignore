@@ -4,5 +4,4 @@ node_modules
 .env*.local
 *.tsbuildinfo
 .vercel
-public/uploads/*
-!public/uploads/.gitkeep
+prisma/
