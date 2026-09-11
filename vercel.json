@@ -1,7 +1,4 @@
 {
   "framework": "nextjs",
-  "buildCommand": "prisma generate && prisma db push --skip-generate && npx tsx prisma/seed.ts && next build",
-  "env": {
-    "DATABASE_URL": "file:./prisma/dev.db"
-  }
+  "buildCommand": "export DATABASE_URL=file:./prisma/dev.db && prisma generate && prisma db push --skip-generate && npx tsx prisma/seed.ts && next build"
 }
