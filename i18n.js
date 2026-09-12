@@ -2,7 +2,7 @@ const CX_I18N = {
   fr: {
     "meta.title": "CX Systems | Systèmes digitaux d’entreprise",
     "meta.desc":
-      "CX Systems conçoit des logiciels pour commerces et distributeurs au Maroc : caisse, stock, fidélité et data. Livrés à Casablanca, utilisés en production.",
+      "CX Systems remplace Excel pour les commerces et distributeurs au Maroc : encaisser, suivre le stock, faire revenir les clients. Conçu à Casablanca, déjà en production.",
     "nav.home": "Accueil",
     "nav.offers": "Notre offre",
     "nav.expertise": "Expertise",
@@ -40,7 +40,7 @@ const CX_I18N = {
     "offers.kicker": "Notre offre",
     "offers.title": "Ce qu’on livre pour votre opération.",
     "offers.lede":
-      "Comptoir, fidélité, data et présence digitale — des outils et un rythme que vos équipes utilisent vraiment.",
+      "Des outils pour encaisser, suivre le stock et faire revenir les clients — un rythme que vos équipes utilisent vraiment.",
     "cap.kicker": "Expertise",
     "cap.title": "Des capacités de bout en bout pour transformer vos opérations.",
     "cap.lede":
@@ -147,7 +147,7 @@ const CX_I18N = {
   en: {
     "meta.title": "CX Systems | Enterprise Digital Systems",
     "meta.desc":
-      "CX Systems builds software for shops and distributors in Morocco: POS, stock, loyalty, and data. Shipped from Casablanca, used in production.",
+      "CX Systems replaces Excel for shops and distributors in Morocco: take payment, know your stock, bring customers back. Built in Casablanca, used in production.",
     "nav.home": "Home",
     "nav.offers": "Our offer",
     "nav.expertise": "Expertise",
@@ -185,7 +185,7 @@ const CX_I18N = {
     "offers.kicker": "Our offer",
     "offers.title": "What we ship for your operations.",
     "offers.lede":
-      "Counter, loyalty, data, and digital presence — tools and a cadence your team actually uses.",
+      "Tools to take payment, know your stock, and bring customers back — a cadence your team actually uses.",
     "cap.kicker": "Expertise",
     "cap.title": "End-to-end capabilities to transform your operations.",
     "cap.lede":

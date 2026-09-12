@@ -51,9 +51,8 @@
     return window.CX_I18N?.[lang]?.[key] || window.CX_I18N?.fr?.[key] || key;
   };
 
-  const savedLang = localStorage.getItem("cx-lang") === "en" ? "en" : "fr";
   if (typeof window.applyCxLang === "function") {
-    window.applyCxLang(savedLang);
+    window.applyCxLang("fr");
   }
   document.querySelectorAll(".lang-btn").forEach((btn) => {
     btn.addEventListener("click", () => {
