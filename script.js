@@ -316,6 +316,29 @@
         .join("");
     }
 
+    const orbit = document.getElementById("hero-orbit-ring");
+    if (orbit) {
+      const shots = (store.projects || [])
+        .filter((p) => p.published === true)
+        .flatMap((p) =>
+          (p.photos || [])
+            .filter(Boolean)
+            .slice(0, 1)
+            .map((src) => ({ src, title: pick(p, "title", "titleEn") }))
+        )
+        .slice(0, 8);
+      orbit.innerHTML = shots
+        .map((shot, i) => {
+          const a = `${(360 / shots.length) * i}deg`;
+          return `<div class="hero-orbit__item" style="--a:${a}">
+            <button type="button" class="hero-orbit__card" data-photo="${esc(shot.src)}" aria-label="${esc(shot.title)}">
+              <img src="${esc(shot.src)}" alt="${esc(shot.title)}" />
+            </button>
+          </div>`;
+        })
+        .join("");
+    }
+
     if (offersWrap) {
       const offers = (store.offers || []).filter((o) => o.published === true);
       offersWrap.innerHTML = offers
@@ -342,6 +365,10 @@
   };
 
   document.getElementById("work-list")?.addEventListener("click", (e) => {
+    const btn = e.target.closest("[data-photo]");
+    if (btn) openPhoto(btn.getAttribute("data-photo"));
+  });
+  document.getElementById("hero-orbit")?.addEventListener("click", (e) => {
     const btn = e.target.closest("[data-photo]");
     if (btn) openPhoto(btn.getAttribute("data-photo"));
   });
