@@ -231,7 +231,17 @@
     const dict = window.CX_I18N?.[window.CX_LANG || "fr"] || {};
 
     if (work) {
-      const projects = (store.projects || []).filter((p) => p.published !== false);
+      const projects = (store.projects || [])
+        .filter((p) => p.published === true)
+        .slice()
+        .sort((a, b) => {
+          const af = a.featured ? 1 : 0;
+          const bf = b.featured ? 1 : 0;
+          if (bf !== af) return bf - af;
+          const ap = (a.photos || []).length ? 1 : 0;
+          const bp = (b.photos || []).length ? 1 : 0;
+          return bp - ap;
+        });
       work.innerHTML = projects
         .map((p) => {
           const photos = (p.photos || []).filter(Boolean);
@@ -253,14 +263,18 @@
     }
 
     if (offersWrap) {
-      const offers = (store.offers || []).filter((o) => o.published !== false);
+      const offers = (store.offers || []).filter((o) => o.published === true);
       offersWrap.innerHTML = offers
-        .map((o, i) => `<article class="offer-card reveal is-in">
+        .map((o, i) => {
+          const details = pick(o, "details", "detailsEn");
+          return `<article class="offer-card reveal is-in">
             <span class="offer-idx">${pad(i + 1)}</span>
             <h3>${esc(pick(o, "title", "titleEn"))}</h3>
             <p>${esc(pick(o, "description", "descriptionEn"))}</p>
+            ${details ? `<p class="offer-details">${esc(details)}</p>` : ""}
             <a class="offer-cta" href="#contact">${esc(dict["offers.cta"] || "En parler")}</a>
-          </article>`)
+          </article>`;
+        })
         .join("");
     }
   };
@@ -294,29 +308,20 @@
     if (!window.CX_STORE) {
       try {
         const res = await fetch("data/store.json");
-        if (res.ok) window.CX_STORE = await res.json();
+        if (res.ok) {
+          const raw = await res.json();
+          // Fichier brut : n’afficher que ce qui est explicitement publié dans l’admin
+          window.CX_STORE = {
+            projects: (raw.projects || []).filter((p) => p.published === true),
+            offers: (raw.offers || []).filter((o) => o.published === true),
+          };
+        }
       } catch {
         window.CX_STORE = { projects: [], offers: [] };
       }
     }
-    try {
-      const local = localStorage.getItem("cx-store");
-      if (local) {
-        const parsed = JSON.parse(local);
-        const incoming = window.CX_STORE || { projects: [], offers: [] };
-        parsed.projects = (parsed.projects || []).map((project) => {
-          if (project.photos?.length) return project;
-          const fresh = (incoming.projects || []).find((item) => item.id === project.id);
-          return fresh?.photos?.length ? { ...project, photos: fresh.photos } : project;
-        });
-        if (!parsed.offers?.length && incoming.offers?.length) {
-          parsed.offers = incoming.offers;
-        }
-        window.CX_STORE = parsed;
-      }
-    } catch {
-      /* keep fetched store */
-    }
+    // Ne pas fusionner localStorage ici : l’admin a sa copie privée ;
+    // le site public ne montre que l’API / le store publié.
     window.renderCxCatalog();
   })();
 })();

@@ -3,97 +3,101 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CX Systems — Admin</title>
+  <title>CX Systems — 01 Clients</title>
   <link rel="icon" type="image/svg+xml" href="/assets/logo-mark.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/admin/admin.css" />
 </head>
 <body class="admin-page">
-  <div class="noise" aria-hidden="true"></div>
-
-  <header class="header is-scrolled">
-    <div class="header-inner">
-      <a class="logo" href="/" aria-label="CX Systems — Accueil">
-        <img src="/assets/logo-mark.svg" alt="" class="logo-mark" width="40" height="40" />
-        <span class="logo-text">
-          <strong>CX Systems</strong>
-          <em>Engineering Digital Systems</em>
-        </span>
-      </a>
-      <nav class="nav" id="admin-nav">
-        <button type="button" class="nav-tab is-active" data-tab="clients" hidden>Clients</button>
-        <button type="button" class="nav-tab" data-tab="projects" hidden>Projets</button>
-        <button type="button" class="nav-tab" data-tab="offers" hidden>Offres</button>
-        <a href="/">Retour au site</a>
-        <button type="button" class="nav-tab" id="logout" hidden>Déconnexion</button>
-      </nav>
-    </div>
-  </header>
-
   <div id="login-view" class="admin-login">
-    <div class="shell admin-login-inner">
-      <div>
-        <p class="kicker kicker--light">Espace privé</p>
-        <h1>Gestion privée &amp; site.</h1>
-        <p class="admin-login-lede">Les clients restent ici. Seuls les projets et offres publiés apparaissent sur le site.</p>
+    <div class="admin-login-panel">
+      <div class="brand">
+        <div class="mark"></div>
+        CX SYSTEMS <span class="sep">/</span> <span class="section">Atelier</span>
       </div>
-      <form class="form" id="login-form">
-        <label>
-          <span>Mot de passe</span>
-          <input type="password" id="login-pass" name="password" required autocomplete="current-password" placeholder="••••••••" />
-        </label>
-        <div class="form-actions">
-          <button type="submit" class="btn btn--solid btn--light" id="login-btn">Entrer</button>
-        </div>
-        <p class="form-status is-error" id="login-err" hidden>Mot de passe incorrect</p>
-      </form>
+      <h1>Gérer le site<br /><em>sans le casser.</em></h1>
+      <p class="admin-login-lede">
+        Clients restent privés. Projets et offres n’apparaissent sur le site public que s’ils sont publiés.
+      </p>
+      <ul class="admin-login-points">
+        <li>Dossiers : fiche → besoin → mission → devis</li>
+        <li>Publication projet / offre en un clic</li>
+        <li>Factures, signature, journal</li>
+      </ul>
     </div>
+    <form class="admin-login-form" id="login-form">
+      <label>
+        <span>Mot de passe atelier</span>
+        <input type="password" id="login-pass" name="password" required autocomplete="current-password" placeholder="••••••••" />
+      </label>
+      <button type="submit" class="new-client" id="login-btn">Entrer dans l’atelier</button>
+      <p class="form-status is-error" id="login-err" hidden>Mot de passe incorrect</p>
+    </form>
   </div>
 
-  <div id="app-view" class="admin-app" hidden>
-    <section class="work">
-      <div class="shell">
-        <section id="tab-clients">
-          <div class="section-intro section-intro--row">
-            <div>
-              <p class="kicker">Privé</p>
-              <h2>Clients &amp; avancement</h2>
-            </div>
-            <button type="button" class="btn btn--solid admin-dark-btn" id="new-client">+ Nouveau client</button>
-          </div>
-          <div class="cases" id="client-list"></div>
-        </section>
-
-        <section id="tab-projects" hidden>
-          <div class="section-intro section-intro--row">
-            <div>
-              <p class="kicker">Projets</p>
-              <h2>Réalisations affichées</h2>
-            </div>
-            <button type="button" class="btn btn--solid admin-dark-btn" id="new-project">+ Nouveau projet</button>
-          </div>
-          <div class="cases" id="project-list"></div>
-        </section>
-
-        <section id="tab-offers" hidden>
-          <div class="section-intro section-intro--row">
-            <div>
-              <p class="kicker">Offres</p>
-              <h2>Notre offre sur le site</h2>
-            </div>
-            <button type="button" class="btn btn--solid admin-dark-btn" id="new-offer">+ Nouvelle offre</button>
-          </div>
-          <div class="cases" id="offer-list"></div>
-        </section>
+  <div id="app-view" class="cx-app" hidden>
+    <header class="topbar">
+      <div class="brand">
+        <div class="mark"></div>
+        CX SYSTEMS <span class="sep">/</span> <span class="section" id="cx-section">01 Clients</span>
       </div>
-    </section>
+      <nav class="admin-tabs" id="admin-nav" hidden>
+        <button type="button" class="admin-tab is-active" data-tab="clients">01 Clients</button>
+        <button type="button" class="admin-tab" data-tab="projects">02 Projets</button>
+        <button type="button" class="admin-tab" data-tab="offers">03 Offres</button>
+      </nav>
+      <div class="search" id="client-search-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        <input type="search" id="client-search" placeholder="Rechercher nom, société, e-mail, ville…" autocomplete="off" />
+      </div>
+      <div class="counters" id="admin-stats" aria-live="polite"></div>
+      <button type="button" class="new-client" id="new-client">+ Nouveau dossier</button>
+      <button type="button" class="new-client" id="new-project" hidden>+ Nouveau projet</button>
+      <button type="button" class="new-client" id="new-offer" hidden>+ Nouvelle offre</button>
+      <a class="icon-btn" href="/" target="_blank" rel="noopener">Site ↗</a>
+      <button type="button" class="icon-btn" id="logout" hidden>Sortir</button>
+    </header>
+
+    <div class="ribbon" id="cx-ribbon" hidden></div>
+
+    <div class="body">
+      <section id="tab-clients" class="cx-split">
+        <aside class="list">
+          <div class="list-head" id="client-rail-head">Dossiers</div>
+          <div id="client-rail"></div>
+        </aside>
+        <div class="fiche" id="client-desk">
+          <div class="crm-empty" id="client-desk-empty">
+            <p class="kicker">Parcours</p>
+            <h3>Fiche, besoin, mission, devis.</h3>
+            <p>Sélectionnez un dossier à gauche. Rien de tout ça n’apparaît sur le site public.</p>
+          </div>
+          <div class="crm-dossier" id="client-dossier" hidden></div>
+        </div>
+      </section>
+
+      <section id="tab-projects" class="cx-catalog" hidden>
+        <div class="admin-grid" id="project-list"></div>
+      </section>
+
+      <section id="tab-offers" class="cx-catalog" hidden>
+        <div class="admin-grid admin-grid--offers" id="offer-list"></div>
+      </section>
+    </div>
   </div>
 
   <dialog id="editor" class="editor">
     <form id="editor-form" class="form editor-form"></form>
+  </dialog>
+
+  <dialog id="quote-sheet" class="quote-sheet">
+    <div class="quote-sheet__toolbar no-print">
+      <button type="button" class="new-client" id="quote-print-btn">Imprimer / PDF</button>
+      <button type="button" class="icon-btn" id="quote-sheet-close">Fermer</button>
+    </div>
+    <div class="quote-sheet__page" id="quote-sheet-body"></div>
   </dialog>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>

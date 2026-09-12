@@ -1,0 +1,7 @@
+{
+  "name": "cx-systems-website",
+  "private": true,
+  "scripts": {
+    "check": "node --check api/store.js && node --check api/login.js && node --check api/rewrite.js && node --check api/quote.js && node --check api/cron-reminders.js && node --check lib/store.js && node --check lib/db.js && node --check lib/auth.js && node --check lib/reformulate.js"
+  }
+}

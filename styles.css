@@ -423,8 +423,8 @@ a {
 /* ——— Offers ——— */
 .offer-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem 1.75rem;
 }
 
 .offer-card {
@@ -459,7 +459,12 @@ a {
 }
 
 .offer-card .offer-details {
-  display: none;
+  margin: 0.75rem 0 0;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--line);
+  color: var(--ink-2);
+  font-size: 0.84rem;
+  line-height: 1.5;
 }
 
 .offer-cta {
@@ -1018,16 +1023,9 @@ a {
   transform: none;
 }
 
-/* Admin list cards keep a bit more padding */
+/* Admin list cards keep a bit more padding — superseded by admin.css cards */
 .admin-app .case {
   padding: 1.25rem;
-}
-
-.admin-app .case-sector,
-.admin-app .case h3,
-.admin-app .case p {
-  padding-left: 0;
-  padding-right: 0;
 }
 
 @media (max-width: 980px) {

@@ -9,8 +9,8 @@ function send(res, status, data) {
 
 module.exports = async function handler(req, res) {
   if (req.method === "GET") {
-    if (checkAuth(req)) return send(res, 200, readStore());
-    return send(res, 200, publicStore());
+    if (checkAuth(req)) return send(res, 200, await readStore());
+    return send(res, 200, await publicStore());
   }
 
   if (req.method === "PUT" || req.method === "POST") {
@@ -23,7 +23,7 @@ module.exports = async function handler(req, res) {
     } catch {
       return send(res, 400, { error: "JSON invalide" });
     }
-    return send(res, 200, writeStore(body));
+    return send(res, 200, await writeStore(body));
   }
 
   send(res, 405, { error: "Method not allowed" });

@@ -38,9 +38,9 @@ const CX_I18N = {
     "strip.erp": "ERP / CRM",
     "strip.api": "API & Intégrations",
     "offers.kicker": "Notre offre",
-    "offers.title": "Trois façons de remplacer Excel.",
+    "offers.title": "Ce qu’on livre pour votre opération.",
     "offers.lede":
-      "Comptoir, fidélité, data — on livre un outil que vos équipes utilisent vraiment, pas une démo.",
+      "Comptoir, fidélité, data et présence digitale — des outils et un rythme que vos équipes utilisent vraiment.",
     "cap.kicker": "Expertise",
     "cap.title": "Des capacités de bout en bout pour transformer vos opérations.",
     "cap.lede":
@@ -155,9 +155,9 @@ const CX_I18N = {
     "strip.erp": "ERP / CRM",
     "strip.api": "API & Integrations",
     "offers.kicker": "Our offer",
-    "offers.title": "Three ways to replace Excel.",
+    "offers.title": "What we ship for your operations.",
     "offers.lede":
-      "Counter, loyalty, data — we ship a tool your team actually uses, not a demo.",
+      "Counter, loyalty, data, and digital presence — tools and a cadence your team actually uses.",
     "cap.kicker": "Expertise",
     "cap.title": "End-to-end capabilities to transform your operations.",
     "cap.lede":

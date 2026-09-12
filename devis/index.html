@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Devis — CX Systems</title>
+  <link rel="icon" type="image/svg+xml" href="/assets/logo-mark.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="/admin/admin.css" />
+</head>
+<body class="admin-page sign-page">
+  <main class="sign-wrap">
+    <p class="kicker">CX Systems</p>
+    <div id="sign-status" class="sign-status">Chargement du devis…</div>
+    <div id="sign-sheet" class="quote-sheet__page" hidden></div>
+    <form id="sign-form" class="sign-form" hidden>
+      <h3>Signature électronique</h3>
+      <p>En signant, vous acceptez ce devis. Mention : bon pour accord.</p>
+      <label>
+        <span>Nom du signataire</span>
+        <input type="text" id="signer-name" required placeholder="Prénom Nom" />
+      </label>
+      <label>
+        <span>Signature (dessinez dans le cadre)</span>
+        <canvas id="sign-pad" width="640" height="180"></canvas>
+      </label>
+      <div class="actions">
+        <button type="button" class="ghost" id="sign-clear">Effacer</button>
+        <button type="submit" class="btn btn--solid admin-dark-btn" id="sign-submit">Signer et accepter</button>
+      </div>
+      <p class="form-status is-error" id="sign-err" hidden></p>
+    </form>
+  </main>
+  <script src="/devis/sign.js"></script>
+</body>
+</html>

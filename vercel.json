@@ -2,10 +2,15 @@
   "cleanUrls": true,
   "rewrites": [
     { "source": "/admin", "destination": "/admin/index.html" },
-    { "source": "/admin/", "destination": "/admin/index.html" }
+    { "source": "/admin/", "destination": "/admin/index.html" },
+    { "source": "/devis", "destination": "/devis/index.html" },
+    { "source": "/devis/", "destination": "/devis/index.html" }
   ],
   "functions": {
     "api/store.js": {
+      "includeFiles": "{data/store.json,lib/**}"
+    },
+    "api/quote.js": {
       "includeFiles": "{data/store.json,lib/**}"
     },
     "api/login.js": {
@@ -13,6 +18,15 @@
     },
     "api/rewrite.js": {
       "includeFiles": "lib/**"
+    },
+    "api/cron-reminders.js": {
+      "includeFiles": "{data/store.json,lib/**}"
     }
-  }
+  },
+  "crons": [
+    {
+      "path": "/api/cron-reminders",
+      "schedule": "0 8 * * *"
+    }
+  ]
 }

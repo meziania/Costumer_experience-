@@ -17,6 +17,21 @@
       "published": true
     },
     {
+      "id": "2rparts",
+      "title": "2R Parts Auto Accessoires",
+      "titleEn": "2R Parts Auto Accessoires",
+      "description": "Caisse, stock, crédit client et factures — à la place des fichiers Excel du comptoir. L’équipe ouvre le logiciel le matin et encaisse.",
+      "descriptionEn": "Till, stock, customer credit and invoices — instead of the counter’s Excel files. The team opens it in the morning and takes payment.",
+      "status": "En production",
+      "statusEn": "In production",
+      "sector": "Distribution auto · Comptoir",
+      "sectorEn": "Auto parts · Counter",
+      "tags": ["Python", "PyQt5", "SQLite", "ReportLab"],
+      "photos": ["/assets/shot-2rparts.png"],
+      "featured": true,
+      "published": true
+    },
+    {
       "id": "foodgroup-erp",
       "title": "Food Group — data & ERP",
       "titleEn": "Food Group — data & ERP",
@@ -32,18 +47,33 @@
       "published": true
     },
     {
-      "id": "2rparts",
-      "title": "2R Parts Auto Accessoires",
-      "titleEn": "2R Parts Auto Accessoires",
-      "description": "Caisse, stock, crédit client et factures — à la place des fichiers Excel du comptoir. L’équipe ouvre le logiciel le matin et encaisse.",
-      "descriptionEn": "Till, stock, customer credit and invoices — instead of the counter’s Excel files. The team opens it in the morning and takes payment.",
-      "status": "En production",
-      "statusEn": "In production",
-      "sector": "Distribution auto · Comptoir",
-      "sectorEn": "Auto parts · Counter",
-      "tags": ["Python", "PyQt5", "SQLite", "ReportLab"],
-      "photos": ["/assets/shot-2rparts.png"],
-      "featured": true,
+      "id": "optigest",
+      "title": "Opti Gest",
+      "titleEn": "Opti Gest",
+      "description": "Application desktop Windows et Mac pour magasin d’optique : clients, ordonnances, devis et factures PDF, mutuelles (CNOPS / CNSS), catalogue et rappels WhatsApp / SMS. Données en local (SQLite).",
+      "descriptionEn": "Windows and Mac desktop app for optical shops: clients, prescriptions, quotes and PDF invoices, insurance follow-up (CNOPS / CNSS), catalog, and WhatsApp / SMS reminders. Data stays local (SQLite).",
+      "status": "Livré",
+      "statusEn": "Delivered",
+      "sector": "Optique · Desktop",
+      "sectorEn": "Optical · Desktop",
+      "tags": ["Electron", "React", "Express", "Prisma", "SQLite"],
+      "photos": ["/assets/shot-optigest.png"],
+      "featured": false,
+      "published": true
+    },
+    {
+      "id": "gpsi",
+      "title": "GPSI",
+      "titleEn": "GPSI",
+      "description": "Gestion de parc et support informatique : inventaire des équipements, tickets avec SLA, trois rôles (admin, technicien, utilisateur) et copilote IA (Ollama) avec repli heuristique.",
+      "descriptionEn": "IT asset management and service desk: equipment inventory, SLA-backed tickets, three roles (admin, technician, user), and an AI copilot (Ollama) with a heuristic fallback.",
+      "status": "Mission entreprise",
+      "statusEn": "Enterprise mission",
+      "sector": "Food Group Trading · IT interne",
+      "sectorEn": "Food Group Trading · Internal IT",
+      "tags": ["Laravel", "Inertia", "React", "TypeScript", "PostgreSQL"],
+      "photos": [],
+      "featured": false,
       "published": true
     },
     {
@@ -105,36 +135,6 @@
       "photos": [],
       "featured": false,
       "published": true
-    },
-    {
-      "id": "optigest",
-      "title": "Opti Gest",
-      "titleEn": "Opti Gest",
-      "description": "Application desktop Windows et Mac pour magasin d’optique : clients, ordonnances, devis et factures PDF, mutuelles (CNOPS / CNSS), catalogue et rappels WhatsApp / SMS. Données en local (SQLite).",
-      "descriptionEn": "Windows and Mac desktop app for optical shops: clients, prescriptions, quotes and PDF invoices, insurance follow-up (CNOPS / CNSS), catalog, and WhatsApp / SMS reminders. Data stays local (SQLite).",
-      "status": "Livré",
-      "statusEn": "Delivered",
-      "sector": "Optique · Desktop",
-      "sectorEn": "Optical · Desktop",
-      "tags": ["Electron", "React", "Express", "Prisma", "SQLite"],
-      "photos": ["/assets/shot-optigest.png"],
-      "featured": false,
-      "published": true
-    },
-    {
-      "id": "gpsi",
-      "title": "GPSI",
-      "titleEn": "GPSI",
-      "description": "Gestion de parc et support informatique : inventaire des équipements, tickets avec SLA, trois rôles (admin, technicien, utilisateur) et copilote IA (Ollama) avec repli heuristique.",
-      "descriptionEn": "IT asset management and service desk: equipment inventory, SLA-backed tickets, three roles (admin, technician, user), and an AI copilot (Ollama) with a heuristic fallback.",
-      "status": "Mission entreprise",
-      "statusEn": "Enterprise mission",
-      "sector": "Food Group Trading · IT interne",
-      "sectorEn": "Food Group Trading · Internal IT",
-      "tags": ["Laravel", "Inertia", "React", "TypeScript", "PostgreSQL"],
-      "photos": [],
-      "featured": false,
-      "published": true
     }
   ],
   "offers": [
@@ -169,6 +169,17 @@
       "details": "Power BI, ETL, ERP/CRM (Dynamics 365 Business Central) et APIs.",
       "detailsEn": "Power BI, ETL, ERP/CRM (Dynamics 365 Business Central) and APIs.",
       "proofId": "foodgroup-erp",
+      "published": true
+    },
+    {
+      "id": "social",
+      "title": "Social media manager",
+      "titleEn": "Social media manager",
+      "description": "Calendrier éditorial, visuels et publications LinkedIn / Instagram pour marques B2B et commerces. Une présence régulière, claire, alignée sur votre offre.",
+      "descriptionEn": "Editorial calendar, visuals, and LinkedIn / Instagram posts for B2B brands and shops. A steady, clear presence that matches your offer.",
+      "details": "Stratégie de contenu, copy FR/EN, formats carrousel & stories, rythme de publication, reporting mensuel. Pensé pour PME et studios tech au Maroc.",
+      "detailsEn": "Content strategy, FR/EN copy, carousel & stories formats, posting cadence, monthly reporting. Built for SMEs and tech studios in Morocco.",
+      "proofId": "",
       "published": true
     }
   ]
