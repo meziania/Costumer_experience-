@@ -71,34 +71,85 @@
   const toast = document.getElementById("toast");
   const inbox = ["a.meziani.dev", "gmail.com"].join("@");
 
-  const waUrl = () => {
-    const name = form?.elements.namedItem("name")?.value?.trim() || "";
-    const email = form?.elements.namedItem("email")?.value?.trim() || "";
-    const phone = form?.elements.namedItem("phone")?.value?.trim() || "";
-    const message = form?.elements.namedItem("message")?.value?.trim() || "";
+  const fieldValue = (name) => form?.elements.namedItem(name)?.value?.trim() || "";
+
+  const fieldLabel = (name) => {
+    const el = form?.elements.namedItem(name);
+    if (!el || el.tagName !== "SELECT" || !el.value) return "";
+    return el.selectedOptions[0]?.textContent?.trim() || "";
+  };
+
+  const brief = () => {
     const isFr = (window.CX_LANG || "fr") === "fr";
-    const text = isFr
+    const name = fieldValue("name");
+    const company = fieldValue("company");
+    const email = fieldValue("email");
+    const phone = fieldValue("phone");
+    const city = fieldValue("city");
+    const need = fieldLabel("need");
+    const current = fieldLabel("current");
+    const when = fieldLabel("when");
+    const message = fieldValue("message");
+    const lines = isFr
       ? [
-          "Bonjour CX Systems,",
+          `Nouveau brief — ${company || name || "CX Systems"}`,
           "",
-          message || "Je souhaite échanger sur un projet.",
-          "",
-          name && `Nom / Société : ${name}`,
+          "Contact",
+          name && `Nom : ${name}`,
+          company && `Société : ${company}`,
           email && `E-mail : ${email}`,
           phone && `Téléphone : ${phone}`,
+          city && `Ville : ${city}`,
+          "",
+          "Besoin",
+          need && `Offre : ${need}`,
+          current && `Outil actuel : ${current}`,
+          when && `Échéance : ${when}`,
+          "",
+          "Problème à résoudre",
+          message,
         ]
       : [
-          "Hello CX Systems,",
+          `New brief — ${company || name || "CX Systems"}`,
           "",
-          message || "I would like to discuss a project.",
-          "",
-          name && `Name / Company: ${name}`,
+          "Contact",
+          name && `Name: ${name}`,
+          company && `Company: ${company}`,
           email && `Email: ${email}`,
           phone && `Phone: ${phone}`,
+          city && `City: ${city}`,
+          "",
+          "Need",
+          need && `Offer: ${need}`,
+          current && `Current tool: ${current}`,
+          when && `Timeline: ${when}`,
+          "",
+          "Problem to solve",
+          message,
         ];
-    return `https://wa.me/212699254247?text=${encodeURIComponent(
-      text.filter(Boolean).join("\n")
-    )}`;
+    return {
+      name,
+      company,
+      email,
+      phone,
+      city,
+      need,
+      current,
+      when,
+      message,
+      letter: lines.filter((line) => line !== false).join("\n").replace(/\n{3,}/g, "\n\n"),
+    };
+  };
+
+  const waUrl = () => {
+    const data = brief();
+    const isFr = (window.CX_LANG || "fr") === "fr";
+    const text = [
+      isFr ? "Bonjour CX Systems," : "Hello CX Systems,",
+      "",
+      data.letter || (isFr ? "Je souhaite échanger sur un projet." : "I would like to discuss a project."),
+    ];
+    return `https://wa.me/212699254247?text=${encodeURIComponent(text.join("\n"))}`;
   };
 
   waBtn?.addEventListener("click", (e) => {
@@ -138,14 +189,18 @@
       return false;
     }
 
-    const data = {
-      name: form.elements.namedItem("name")?.value?.trim() || "",
-      email: form.elements.namedItem("email")?.value?.trim() || "",
-      phone: form.elements.namedItem("phone")?.value?.trim() || "",
-      message: form.elements.namedItem("message")?.value?.trim() || "",
-      _subject: "Nouveau message — CX Systems",
-      _template: "table",
+    const data = brief();
+    const subject = data.need
+      ? `Brief — ${data.need} — ${data.company || data.name}`
+      : `Nouveau brief — ${data.company || data.name || "CX Systems"}`;
+    const payload = {
+      name: data.name,
+      email: data.email,
+      _replyto: data.email,
+      _subject: subject,
+      _template: "basic",
       _captcha: "false",
+      message: data.letter,
     };
 
     if (submitBtn) {
@@ -161,11 +216,11 @@
           "Content-Type": "application/json",
           Accept: "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(payload),
       });
 
-      const payload = await res.json().catch(() => ({}));
-      if (!res.ok || payload.success === "false") throw new Error("send_failed");
+      const result = await res.json().catch(() => ({}));
+      if (!res.ok || result.success === "false") throw new Error("send_failed");
 
       form.reset();
       setStatus(t("form.ok"), "ok");

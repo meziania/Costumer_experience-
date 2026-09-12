@@ -123,7 +123,7 @@
           <p class="kicker" data-i18n="contact.kicker">Contact</p>
           <h2 data-i18n="contact.title">Prêts quand vous l’êtes.</h2>
           <p class="contact-lede" data-i18n="contact.lede">
-            Décrivez votre besoin via le formulaire, ou contactez-nous directement sur WhatsApp.
+            Précisez l’offre, le contexte et l’échéance — on saura quoi vous proposer. WhatsApp aussi, si vous préférez.
           </p>
           <p class="contact-trust" data-i18n="contact.trust">Réponse sous 24 h. WhatsApp ou formulaire — vous choisissez.</p>
           <a class="wa-direct" href="https://wa.me/212699254247" target="_blank" rel="noopener noreferrer">
@@ -134,17 +134,57 @@
         </div>
 
         <form class="form" id="contact-form" action="#" method="post" novalidate>
-          <input type="hidden" name="_subject" value="Nouveau message — CX Systems" />
+          <input type="hidden" name="_subject" value="Nouveau brief — CX Systems" />
           <input type="hidden" name="_captcha" value="false" />
-          <input type="hidden" name="_template" value="table" />
+          <input type="hidden" name="_template" value="basic" />
           <input type="text" name="_honey" class="honey" tabindex="-1" autocomplete="off" />
 
           <div class="form-row">
-            <label><span data-i18n="form.name">Nom / Société</span><input type="text" name="name" required data-i18n-placeholder="form.namePh" placeholder="Votre nom" /></label>
-            <label><span data-i18n="form.email">Votre e-mail</span><input type="email" name="email" required data-i18n-placeholder="form.emailPh" placeholder="vous@entreprise.com" /></label>
+            <label><span data-i18n="form.name">Votre nom</span><input type="text" name="name" required autocomplete="name" data-i18n-placeholder="form.namePh" placeholder="Prénom Nom" /></label>
+            <label><span data-i18n="form.company">Société</span><input type="text" name="company" required autocomplete="organization" data-i18n-placeholder="form.companyPh" placeholder="Nom de l’entreprise" /></label>
           </div>
-          <label><span data-i18n="form.phone">Téléphone</span> <em data-i18n="form.phoneOpt">(optionnel)</em><input type="tel" name="phone" data-i18n-placeholder="form.phonePh" placeholder="+212 …" /></label>
-          <label><span data-i18n="form.message">Message</span><textarea name="message" rows="5" required data-i18n-placeholder="form.messagePh" placeholder="Contexte, objectifs, délais…"></textarea></label>
+          <div class="form-row">
+            <label><span data-i18n="form.email">E-mail</span><input type="email" name="email" required autocomplete="email" data-i18n-placeholder="form.emailPh" placeholder="vous@entreprise.com" /></label>
+            <label><span data-i18n="form.phone">Téléphone</span> <em data-i18n="form.phoneOpt">(optionnel)</em><input type="tel" name="phone" autocomplete="tel" data-i18n-placeholder="form.phonePh" placeholder="+212 …" /></label>
+          </div>
+          <div class="form-row">
+            <label><span data-i18n="form.city">Ville</span><input type="text" name="city" autocomplete="address-level2" data-i18n-placeholder="form.cityPh" placeholder="Casablanca, Rabat…" /></label>
+            <label>
+              <span data-i18n="form.need">Besoin</span>
+              <select name="need" required>
+                <option value="" data-i18n="form.needPh">Choisir l’offre…</option>
+                <option value="pos" data-i18n="form.need.pos">Logiciel de comptoir / caisse</option>
+                <option value="loyalty" data-i18n="form.need.loyalty">Fidélité & outil terrain</option>
+                <option value="data" data-i18n="form.need.data">Data / ERP / reporting</option>
+                <option value="social" data-i18n="form.need.social">Social media manager</option>
+                <option value="other" data-i18n="form.need.other">Autre / à cadrer ensemble</option>
+              </select>
+            </label>
+          </div>
+          <div class="form-row">
+            <label>
+              <span data-i18n="form.current">Outil actuel</span>
+              <select name="current">
+                <option value="" data-i18n="form.currentPh">Comment vous travaillez aujourd’hui…</option>
+                <option value="excel" data-i18n="form.current.excel">Excel / Google Sheets</option>
+                <option value="paper" data-i18n="form.current.paper">Papier / cahier</option>
+                <option value="software" data-i18n="form.current.software">Un logiciel déjà en place</option>
+                <option value="mixed" data-i18n="form.current.mixed">Plusieurs outils mélangés</option>
+                <option value="none" data-i18n="form.current.none">Rien de structuré</option>
+              </select>
+            </label>
+            <label>
+              <span data-i18n="form.when">Échéance</span>
+              <select name="when" required>
+                <option value="" data-i18n="form.whenPh">Quand voulez-vous avancer…</option>
+                <option value="asap" data-i18n="form.when.asap">Dès que possible</option>
+                <option value="1-3m" data-i18n="form.when.soon">Dans 1 à 3 mois</option>
+                <option value="3-6m" data-i18n="form.when.later">Dans 3 à 6 mois</option>
+                <option value="explore" data-i18n="form.when.explore">Je me renseigne</option>
+              </select>
+            </label>
+          </div>
+          <label><span data-i18n="form.message">Le problème à résoudre</span><textarea name="message" rows="5" required data-i18n-placeholder="form.messagePh" placeholder="Combien de points de vente ou d’utilisateurs ? Qu’est-ce qui bloque aujourd’hui ? Quel résultat vous attendez ?"></textarea></label>
 
           <div class="form-actions">
             <button type="submit" class="btn btn--solid" id="submit-btn" data-i18n="form.submit">Envoyer le message</button>

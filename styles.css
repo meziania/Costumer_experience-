@@ -826,7 +826,8 @@ a {
 }
 
 .form input,
-.form textarea {
+.form textarea,
+.form select {
   width: 100%;
   padding: 0.8rem 0.9rem;
   border-radius: var(--radius);
@@ -837,8 +838,18 @@ a {
   resize: vertical;
 }
 
+.form select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%235c6b76' d='M1.1 1.2 6 6.1l4.9-4.9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.9rem center;
+  padding-right: 2.2rem;
+  cursor: pointer;
+}
+
 .form input:focus,
-.form textarea:focus {
+.form textarea:focus,
+.form select:focus {
   outline: none;
   border-color: var(--accent);
 }
