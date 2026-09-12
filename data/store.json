@@ -136,5 +136,37 @@
       "featured": false,
       "published": true
     }
+  ],
+  "offers": [
+    {
+      "id": "pos",
+      "title": "Logiciel de comptoir",
+      "titleEn": "Counter software",
+      "description": "Caisse, stock et facturation pour commerces et distributeurs. Un outil que vos équipes ouvrent le lundi matin — plus de fichiers Excel qui divergent.",
+      "descriptionEn": "POS, stock and invoicing for shops and distributors. A tool your team opens on Monday morning — no more diverging Excel files.",
+      "details": "Inventaire, tickets, clients, reporting. Déployé sur Windows ou en web, selon votre terrain.",
+      "detailsEn": "Inventory, tickets, customers, reporting. Shipped on Windows or the web, depending on the shop floor.",
+      "published": true
+    },
+    {
+      "id": "loyalty",
+      "title": "Fidélité & outil terrain",
+      "titleEn": "Loyalty & field tool",
+      "description": "Cartes QR, visites, points et tableau de bord commerçant. Sans application à télécharger pour le client final.",
+      "descriptionEn": "QR cards, visits, points, and a merchant dashboard. No app download for the end customer.",
+      "details": "Anti-fraude, campagnes, suivi des passages. Conçu pour le retail marocain.",
+      "detailsEn": "Anti-fraud, campaigns, visit tracking. Built for Moroccan retail.",
+      "published": true
+    },
+    {
+      "id": "data-erp",
+      "title": "Missions data & ERP",
+      "titleEn": "Data & ERP missions",
+      "description": "Tableaux de bord, intégrations et remise en ordre des flux : de l’Excel partagé à un système que la direction peut lire.",
+      "descriptionEn": "Dashboards, integrations, and cleaned-up flows: from shared Excel to a system leadership can actually read.",
+      "details": "Power BI, ETL, ERP/CRM (Dynamics 365 Business Central) et APIs.",
+      "detailsEn": "Power BI, ETL, ERP/CRM (Dynamics 365 Business Central) and APIs.",
+      "published": true
+    }
   ]
 }

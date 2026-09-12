@@ -26,6 +26,7 @@
       <nav class="nav" id="admin-nav">
         <button type="button" class="nav-tab is-active" data-tab="clients" hidden>Clients</button>
         <button type="button" class="nav-tab" data-tab="projects" hidden>Projets</button>
+        <button type="button" class="nav-tab" data-tab="offers" hidden>Offres</button>
         <a href="/">Retour au site</a>
         <button type="button" class="nav-tab" id="logout" hidden>Déconnexion</button>
       </nav>
@@ -36,8 +37,8 @@
     <div class="shell admin-login-inner">
       <div>
         <p class="kicker kicker--light">Espace privé</p>
-        <h1>Gestion clients &amp; projets.</h1>
-        <p class="admin-login-lede">Le même atelier, pour publier les fiches visibles sur le site.</p>
+        <h1>Gestion clients, projets &amp; offres.</h1>
+        <p class="admin-login-lede">Le même atelier, pour publier les fiches et l’offre visibles sur le site.</p>
       </div>
       <form class="form" id="login-form">
         <label>
@@ -75,6 +76,17 @@
             <button type="button" class="btn btn--solid admin-dark-btn" id="new-project">+ Nouveau projet</button>
           </div>
           <div class="cases" id="project-list"></div>
+        </section>
+
+        <section id="tab-offers" hidden>
+          <div class="section-intro section-intro--row">
+            <div>
+              <p class="kicker">Offres</p>
+              <h2>Notre offre sur le site</h2>
+            </div>
+            <button type="button" class="btn btn--solid admin-dark-btn" id="new-offer">+ Nouvelle offre</button>
+          </div>
+          <div class="cases" id="offer-list"></div>
         </section>
       </div>
     </section>

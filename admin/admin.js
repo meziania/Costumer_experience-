@@ -14,7 +14,7 @@
   const LOCAL_PASS = "cxadmin2024";
   let token = sessionStorage.getItem(TOKEN_KEY) || "";
   let localMode = token === "local";
-  let store = { clients: [], projects: [] };
+  let store = { clients: [], projects: [], offers: [] };
   let mode = null;
   let currentId = null;
 
@@ -107,6 +107,7 @@
           store = await res.json();
           store.clients = store.clients || [];
           store.projects = store.projects || [];
+          store.offers = store.offers || [];
           localStorage.setItem(LOCAL_KEY, JSON.stringify(store));
           return;
         }
@@ -119,10 +120,11 @@
       store = JSON.parse(cached);
     } else {
       const res = await fetch("/data/store.json");
-      store = res.ok ? await res.json() : { clients: [], projects: [] };
+      store = res.ok ? await res.json() : { clients: [], projects: [], offers: [] };
     }
     store.clients = store.clients || [];
     store.projects = store.projects || [];
+    store.offers = store.offers || [];
   }
 
   async function saveStore() {
@@ -181,6 +183,21 @@
       </article>`
       )
       .join("") || `<p class="lede">Aucun projet. Ajoutez un titre, une description et des photos.</p>`;
+
+    document.getElementById("offer-list").innerHTML = store.offers
+      .map(
+        (o) => `
+      <article class="case">
+        <p class="case-sector">${o.published === false ? "Brouillon" : "Publié"}</p>
+        <h3>${esc(o.title) || "Sans titre"}</h3>
+        <p>${esc(snippet(o.description) || "Pas de description")}</p>
+        <div class="case-actions">
+          <button class="ghost" data-edit-offer="${esc(o.id)}">Éditer</button>
+          <button class="danger" data-del-offer="${esc(o.id)}">Suppr.</button>
+        </div>
+      </article>`
+      )
+      .join("") || `<p class="lede">Aucune offre. Ajoutez un titre, une description et le détail.</p>`;
   }
 
   function closeEditor() {
@@ -277,6 +294,38 @@
     editor.showModal();
   }
 
+  function openOffer(offer) {
+    mode = "offer";
+    currentId = offer.id;
+    editorForm.innerHTML = `
+      <h3>${offer.title ? "Éditer l’offre" : "Nouvelle offre"}</h3>
+      <label>Titre
+        <input name="title" required value="${esc(offer.title)}" />
+      </label>
+      <label>Titre (EN)
+        <input name="titleEn" value="${esc(offer.titleEn)}" />
+      </label>
+      <label>Description
+        <textarea name="description" rows="5" required>${esc(offer.description)}</textarea>
+      </label>
+      <label>Description (EN)
+        <textarea name="descriptionEn" rows="4">${esc(offer.descriptionEn)}</textarea>
+      </label>
+      <label>Détail (optionnel)
+        <textarea name="details" rows="4">${esc(offer.details)}</textarea>
+      </label>
+      <label>Détail (EN)
+        <textarea name="detailsEn" rows="3">${esc(offer.detailsEn)}</textarea>
+      </label>
+      <label class="check"><input type="checkbox" name="published" ${offer.published !== false ? "checked" : ""} /> Afficher sur le site</label>
+      <div class="actions">
+        <button type="submit" class="btn btn--solid btn--light">Enregistrer</button>
+        <button type="button" class="ghost-btn" id="cancel">Annuler</button>
+      </div>
+    `;
+    editor.showModal();
+  }
+
   document.getElementById("login-form").addEventListener("submit", async (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -340,6 +389,7 @@
       const tab = btn.getAttribute("data-tab");
       document.getElementById("tab-clients").hidden = tab !== "clients";
       document.getElementById("tab-projects").hidden = tab !== "projects";
+      document.getElementById("tab-offers").hidden = tab !== "offers";
     });
   });
 
@@ -357,6 +407,18 @@
       featured: false,
     });
   });
+  document.getElementById("new-offer").addEventListener("click", () => {
+    openOffer({
+      id: uid(),
+      title: "",
+      titleEn: "",
+      description: "",
+      descriptionEn: "",
+      details: "",
+      detailsEn: "",
+      published: true,
+    });
+  });
 
   document.getElementById("client-list").addEventListener("click", async (e) => {
     const edit = e.target.closest("[data-edit-client]");
@@ -367,6 +429,20 @@
     }
     if (del && confirm("Supprimer ce client ?")) {
       store.clients = store.clients.filter((c) => c.id !== del.getAttribute("data-del-client"));
+      await saveStore();
+      render();
+    }
+  });
+
+  document.getElementById("offer-list").addEventListener("click", async (e) => {
+    const edit = e.target.closest("[data-edit-offer]");
+    const del = e.target.closest("[data-del-offer]");
+    if (edit) {
+      const item = store.offers.find((o) => o.id === edit.getAttribute("data-edit-offer"));
+      if (item) openOffer(item);
+    }
+    if (del && confirm("Supprimer cette offre ?")) {
+      store.offers = store.offers.filter((o) => o.id !== del.getAttribute("data-del-offer"));
       await saveStore();
       render();
     }
@@ -529,6 +605,21 @@
       const idx = store.projects.findIndex((p) => p.id === currentId);
       if (idx >= 0) store.projects[idx] = { ...store.projects[idx], ...next };
       else store.projects.unshift(next);
+    }
+    if (mode === "offer") {
+      const next = {
+        id: currentId,
+        title: editorForm.title.value.trim(),
+        titleEn: editorForm.titleEn.value.trim(),
+        description: editorForm.description.value.trim(),
+        descriptionEn: editorForm.descriptionEn.value.trim(),
+        details: editorForm.details.value.trim(),
+        detailsEn: editorForm.detailsEn.value.trim(),
+        published: editorForm.published.checked,
+      };
+      const idx = store.offers.findIndex((o) => o.id === currentId);
+      if (idx >= 0) store.offers[idx] = { ...store.offers[idx], ...next };
+      else store.offers.unshift(next);
     }
     await saveStore();
     closeEditor();

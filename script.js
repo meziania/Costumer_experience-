@@ -11,29 +11,46 @@
   window.addEventListener("scroll", onScroll, { passive: true });
 
   const menuBtn = document.querySelector(".menu-btn");
-  const nav = document.querySelector(".nav");
+  const sidebar = document.getElementById("sidebar");
+  const siteNav = document.getElementById("site-nav");
+  const PANEL_IDS = ["home", "offers", "capabilities", "work", "clients", "method", "contact"];
 
   const closeMenu = () => {
-    nav?.classList.remove("is-open");
+    sidebar?.classList.remove("is-open");
     menuBtn?.classList.remove("is-open");
     menuBtn?.setAttribute("aria-expanded", "false");
   };
 
-  if (menuBtn && nav) {
+  const showPanel = (id) => {
+    let targetId = PANEL_IDS.includes(id) ? id : "home";
+    const panel = document.getElementById(targetId);
+    if (!panel || panel.hidden) targetId = "home";
+    document.querySelectorAll("section.panel").forEach((sec) => {
+      sec.classList.toggle("is-active", sec.id === targetId);
+    });
+    siteNav?.querySelectorAll("a").forEach((a) => {
+      a.classList.toggle("is-active", a.getAttribute("href") === `#${targetId}`);
+    });
+    if (location.hash !== `#${targetId}`) {
+      history.replaceState(null, "", `#${targetId}`);
+    }
+    window.scrollTo(0, 0);
+    closeMenu();
+  };
+
+  window.showCxPanel = showPanel;
+
+  if (menuBtn && sidebar) {
     menuBtn.addEventListener("click", (e) => {
       e.stopPropagation();
-      const open = nav.classList.toggle("is-open");
+      const open = sidebar.classList.toggle("is-open");
       menuBtn.classList.toggle("is-open", open);
       menuBtn.setAttribute("aria-expanded", String(open));
     });
 
-    nav.querySelectorAll("a").forEach((a) => {
-      a.addEventListener("click", closeMenu);
-    });
-
     document.addEventListener("click", (e) => {
-      if (!nav.classList.contains("is-open")) return;
-      if (nav.contains(e.target) || menuBtn.contains(e.target)) return;
+      if (!sidebar.classList.contains("is-open")) return;
+      if (sidebar.contains(e.target) || menuBtn.contains(e.target)) return;
       closeMenu();
     });
 
@@ -41,6 +58,21 @@
       if (e.key === "Escape") closeMenu();
     });
   }
+
+  document.addEventListener("click", (e) => {
+    const link = e.target.closest('a[href^="#"]');
+    if (!link) return;
+    const id = (link.getAttribute("href") || "").slice(1);
+    if (!PANEL_IDS.includes(id)) return;
+    e.preventDefault();
+    showPanel(id);
+  });
+
+  window.addEventListener("hashchange", () => {
+    showPanel(location.hash.replace("#", "") || "home");
+  });
+
+  showPanel(location.hash.replace("#", "") || "home");
 
   const t = (key) => {
     const lang = window.CX_LANG || "fr";
@@ -231,8 +263,9 @@
   const pad = (n) => String(n).padStart(2, "0");
 
   window.renderCxCatalog = function renderCxCatalog() {
-    const store = window.CX_STORE || { clients: [], projects: [] };
+    const store = window.CX_STORE || { clients: [], projects: [], offers: [] };
     const work = document.getElementById("work-list");
+    const offersWrap = document.getElementById("offer-list");
     const clientsWrap = document.getElementById("client-list");
     const clientsSec = document.getElementById("clients");
     const navClients = document.getElementById("nav-clients");
@@ -283,6 +316,22 @@
         .join("");
     }
 
+    if (offersWrap) {
+      const offers = (store.offers || []).filter((o) => o.published !== false);
+      offersWrap.innerHTML = offers
+        .map((o, i) => {
+          const details = pick(o, "details", "detailsEn");
+          return `<article class="offer-card reveal is-in">
+            <span class="offer-idx">${pad(i + 1)}</span>
+            <h3>${esc(pick(o, "title", "titleEn"))}</h3>
+            <p>${esc(pick(o, "description", "descriptionEn"))}</p>
+            ${details ? `<p class="offer-details">${esc(details)}</p>` : ""}
+            <a class="offer-cta" href="#contact">${esc(dict["offers.cta"] || "En parler")}</a>
+          </article>`;
+        })
+        .join("");
+    }
+
     const clients = (store.clients || []).filter((c) => c.published !== false);
     const showClients = clients.length > 0;
     if (clientsSec) clientsSec.hidden = !showClients;
@@ -303,6 +352,9 @@
         )
         .join("");
     }
+
+    const current = location.hash.replace("#", "") || "home";
+    showPanel(current === "clients" && !showClients ? "home" : current);
   };
 
   const openPhoto = (src) => {
@@ -336,19 +388,22 @@
         const res = await fetch("data/store.json");
         if (res.ok) window.CX_STORE = await res.json();
       } catch {
-        window.CX_STORE = { clients: [], projects: [] };
+        window.CX_STORE = { clients: [], projects: [], offers: [] };
       }
     }
     try {
       const local = localStorage.getItem("cx-store");
       if (local) {
         const parsed = JSON.parse(local);
-        const incoming = window.CX_STORE || { clients: [], projects: [] };
+        const incoming = window.CX_STORE || { clients: [], projects: [], offers: [] };
         parsed.projects = (parsed.projects || []).map((project) => {
           if (project.photos?.length) return project;
           const fresh = (incoming.projects || []).find((item) => item.id === project.id);
           return fresh?.photos?.length ? { ...project, photos: fresh.photos } : project;
         });
+        if (!parsed.offers?.length && incoming.offers?.length) {
+          parsed.offers = incoming.offers;
+        }
         window.CX_STORE = parsed;
       }
     } catch {

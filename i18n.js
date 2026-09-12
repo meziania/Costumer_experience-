@@ -3,6 +3,8 @@ const CX_I18N = {
     "meta.title": "CX Systems | Systèmes digitaux d’entreprise",
     "meta.desc":
       "CX Systems conçoit des logiciels pour commerces et distributeurs au Maroc : caisse, stock, fidélité et data. Livrés à Casablanca, utilisés en production.",
+    "nav.home": "Accueil",
+    "nav.offers": "Notre offre",
     "nav.expertise": "Expertise",
     "nav.work": "Réalisations",
     "nav.clients": "Clients",
@@ -11,6 +13,8 @@ const CX_I18N = {
     "nav.cta": "Parler à un expert",
     "nav.menu": "Ouvrir le menu",
     "logo.tag": "Engineering Digital Systems",
+    "sidebar.studio": "Casablanca · Maroc",
+    "hero.kicker": "Atelier logiciel · Casablanca",
     "hero.title": "On remplace Excel pour les commerces et distributeurs au Maroc.",
     "hero.sub":
       "Caisse, stock, fidélité, data — conçus à Casablanca, utilisés tous les jours en production. Pas une démo : un outil que vos équipes ouvrent le lundi matin.",
@@ -18,6 +22,14 @@ const CX_I18N = {
     "hero.cta2": "Voir les réalisations",
     "hero.shots": "Captures réelles — FidApp · 2R Parts · Opti Gest",
     "hero.footer": "Casablanca · Maroc · 2024 — 2026",
+    "hero.avail": "Systèmes en production — pas une démo.",
+    "hero.proof1.v": "Production",
+    "hero.proof1.l": "Outils déjà utilisés",
+    "hero.proof2.v": "Casablanca",
+    "hero.proof2.l": "Conçu au Maroc",
+    "hero.proof3.v": "Suivi",
+    "hero.proof3.l": "Livraison & support",
+    "offers.cta": "En parler",
     "strip.web": "Applications Web",
     "strip.saas": "Plateformes SaaS",
     "strip.mobile": "Mobile & PWA",
@@ -25,6 +37,10 @@ const CX_I18N = {
     "strip.data": "Data & BI",
     "strip.erp": "ERP / CRM",
     "strip.api": "API & Intégrations",
+    "offers.kicker": "Notre offre",
+    "offers.title": "Trois façons de remplacer Excel.",
+    "offers.lede":
+      "Comptoir, fidélité, data — on livre un outil que vos équipes utilisent vraiment, pas une démo.",
     "cap.kicker": "Expertise",
     "cap.title": "Des capacités de bout en bout pour transformer vos opérations.",
     "cap.lede":
@@ -71,6 +87,7 @@ const CX_I18N = {
     "contact.title": "Prêts quand vous l’êtes.",
     "contact.lede":
       "Décrivez votre besoin via le formulaire, ou contactez-nous directement sur WhatsApp.",
+    "contact.trust": "Réponse sous 24 h. WhatsApp ou formulaire — vous choisissez.",
     "contact.waLabel": "WhatsApp direct",
     "contact.waCta": "Ouvrir la conversation →",
     "form.name": "Nom / Société",
@@ -103,6 +120,8 @@ const CX_I18N = {
     "meta.title": "CX Systems | Enterprise Digital Systems",
     "meta.desc":
       "CX Systems builds software for shops and distributors in Morocco: POS, stock, loyalty, and data. Shipped from Casablanca, used in production.",
+    "nav.home": "Home",
+    "nav.offers": "Our offer",
     "nav.expertise": "Expertise",
     "nav.work": "Work",
     "nav.clients": "Clients",
@@ -111,6 +130,8 @@ const CX_I18N = {
     "nav.cta": "Talk to an expert",
     "nav.menu": "Open menu",
     "logo.tag": "Engineering Digital Systems",
+    "sidebar.studio": "Casablanca · Morocco",
+    "hero.kicker": "Software atelier · Casablanca",
     "hero.title": "We replace Excel for shops and distributors in Morocco.",
     "hero.sub":
       "POS, stock, loyalty, data — built in Casablanca, used every day in production. Not a demo: a tool your team opens on Monday morning.",
@@ -118,6 +139,14 @@ const CX_I18N = {
     "hero.cta2": "See the work",
     "hero.shots": "Real captures — FidApp · 2R Parts · Opti Gest",
     "hero.footer": "Casablanca · Morocco · 2024 — 2026",
+    "hero.avail": "Systems in production — not a demo.",
+    "hero.proof1.v": "Production",
+    "hero.proof1.l": "Tools already in use",
+    "hero.proof2.v": "Casablanca",
+    "hero.proof2.l": "Built in Morocco",
+    "hero.proof3.v": "Support",
+    "hero.proof3.l": "Delivery & follow-up",
+    "offers.cta": "Talk it through",
     "strip.web": "Web Applications",
     "strip.saas": "SaaS Platforms",
     "strip.mobile": "Mobile & PWA",
@@ -125,6 +154,10 @@ const CX_I18N = {
     "strip.data": "Data & BI",
     "strip.erp": "ERP / CRM",
     "strip.api": "API & Integrations",
+    "offers.kicker": "Our offer",
+    "offers.title": "Three ways to replace Excel.",
+    "offers.lede":
+      "Counter, loyalty, data — we ship a tool your team actually uses, not a demo.",
     "cap.kicker": "Expertise",
     "cap.title": "End-to-end capabilities to transform your operations.",
     "cap.lede":
@@ -171,6 +204,7 @@ const CX_I18N = {
     "contact.title": "Ready when you are.",
     "contact.lede":
       "Describe your need via the form, or reach us directly on WhatsApp.",
+    "contact.trust": "Reply within 24 hours. WhatsApp or the form — your choice.",
     "contact.waLabel": "Direct WhatsApp",
     "contact.waCta": "Open conversation →",
     "form.name": "Name / Company",

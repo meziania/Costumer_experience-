@@ -8,42 +8,45 @@
   <link rel="icon" type="image/svg+xml" href="assets/logo-mark.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
+<body class="has-sidebar">
   <div class="noise" aria-hidden="true"></div>
 
-  <header class="header" id="top">
-    <div class="header-inner">
-      <a class="logo" href="#top" aria-label="CX Systems — Accueil">
-        <img src="assets/logo-mark.svg" alt="" class="logo-mark" width="40" height="40" />
-        <span class="logo-text">
-          <strong>CX Systems</strong>
-          <em data-i18n="logo.tag">Engineering Digital Systems</em>
-        </span>
-      </a>
-      <nav class="nav" id="site-nav" aria-label="Principal">
-        <a href="#capabilities" data-i18n="nav.expertise">Expertise</a>
-        <a href="#work" data-i18n="nav.work">Réalisations</a>
-        <a href="#clients" id="nav-clients" hidden data-i18n="nav.clients">Clients</a>
-        <a href="#method" data-i18n="nav.method">Méthode</a>
-        <a href="#contact" data-i18n="nav.contact">Contact</a>
-        <a href="#contact" class="nav-cta-mobile" data-i18n="nav.cta">Parler à un expert</a>
-      </nav>
+  <aside class="sidebar" id="sidebar">
+    <a class="logo" href="#home" aria-label="CX Systems — Accueil">
+      <img src="assets/logo-mark.svg" alt="" class="logo-mark" width="40" height="40" />
+      <span class="logo-text">
+        <strong>CX Systems</strong>
+        <em data-i18n="logo.tag">Engineering Digital Systems</em>
+      </span>
+    </a>
+    <p class="sidebar-studio"><span class="live-dot" aria-hidden="true"></span><span data-i18n="sidebar.studio">Casablanca · Maroc</span></p>
+    <nav class="nav" id="site-nav" aria-label="Principal">
+      <a href="#home" class="is-active"><span class="nav-idx">01</span><span data-i18n="nav.home">Accueil</span></a>
+      <a href="#offers"><span class="nav-idx">02</span><span data-i18n="nav.offers">Notre offre</span></a>
+      <a href="#capabilities"><span class="nav-idx">03</span><span data-i18n="nav.expertise">Expertise</span></a>
+      <a href="#work"><span class="nav-idx">04</span><span data-i18n="nav.work">Réalisations</span></a>
+      <a href="#clients" id="nav-clients" hidden><span class="nav-idx">05</span><span data-i18n="nav.clients">Clients</span></a>
+      <a href="#method"><span class="nav-idx">06</span><span data-i18n="nav.method">Méthode</span></a>
+      <a href="#contact"><span class="nav-idx">07</span><span data-i18n="nav.contact">Contact</span></a>
+    </nav>
+    <div class="sidebar-foot">
       <div class="lang-switch" role="group" aria-label="Language">
         <button type="button" class="lang-btn is-active" data-lang="fr" aria-pressed="true">FR</button>
         <button type="button" class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
       </div>
       <a class="header-cta" href="#contact" data-i18n="nav.cta">Parler à un expert</a>
-      <button class="menu-btn" type="button" data-i18n-aria="nav.menu" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="site-nav">
-        <span></span><span></span>
-      </button>
     </div>
-  </header>
+  </aside>
 
-  <main>
-    <section class="hero">
+  <button class="menu-btn" type="button" data-i18n-aria="nav.menu" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="sidebar">
+    <span></span><span></span>
+  </button>
+
+  <main class="site-main">
+    <section class="hero panel is-active" id="home">
       <div class="hero-media" aria-hidden="true">
         <div class="hero-wash"></div>
         <div class="hero-lines"></div>
@@ -51,7 +54,7 @@
       </div>
       <div class="hero-inner">
         <div class="hero-copy">
-          <p class="hero-logo-word">CX Systems</p>
+          <p class="hero-kicker"><span class="live-dot" aria-hidden="true"></span><span data-i18n="hero.kicker">Atelier logiciel · Casablanca</span></p>
           <h1 data-i18n="hero.title">On remplace Excel pour les commerces et distributeurs au Maroc.</h1>
           <p class="hero-sub" data-i18n="hero.sub">
             Caisse, stock, fidélité, data — conçus à Casablanca, utilisés tous les jours en production. Pas une démo : un outil que vos équipes ouvrent le lundi matin.
@@ -60,19 +63,36 @@
             <a class="btn btn--solid" href="#contact" data-i18n="hero.cta1">Parler du besoin</a>
             <a class="btn btn--line" href="#work" data-i18n="hero.cta2">Voir les réalisations</a>
           </div>
+          <ul class="proof">
+            <li>
+              <strong data-i18n="hero.proof1.v">Production</strong>
+              <span data-i18n="hero.proof1.l">Outils déjà utilisés</span>
+            </li>
+            <li>
+              <strong data-i18n="hero.proof2.v">Casablanca</strong>
+              <span data-i18n="hero.proof2.l">Conçu au Maroc</span>
+            </li>
+            <li>
+              <strong data-i18n="hero.proof3.v">Suivi</strong>
+              <span data-i18n="hero.proof3.l">Livraison &amp; support</span>
+            </li>
+          </ul>
         </div>
         <div class="hero-shots">
           <p class="hero-shots-label" data-i18n="hero.shots">Captures réelles — FidApp · 2R Parts · Opti Gest</p>
           <div class="hero-shots-row">
-            <figure>
+            <figure class="shot-frame">
+              <div class="shot-chrome" aria-hidden="true"><span></span><span></span><span></span></div>
               <img src="assets/shot-fidapp.png" alt="FidApp — dashboard de fidélité" />
               <figcaption>FidApp</figcaption>
             </figure>
-            <figure>
+            <figure class="shot-frame">
+              <div class="shot-chrome" aria-hidden="true"><span></span><span></span><span></span></div>
               <img src="assets/shot-2rparts.png" alt="2R Parts — logiciel de comptoir" />
               <figcaption>2R Parts</figcaption>
             </figure>
-            <figure>
+            <figure class="shot-frame">
+              <div class="shot-chrome" aria-hidden="true"><span></span><span></span><span></span></div>
               <img src="assets/shot-optigest.png" alt="Opti Gest — gestion d’optique" />
               <figcaption>Opti Gest</figcaption>
             </figure>
@@ -81,7 +101,7 @@
       </div>
       <div class="hero-footer">
         <p data-i18n="hero.footer">Casablanca · Maroc · 2024 — 2026</p>
-        <div class="hero-scroll" aria-hidden="true"><span></span></div>
+        <p class="hero-avail" data-i18n="hero.avail">Systèmes en production — pas une démo.</p>
       </div>
     </section>
 
@@ -104,7 +124,20 @@
       </div>
     </section>
 
-    <section class="capabilities" id="capabilities">
+    <section class="offers-sec panel" id="offers">
+      <div class="shell">
+        <div class="section-intro">
+          <p class="kicker" data-i18n="offers.kicker">Notre offre</p>
+          <h2 data-i18n="offers.title">Trois façons de remplacer Excel.</h2>
+          <p class="lede" data-i18n="offers.lede">
+            Comptoir, fidélité, data — on livre un outil que vos équipes utilisent vraiment, pas une démo.
+          </p>
+        </div>
+        <div class="offer-grid" id="offer-list"></div>
+      </div>
+    </section>
+
+    <section class="capabilities panel" id="capabilities">
       <div class="shell">
         <div class="section-intro">
           <p class="kicker" data-i18n="cap.kicker">Expertise</p>
@@ -149,7 +182,7 @@
       </div>
     </section>
 
-    <section class="work" id="work">
+    <section class="work panel" id="work">
       <div class="shell">
         <div class="section-intro section-intro--row">
           <div>
@@ -165,7 +198,7 @@
       </div>
     </section>
 
-    <section class="clients-sec" id="clients" hidden>
+    <section class="clients-sec panel" id="clients" hidden>
       <div class="shell">
         <div class="section-intro">
           <p class="kicker" data-i18n="clients.kicker">Clients</p>
@@ -178,7 +211,7 @@
       </div>
     </section>
 
-    <section class="method" id="method">
+    <section class="method panel" id="method">
       <div class="shell">
         <div class="section-intro">
           <p class="kicker" data-i18n="method.kicker">Méthode</p>
@@ -209,7 +242,7 @@
       </div>
     </section>
 
-    <section class="contact" id="contact">
+    <section class="contact panel" id="contact">
       <div class="shell contact-shell">
         <div class="contact-left">
           <p class="kicker kicker--light" data-i18n="contact.kicker">Contact</p>
@@ -217,6 +250,7 @@
           <p class="contact-lede" data-i18n="contact.lede">
             Décrivez votre besoin via le formulaire, ou contactez-nous directement sur WhatsApp.
           </p>
+          <p class="contact-trust" data-i18n="contact.trust">Réponse sous 24 h. WhatsApp ou formulaire — vous choisissez.</p>
           <a class="wa-direct" href="https://wa.me/212699254247" target="_blank" rel="noopener noreferrer">
             <span class="wa-direct__label" data-i18n="contact.waLabel">WhatsApp direct</span>
             <span class="wa-direct__num">+212 699 254 247</span>
@@ -279,6 +313,7 @@
       <div class="footer-cols">
         <div>
           <h4 data-i18n="footer.company">Société</h4>
+          <a href="#offers" data-i18n="nav.offers">Notre offre</a>
           <a href="#capabilities" data-i18n="nav.expertise">Expertise</a>
           <a href="#work" data-i18n="nav.work">Réalisations</a>
           <a href="#clients" class="footer-clients" hidden data-i18n="nav.clients">Clients</a>
