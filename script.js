@@ -326,7 +326,7 @@
       )
       .slice(0, 8);
     window.CX_HERO_SHOTS = reelShots;
-    renderHeroReel(reelShots);
+    renderHeroStage(reelShots);
 
     if (offersWrap) {
       const offers = (store.offers || []).filter((o) => o.published === true);
@@ -345,49 +345,70 @@
     }
   };
 
-  let heroReelTimer = 0;
-  let heroReelIndex = 0;
+  let heroStageTimer = 0;
+  let heroStageIndex = 0;
+  let heroStagePaused = false;
+
+  function shortestOffset(i, active, n) {
+    let offset = i - active;
+    if (offset > n / 2) offset -= n;
+    if (offset < -n / 2) offset += n;
+    return offset;
+  }
+
+  function layoutHeroStage() {
+    const shots = window.CX_HERO_SHOTS || [];
+    const cards = document.querySelectorAll(".hero-stage__card");
+    const n = cards.length;
+    if (!n) return;
+    cards.forEach((card, i) => {
+      const offset = shortestOffset(i, heroStageIndex, n);
+      const abs = Math.abs(offset);
+      const dir = Math.sign(offset);
+      const x = dir * (abs * 46 + (abs ? 6 : 0));
+      const rot = dir * Math.min(abs * 46, 64);
+      const z = abs === 0 ? 90 : -80 - abs * 78;
+      const scale = abs === 0 ? 1 : Math.max(0.58, 1 - abs * 0.15);
+      const opacity = abs > 2 ? 0 : abs === 0 ? 1 : 0.78;
+      card.style.transform = `translate(-50%, -58%) translateX(${x}%) rotateY(${-rot}deg) translateZ(${z}px) scale(${scale})`;
+      card.style.zIndex = String(24 - abs);
+      card.style.opacity = String(opacity);
+      card.style.pointerEvents = abs > 2 ? "none" : "auto";
+      card.classList.toggle("is-active", offset === 0);
+    });
+    const title = document.getElementById("hero-stage-title");
+    if (title && shots[heroStageIndex]) title.textContent = shots[heroStageIndex].title;
+  }
 
   function showHeroShot(index) {
     const shots = window.CX_HERO_SHOTS || [];
     if (!shots.length) return;
-    heroReelIndex = ((index % shots.length) + shots.length) % shots.length;
-    const shot = shots[heroReelIndex];
-    const frame = document.getElementById("hero-reel-frame");
-    const img = document.getElementById("hero-reel-img");
-    const title = document.getElementById("hero-reel-title");
-    if (img) {
-      img.src = shot.src;
-      img.alt = shot.title;
-    }
-    if (title) title.textContent = shot.title;
-    if (frame) {
-      frame.dataset.photo = shot.src;
-      frame.classList.remove("is-swap");
-      void frame.offsetWidth;
-      frame.classList.add("is-swap");
-    }
-    document.querySelectorAll(".hero-reel__thumb").forEach((thumb, i) => {
-      thumb.classList.toggle("is-active", i % shots.length === heroReelIndex);
-    });
+    heroStageIndex = ((index % shots.length) + shots.length) % shots.length;
+    layoutHeroStage();
   }
 
-  function renderHeroReel(shots) {
-    const track = document.getElementById("hero-reel-track");
-    if (!track) return;
-    window.clearInterval(heroReelTimer);
+  function renderHeroStage(shots) {
+    const deck = document.getElementById("hero-stage-deck");
+    if (!deck) return;
+    window.clearInterval(heroStageTimer);
     if (!shots.length) {
-      track.innerHTML = "";
+      deck.innerHTML = "";
       return;
     }
-    const cell = (shot, i) =>
-      `<button type="button" class="hero-reel__thumb" data-reel-index="${i}" data-photo="${esc(shot.src)}" aria-label="${esc(shot.title)}">
-        <img src="${esc(shot.src)}" alt="" />
-      </button>`;
-    track.innerHTML = `${shots.map(cell).join("")}${shots.map(cell).join("")}`;
+    deck.innerHTML = shots
+      .map(
+        (shot, i) =>
+          `<button type="button" class="hero-stage__card" data-stage-index="${i}" data-photo="${esc(shot.src)}" aria-label="${esc(shot.title)}">
+            <span class="hero-stage__face"><img src="${esc(shot.src)}" alt="${esc(shot.title)}" /></span>
+            <span class="hero-stage__reflection" aria-hidden="true"><img src="${esc(shot.src)}" alt="" /></span>
+          </button>`
+      )
+      .join("");
     showHeroShot(0);
-    if (shots.length > 1) {
-      heroReelTimer = window.setInterval(() => showHeroShot(heroReelIndex + 1), 4200);
+    if (shots.length > 1 && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      heroStageTimer = window.setInterval(() => {
+        if (!heroStagePaused) showHeroShot(heroStageIndex + 1);
+      }, 4200);
     }
   }
 
@@ -403,14 +424,35 @@
     const btn = e.target.closest("[data-photo]");
     if (btn) openPhoto(btn.getAttribute("data-photo"));
   });
-  document.getElementById("hero-reel")?.addEventListener("click", (e) => {
-    const thumb = e.target.closest("[data-reel-index]");
-    if (thumb) {
-      showHeroShot(Number(thumb.getAttribute("data-reel-index")));
+  const heroStage = document.getElementById("hero-stage");
+  const heroScene = document.getElementById("hero-stage-scene");
+  const heroDeck = document.getElementById("hero-stage-deck");
+
+  heroStage?.addEventListener("click", (e) => {
+    const card = e.target.closest("[data-stage-index]");
+    if (!card) return;
+    const index = Number(card.getAttribute("data-stage-index"));
+    if (index === heroStageIndex) {
+      openPhoto(card.getAttribute("data-photo"));
       return;
     }
-    const frame = e.target.closest("[data-photo]");
-    if (frame) openPhoto(frame.getAttribute("data-photo"));
+    showHeroShot(index);
+  });
+
+  heroStage?.addEventListener("mouseenter", () => {
+    heroStagePaused = true;
+  });
+  heroStage?.addEventListener("mouseleave", () => {
+    heroStagePaused = false;
+    if (heroDeck) heroDeck.style.transform = "";
+  });
+
+  heroScene?.addEventListener("mousemove", (e) => {
+    if (!heroDeck || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const box = heroScene.getBoundingClientRect();
+    const x = (e.clientX - box.left) / box.width - 0.5;
+    const y = (e.clientY - box.top) / box.height - 0.5;
+    heroDeck.style.transform = `rotateY(${x * 10}deg) rotateX(${-y * 6}deg)`;
   });
   document.getElementById("photo-modal-close")?.addEventListener("click", () => {
     document.getElementById("photo-modal")?.close();
