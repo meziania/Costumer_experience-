@@ -2,7 +2,7 @@ const CX_I18N = {
   fr: {
     "meta.title": "CX Systems | Systèmes digitaux d’entreprise",
     "meta.desc":
-      "CX Systems conçoit, développe et déploie des systèmes digitaux pour les entreprises — applications web, mobile, desktop, SaaS et data.",
+      "CX Systems conçoit des logiciels pour commerces et distributeurs au Maroc : caisse, stock, fidélité et data. Livrés à Casablanca, utilisés en production.",
     "nav.expertise": "Expertise",
     "nav.work": "Réalisations",
     "nav.clients": "Clients",
@@ -11,12 +11,13 @@ const CX_I18N = {
     "nav.cta": "Parler à un expert",
     "nav.menu": "Ouvrir le menu",
     "logo.tag": "Engineering Digital Systems",
-    "hero.title": "Des systèmes digitaux qui grandissent avec votre business.",
+    "hero.title": "On remplace Excel pour les commerces et distributeurs au Maroc.",
     "hero.sub":
-      "Conception, développement et mise en production de logiciels d’entreprise — web, mobile, desktop et data.",
-    "hero.cta1": "Démarrer une conversation",
-    "hero.cta2": "Explorer nos réalisations",
-    "hero.footer": "Casablanca · Remote-ready · Maroc & International",
+      "Caisse, stock, fidélité, data — conçus à Casablanca, utilisés tous les jours en production. Pas une démo : un outil que vos équipes ouvrent le lundi matin.",
+    "hero.cta1": "Parler du besoin",
+    "hero.cta2": "Voir les réalisations",
+    "hero.shots": "Captures réelles — FidApp · 2R Parts · Opti Gest",
+    "hero.footer": "Casablanca · Maroc · 2024 — 2026",
     "strip.web": "Applications Web",
     "strip.saas": "Plateformes SaaS",
     "strip.mobile": "Mobile & PWA",
@@ -49,7 +50,7 @@ const CX_I18N = {
     "work.kicker": "Réalisations",
     "work.title": "Systèmes livrés. Impact réel.",
     "work.lede":
-      "Une sélection de missions pour des entreprises et organisations — du SaaS en production aux systèmes data d’entreprise.",
+      "Des outils déjà en production : caisse, fidélité, data. Cliquez une fiche pour les captures et le détail.",
     "clients.kicker": "Clients",
     "clients.title": "Besoins accompagnés, profils et contexte.",
     "clients.lede":
@@ -101,7 +102,7 @@ const CX_I18N = {
   en: {
     "meta.title": "CX Systems | Enterprise Digital Systems",
     "meta.desc":
-      "CX Systems designs, builds, and deploys digital systems for businesses — web, mobile, desktop, SaaS, and data.",
+      "CX Systems builds software for shops and distributors in Morocco: POS, stock, loyalty, and data. Shipped from Casablanca, used in production.",
     "nav.expertise": "Expertise",
     "nav.work": "Work",
     "nav.clients": "Clients",
@@ -110,12 +111,13 @@ const CX_I18N = {
     "nav.cta": "Talk to an expert",
     "nav.menu": "Open menu",
     "logo.tag": "Engineering Digital Systems",
-    "hero.title": "Engineering digital systems that scale with your business.",
+    "hero.title": "We replace Excel for shops and distributors in Morocco.",
     "hero.sub":
-      "Design, development, and production delivery of enterprise software — web, mobile, desktop, and data.",
-    "hero.cta1": "Start a conversation",
-    "hero.cta2": "Explore our work",
-    "hero.footer": "Casablanca · Remote-ready · Morocco & International",
+      "POS, stock, loyalty, data — built in Casablanca, used every day in production. Not a demo: a tool your team opens on Monday morning.",
+    "hero.cta1": "Talk about the need",
+    "hero.cta2": "See the work",
+    "hero.shots": "Real captures — FidApp · 2R Parts · Opti Gest",
+    "hero.footer": "Casablanca · Morocco · 2024 — 2026",
     "strip.web": "Web Applications",
     "strip.saas": "SaaS Platforms",
     "strip.mobile": "Mobile & PWA",
@@ -148,7 +150,7 @@ const CX_I18N = {
     "work.kicker": "Selected work",
     "work.title": "Shipped systems. Real impact.",
     "work.lede":
-      "A selection of engagements for companies and organizations — from live SaaS to enterprise data systems.",
+      "Tools already in production: POS, loyalty, data. Click a case for photos and detail.",
     "clients.kicker": "Clients",
     "clients.title": "Needs we framed, profiles and context.",
     "clients.lede":

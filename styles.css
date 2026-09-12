@@ -306,13 +306,17 @@ a {
   z-index: 1;
   width: min(100% - 3rem, var(--max));
   margin: 0 auto;
-  padding-bottom: 4rem;
+  padding-bottom: 3rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: 2.5rem;
+  align-items: end;
 }
 
 .hero-logo-word {
   margin: 0 0 1.4rem;
   font-family: var(--serif);
-  font-size: clamp(3.2rem, 9vw, 7.5rem);
+  font-size: clamp(2.4rem, 6vw, 4.4rem);
   font-weight: 400;
   letter-spacing: -0.04em;
   line-height: 0.9;
@@ -322,7 +326,7 @@ a {
 
 .hero h1 {
   margin: 0 0 1.25rem;
-  max-width: 16ch;
+  max-width: 22ch;
   font-size: clamp(1.45rem, 2.8vw, 2.15rem);
   font-weight: 500;
   letter-spacing: -0.03em;
@@ -333,7 +337,7 @@ a {
 
 .hero-sub {
   margin: 0 0 2.2rem;
-  max-width: 40ch;
+  max-width: 44ch;
   font-size: 1.05rem;
   color: var(--hero-muted);
   animation: fadeUp 1.05s var(--ease) 0.18s both;
@@ -344,6 +348,49 @@ a {
   flex-wrap: wrap;
   gap: 0.85rem;
   animation: fadeUp 1.1s var(--ease) 0.26s both;
+}
+
+.hero-shots {
+  animation: fadeUp 1.15s var(--ease) 0.3s both;
+}
+
+.hero-shots-label {
+  margin: 0 0 0.75rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(243, 240, 234, 0.5);
+}
+
+.hero-shots-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.65rem;
+}
+
+.hero-shots-row figure {
+  margin: 0;
+  border: 1px solid rgba(243, 240, 234, 0.14);
+  border-radius: 6px;
+  overflow: hidden;
+  background: #0d1a24;
+}
+
+.hero-shots-row img {
+  width: 100%;
+  height: 148px;
+  object-fit: cover;
+  object-position: top center;
+}
+
+.hero-shots-row figcaption {
+  padding: 0.45rem 0.55rem 0.55rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(243, 240, 234, 0.62);
 }
 
 .hero-footer {
@@ -1334,8 +1381,13 @@ a {
   .case-body,
   .contact-shell,
   .cap-grid,
-  .method-list {
+  .method-list,
+  .hero-inner {
     grid-template-columns: 1fr;
+  }
+
+  .hero-shots-row img {
+    height: 110px;
   }
 
   .cap,

@@ -12,7 +12,7 @@
       "sector": "Retail · SaaS · Fidélité",
       "sectorEn": "Retail · SaaS · Loyalty",
       "tags": ["React", "Node.js", "PostgreSQL", "Prisma", "PWA"],
-      "photos": [],
+      "photos": ["/assets/shot-fidapp.png"],
       "featured": true,
       "published": true
     },
@@ -42,7 +42,7 @@
       "sector": "Distribution auto · Desktop",
       "sectorEn": "Auto distribution · Desktop",
       "tags": ["Python", "PyQt5", "SQLite", "ReportLab"],
-      "photos": [],
+      "photos": ["/assets/shot-2rparts.png"],
       "featured": false,
       "published": true
     },
@@ -117,7 +117,7 @@
       "sector": "Optique · Desktop",
       "sectorEn": "Optical · Desktop",
       "tags": ["Electron", "React", "Express", "Prisma", "SQLite"],
-      "photos": [],
+      "photos": ["/assets/shot-optigest.png"],
       "featured": false,
       "published": true
     },

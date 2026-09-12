@@ -341,7 +341,16 @@
     }
     try {
       const local = localStorage.getItem("cx-store");
-      if (local) window.CX_STORE = JSON.parse(local);
+      if (local) {
+        const parsed = JSON.parse(local);
+        const incoming = window.CX_STORE || { clients: [], projects: [] };
+        parsed.projects = (parsed.projects || []).map((project) => {
+          if (project.photos?.length) return project;
+          const fresh = (incoming.projects || []).find((item) => item.id === project.id);
+          return fresh?.photos?.length ? { ...project, photos: fresh.photos } : project;
+        });
+        window.CX_STORE = parsed;
+      }
     } catch {
       /* keep fetched store */
     }
