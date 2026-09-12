@@ -9,88 +9,12 @@
   const ctx = canvas.getContext("2d");
   let drawing = false;
 
-  const money = (amount, currency = "MAD") => {
-    const n = Number(amount) || 0;
-    try {
-      return new Intl.NumberFormat("fr-MA", {
-        style: "currency",
-        currency: currency === "EUR" ? "EUR" : currency === "USD" ? "USD" : "MAD",
-        maximumFractionDigits: 2,
-      }).format(n);
-    } catch {
-      return `${n.toFixed(2)} ${currency}`;
-    }
-  };
-
-  const totals = (quote) => {
-    const ht = (quote.lines || []).reduce(
-      (sum, line) => sum + (Number(line.qty) || 0) * (Number(line.unitPrice) || 0),
-      0
-    );
-    const rate = Number.isFinite(Number(quote.taxRate)) ? Number(quote.taxRate) : 20;
-    return { ht, tva: (ht * rate) / 100, ttc: ht + (ht * rate) / 100, rate };
-  };
-
   const renderQuote = (quote) => {
-    const tot = totals(quote);
-    const currency = quote.currency || "MAD";
-    sheet.innerHTML = `
-      <div class="q-brand">
-        <div>
-          <strong>CX Systems</strong>
-          <em>Engineering Digital Systems · Casablanca</em>
-        </div>
-        <div class="q-meta">
-          <div class="q-num">${quote.number || ""}</div>
-          <div>Date : ${quote.date || ""}</div>
-          <div>Valable jusqu’au : ${quote.validUntil || "—"}</div>
-        </div>
-      </div>
-      <div class="q-parties">
-        <div>
-          <h4>Émetteur</h4>
-          <p>CX Systems<br>Casablanca, Maroc</p>
-        </div>
-        <div>
-          <h4>Client</h4>
-          <p><strong>${quote.client?.name || ""}</strong><br>${quote.client?.company || ""}<br>${quote.client?.city || ""}</p>
-        </div>
-      </div>
-      <h3 style="margin:0 0 1rem;font-family:var(--serif);font-weight:400">${quote.title || "Devis"}</h3>
-      <table class="q-table">
-        <thead>
-          <tr>
-            <th>Description</th>
-            <th class="num">Qté</th>
-            <th class="num">P.U. HT</th>
-            <th class="num">Total HT</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${(quote.lines || [])
-            .map((line) => {
-              const lineTotal = (Number(line.qty) || 0) * (Number(line.unitPrice) || 0);
-              return `<tr>
-                <td>${line.description || ""}</td>
-                <td class="num">${line.qty || 0}</td>
-                <td class="num">${money(line.unitPrice, currency)}</td>
-                <td class="num">${money(lineTotal, currency)}</td>
-              </tr>`;
-            })
-            .join("")}
-        </tbody>
-      </table>
-      <div class="q-totals">
-        <div><span>Total HT</span><span>${money(tot.ht, currency)}</span></div>
-        <div><span>TVA (${tot.rate}%)</span><span>${money(tot.tva, currency)}</span></div>
-        <div class="q-ttc"><span>Total TTC</span><span>${money(tot.ttc, currency)}</span></div>
-      </div>
-      ${quote.notes ? `<div class="q-notes">${quote.notes}</div>` : ""}
-      ${
-        quote.signedAt
-          ? `<div class="q-notes"><strong>Signé le ${quote.signedAt.slice(0, 10)}</strong> par ${quote.signerName}.</div>`
-          : ""
-      }`;
+    sheet.innerHTML = window.CXDevis.renderDocument({
+      kind: "quote",
+      client: quote.client || {},
+      doc: quote,
+    });
     sheet.hidden = false;
   };
 

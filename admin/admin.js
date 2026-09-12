@@ -59,7 +59,10 @@
   ];
 
   const statusLabel = (id) => WORK_STATUSES.find((item) => item[0] === id)?.[1] || "Nouveau";
-  const quoteStatusLabel = (id) => QUOTE_STATUSES.find((item) => item[0] === id)?.[1] || "Brouillon";
+  const quoteStatusLabel = (id) =>
+    window.CXDevis?.statusLabel(id) || QUOTE_STATUSES.find((item) => item[0] === id)?.[1] || "Brouillon";
+
+  const liveQuoteStatus = (quote) => window.CXDevis?.liveQuoteStatus(quote) || quote?.status || "draft";
   const billingLabel = (id) => BILLING.find((item) => item[0] === id)?.[1] || "Forfait";
 
   const statusOptions = (selected) =>
@@ -131,7 +134,8 @@
     }[status] || "grey");
 
   const quotePill = (status) =>
-    ({ draft: "grey", sent: "blue", accepted: "green", rejected: "red", paid: "teal" }[status] || "grey");
+    ({ draft: "grey", sent: "blue", accepted: "green", rejected: "red", expired: "amber", paid: "teal" }[status] ||
+      "grey");
 
   const invoicePill = (status) =>
     ({ draft: "grey", sent: "blue", partial: "amber", paid: "green", overdue: "red" }[status] || "grey");
@@ -160,14 +164,13 @@
 
   const getClient = (id) => store.clients.find((c) => c.id === id);
 
-  const quoteTotals = (quote) => {
-    const lines = Array.isArray(quote?.lines) ? quote.lines : [];
-    const ht = lines.reduce((sum, line) => sum + (Number(line.qty) || 0) * (Number(line.unitPrice) || 0), 0);
-    const taxRate = Number(quote?.taxRate);
-    const rate = Number.isFinite(taxRate) ? taxRate : 20;
-    const tva = (ht * rate) / 100;
-    return { ht, tva, ttc: ht + tva, rate };
-  };
+  const quoteTotals = (quote) =>
+    window.CXDevis?.totals(quote) || {
+      ht: 0,
+      tva: 0,
+      ttc: 0,
+      rate: 20,
+    };
 
   const clientBudget = (client) =>
     (client.works || []).reduce((sum, w) => sum + (Number(w.price) || 0), 0);
@@ -322,6 +325,114 @@
         })
         .join("")}
     </ol>`;
+  }
+
+  const collectQuotes = () =>
+    store.clients.flatMap((client) =>
+      (client.quotes || []).map((quote) => {
+        const tot = quoteTotals(quote);
+        return {
+          client,
+          quote,
+          status: liveQuoteStatus(quote),
+          ttc: tot.ttc,
+        };
+      })
+    );
+
+  function renderQuoteBoard() {
+    const board = document.getElementById("quote-board");
+    const clientSelect = document.getElementById("quote-filter-client");
+    if (!board) return;
+    if (clientSelect && clientSelect.options.length <= 1) {
+      clientSelect.innerHTML =
+        `<option value="">Tous</option>` +
+        store.clients
+          .map((c) => `<option value="${esc(c.id)}">${esc(c.company || c.name || "Sans nom")}</option>`)
+          .join("");
+    } else if (clientSelect) {
+      const current = clientSelect.value;
+      clientSelect.innerHTML =
+        `<option value="">Tous</option>` +
+        store.clients
+          .map((c) => `<option value="${esc(c.id)}" ${c.id === current ? "selected" : ""}>${esc(c.company || c.name || "Sans nom")}</option>`)
+          .join("");
+    }
+
+    const q = (document.getElementById("quote-search")?.value || "").trim().toLowerCase();
+    const status = document.getElementById("quote-filter-status")?.value || "";
+    const clientId = document.getElementById("quote-filter-client")?.value || "";
+    const from = document.getElementById("quote-filter-from")?.value || "";
+    const to = document.getElementById("quote-filter-to")?.value || "";
+
+    const list = collectQuotes()
+      .filter((item) => {
+        if (status && item.status !== status) return false;
+        if (clientId && item.client.id !== clientId) return false;
+        if (from && (item.quote.date || "") < from) return false;
+        if (to && (item.quote.date || "") > to) return false;
+        if (!q) return true;
+        const hay = [item.quote.number, item.quote.title, item.client.name, item.client.company].join(" ").toLowerCase();
+        return hay.includes(q);
+      })
+      .sort((a, b) => String(b.quote.date || "").localeCompare(String(a.quote.date || "")));
+
+    board.innerHTML = list.length
+      ? `<table class="quote-table">
+          <thead>
+            <tr>
+              <th>N°</th>
+              <th>Client</th>
+              <th>Titre</th>
+              <th>Statut</th>
+              <th>Date</th>
+              <th class="num">TTC</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            ${list
+              .map((item) => {
+                const { client, quote } = item;
+                return `<tr>
+                  <td class="devis-id">${esc(quote.number)}</td>
+                  <td>${esc(client.company || client.name)}</td>
+                  <td>${esc(quote.title) || "Devis"}</td>
+                  <td><span class="pill ${quotePill(item.status)}"><i></i>${esc(quoteStatusLabel(item.status))}${quote.signedAt ? " · signé" : ""}</span></td>
+                  <td>${esc(quote.date || "—")}</td>
+                  <td class="num">${money(item.ttc, quote.currency || "MAD")}</td>
+                  <td class="row-actions">
+                    <button type="button" class="icon-btn" data-open-quote-client="${esc(client.id)}" data-print-quote="${esc(quote.id)}">PDF</button>
+                    <button type="button" class="icon-btn" data-open-quote-client="${esc(client.id)}" data-dup-quote="${esc(quote.id)}">Dupliquer</button>
+                    ${item.status === "accepted" || quote.signedAt ? `<button type="button" class="icon-btn" data-open-quote-client="${esc(client.id)}" data-invoice-from-quote="${esc(quote.id)}">Facturer</button>` : ""}
+                    <button type="button" class="icon-btn" data-open-quote-client="${esc(client.id)}" data-edit-quote="${esc(quote.id)}">Éditer</button>
+                  </td>
+                </tr>`;
+              })
+              .join("")}
+          </tbody>
+        </table>`
+      : `<div class="admin-empty"><strong>Aucun devis</strong>Créez-en un depuis un dossier client, ou élargissez les filtres.</div>`;
+  }
+
+  function duplicateQuote(quote) {
+    return {
+      ...quote,
+      id: uid(),
+      number: nextQuoteNumber(),
+      title: quote.title ? `${quote.title} (copie)` : "",
+      date: todayISO(),
+      validUntil: plusDays(30),
+      status: "draft",
+      shareToken: uid(),
+      signedAt: "",
+      signerName: "",
+      signatureData: "",
+      sentAt: "",
+      sentVia: "",
+      revisions: [],
+      lines: (quote.lines || []).map((line) => ({ ...line, id: uid() })),
+    };
   }
 
   const nextQuoteNumber = () => {
@@ -546,6 +657,8 @@
       currency: quote.currency || "MAD",
       taxRate: quote.taxRate ?? 20,
       notes: quote.notes || "Acompte 40% à la commande, solde à la livraison.",
+      depositPercent: quote.depositPercent,
+      terms: quote.terms || "",
       quoteId: quote.id,
       workId: quote.workId || "",
       lines: (quote.lines || []).map((line) => ({ ...line, id: uid() })),
@@ -688,7 +801,8 @@
   function setDash(tab) {
     const section = document.getElementById("cx-section");
     if (section) {
-      section.textContent = tab === "projects" ? "02 Projets" : tab === "offers" ? "03 Offres" : "01 Clients";
+      section.textContent =
+        tab === "projects" ? "02 Projets" : tab === "offers" ? "03 Offres" : tab === "quotes" ? "04 Devis" : "01 Clients";
     }
     const search = document.getElementById("client-search-wrap");
     if (search) search.hidden = tab !== "clients";
@@ -713,6 +827,17 @@
     );
     const toFrame = store.clients.filter((c) => clientJourney(c).step <= 2).length;
     const activeTab = document.querySelector(".admin-tab.is-active")?.getAttribute("data-tab") || "clients";
+    if (activeTab === "quotes") {
+      const all = collectQuotes();
+      const won = all.filter((item) => item.status === "accepted" || item.status === "paid").length;
+      const expired = all.filter((item) => item.status === "expired").length;
+      stats.innerHTML = `
+        <div class="counter"><b>${all.length}</b><span>Devis</span></div>
+        <div class="counter"><b>${openQuotes}</b><span>Ouverts</span></div>
+        <div class="counter"><b>${won}</b><span>Acceptés</span></div>
+        <div class="counter warn"><b>${expired}</b><span>Expirés</span></div>`;
+      return;
+    }
     if (activeTab === "clients") {
       stats.innerHTML = `
         <div class="counter"><b>${store.clients.length}</b><span>Dossiers</span></div>
@@ -876,17 +1001,19 @@
                 ${quotes
                   .map((q) => {
                     const tot = quoteTotals(q);
+                    const st = liveQuoteStatus(q);
                     return `<tr>
                       <td class="devis-id">${esc(q.number)}</td>
                       <td>${esc(q.title) || "Devis"}</td>
-                      <td><span class="pill ${quotePill(q.status)}"><i></i>${esc(quoteStatusLabel(q.status))}${q.signedAt ? " · signé" : ""}</span></td>
+                      <td><span class="pill ${quotePill(st)}"><i></i>${esc(quoteStatusLabel(st))}${q.signedAt ? " · signé" : ""}</span></td>
                       <td>${esc(q.validUntil || "—")}</td>
                       <td class="num">${money(tot.ttc, q.currency || "MAD")}</td>
                       <td class="row-actions">
                         <button type="button" class="icon-btn" data-wa-quote="${esc(q.id)}">WA</button>
                         <button type="button" class="icon-btn" data-mail-quote="${esc(q.id)}">Mail</button>
                         <button type="button" class="icon-btn" data-print-quote="${esc(q.id)}">PDF</button>
-                        ${q.status === "accepted" || q.signedAt ? `<button type="button" class="icon-btn" data-invoice-from-quote="${esc(q.id)}">Facturer</button>` : ""}
+                        <button type="button" class="icon-btn" data-dup-quote="${esc(q.id)}">Dupliquer</button>
+                        ${st === "accepted" || q.signedAt ? `<button type="button" class="icon-btn" data-invoice-from-quote="${esc(q.id)}">Facturer</button>` : ""}
                         <button type="button" class="icon-btn" data-edit-quote="${esc(q.id)}">Éditer</button>
                         <button type="button" class="icon-btn danger" data-del-quote="${esc(q.id)}">Suppr.</button>
                       </td>
@@ -984,6 +1111,7 @@
     renderStats();
     renderClientRail();
     renderClientDesk();
+    renderQuoteBoard();
 
     document.getElementById("project-list").innerHTML = store.projects
       .map((p) => {
@@ -1203,8 +1331,9 @@
       status: quote.status || "draft",
       currency: quote.currency || "MAD",
       taxRate: quote.taxRate ?? 20,
-      notes: quote.notes || "Paiement : 40% à la commande, 60% à la livraison.\nDevis valable 30 jours.",
-      terms: quote.terms || "",
+      notes: quote.notes || "Devis valable 30 jours. Prix hors déplacements hors Casablanca.",
+      terms: quote.terms || "Bon pour accord. Le démarrage suit la réception de l’acompte.",
+      depositPercent: quote.depositPercent ?? 40,
       lines: quote.lines?.length ? quote.lines : [{ id: uid(), description: "", qty: 1, unitPrice: 0 }],
       workId: quote.workId || "",
       shareToken: quote.shareToken || uid(),
@@ -1271,9 +1400,15 @@
         </div>
       </fieldset>
       <fieldset class="field-block">
-        <legend>Notes</legend>
-        <label>Conditions / notes
-          <textarea name="quoteNotes" rows="4">${esc(q.notes)}</textarea>
+        <legend>Paiement & conditions</legend>
+        <label>Acompte à la commande (%)
+          <input name="quoteDeposit" type="number" min="0" max="100" step="1" value="${esc(q.depositPercent)}" />
+        </label>
+        <label>Notes
+          <textarea name="quoteNotes" rows="3">${esc(q.notes)}</textarea>
+        </label>
+        <label>Conditions générales
+          <textarea name="quoteTerms" rows="3">${esc(q.terms)}</textarea>
         </label>
       </fieldset>
       <div class="actions">
@@ -1421,144 +1556,16 @@
   }
 
   function openQuotePrint(client, quote) {
-    const tot = quoteTotals(quote);
-    const currency = quote.currency || "MAD";
-    quoteSheetBody.innerHTML = `
-      <div class="q-brand">
-        <div>
-          <strong>CX Systems</strong>
-          <em>Engineering Digital Systems · Casablanca</em>
-          <em>WhatsApp +212 699 254 247</em>
-        </div>
-        <div class="q-meta">
-          <div class="q-num">${esc(quote.number)}</div>
-          <div>Date : ${esc(quote.date || "")}</div>
-          <div>Valable jusqu’au : ${esc(quote.validUntil || "—")}</div>
-          <div>Statut : ${esc(quoteStatusLabel(quote.status))}</div>
-        </div>
-      </div>
-      <div class="q-parties">
-        <div>
-          <h4>Émetteur</h4>
-          <p>CX Systems<br>Casablanca, Maroc<br>a.meziani.dev@gmail.com</p>
-        </div>
-        <div>
-          <h4>Client</h4>
-          <p>
-            <strong>${esc(client.name)}</strong><br>
-            ${esc(client.company) || ""}<br>
-            ${esc(client.address) || ""} ${esc(client.city) || ""}<br>
-            ${client.ice ? `ICE ${esc(client.ice)}<br>` : ""}
-            ${esc(client.email) || ""} ${esc(client.phone) || ""}
-          </p>
-        </div>
-      </div>
-      <h3 style="margin:0 0 1rem;font-family:var(--serif);font-weight:400">${esc(quote.title)}</h3>
-      <table class="q-table">
-        <thead>
-          <tr>
-            <th>Description</th>
-            <th class="num">Qté</th>
-            <th class="num">P.U. HT</th>
-            <th class="num">Total HT</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${(quote.lines || [])
-            .map((line) => {
-              const lineTotal = (Number(line.qty) || 0) * (Number(line.unitPrice) || 0);
-              return `<tr>
-                <td>${esc(line.description)}</td>
-                <td class="num">${esc(line.qty)}</td>
-                <td class="num">${money(line.unitPrice, currency)}</td>
-                <td class="num">${money(lineTotal, currency)}</td>
-              </tr>`;
-            })
-            .join("")}
-        </tbody>
-      </table>
-      <div class="q-totals">
-        <div><span>Total HT</span><span>${money(tot.ht, currency)}</span></div>
-        <div><span>TVA (${tot.rate}%)</span><span>${money(tot.tva, currency)}</span></div>
-        <div class="q-ttc"><span>Total TTC</span><span>${money(tot.ttc, currency)}</span></div>
-      </div>
-      ${quote.notes ? `<div class="q-notes">${esc(quote.notes)}</div>` : ""}
-      ${
-        quote.signedAt
-          ? `<div class="q-notes"><strong>Signé électroniquement le ${esc(quote.signedAt.slice(0, 10))}</strong> par ${esc(quote.signerName)}.${quote.signatureData ? `<br><img src="${esc(quote.signatureData)}" alt="Signature" style="max-width:220px;margin-top:0.6rem">` : ""}</div>`
-          : ""
-      }
-      <div class="q-footer">Document généré depuis l’atelier CX Systems — devis non contractuel jusqu’à acceptation écrite ou signature.</div>
-    `;
+    quoteSheetBody.innerHTML = window.CXDevis.renderDocument({ kind: "quote", client, doc: quote });
     quoteSheet.showModal();
   }
 
   function openInvoicePrint(client, invoice) {
-    const tot = quoteTotals(invoice);
-    const currency = invoice.currency || "MAD";
-    quoteSheetBody.innerHTML = `
-      <div class="q-brand">
-        <div>
-          <strong>CX Systems</strong>
-          <em>Facture · Engineering Digital Systems</em>
-          <em>WhatsApp +212 699 254 247</em>
-        </div>
-        <div class="q-meta">
-          <div class="q-num">${esc(invoice.number)}</div>
-          <div>Date : ${esc(invoice.date || "")}</div>
-          <div>Échéance : ${esc(invoice.dueDate || "—")}</div>
-          <div>Statut : ${esc(invoiceStatusLabel(liveInvoiceStatus(invoice)))}</div>
-        </div>
-      </div>
-      <div class="q-parties">
-        <div>
-          <h4>Émetteur</h4>
-          <p>CX Systems<br>Casablanca, Maroc<br>a.meziani.dev@gmail.com</p>
-        </div>
-        <div>
-          <h4>Client</h4>
-          <p>
-            <strong>${esc(client.name)}</strong><br>
-            ${esc(client.company) || ""}<br>
-            ${esc(client.address) || ""} ${esc(client.city) || ""}<br>
-            ${client.ice ? `ICE ${esc(client.ice)}<br>` : ""}
-            ${esc(client.email) || ""} ${esc(client.phone) || ""}
-          </p>
-        </div>
-      </div>
-      <h3 style="margin:0 0 1rem;font-family:var(--serif);font-weight:400">${esc(invoice.title)}</h3>
-      <table class="q-table">
-        <thead>
-          <tr>
-            <th>Description</th>
-            <th class="num">Qté</th>
-            <th class="num">P.U. HT</th>
-            <th class="num">Total HT</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${(invoice.lines || [])
-            .map((line) => {
-              const lineTotal = (Number(line.qty) || 0) * (Number(line.unitPrice) || 0);
-              return `<tr>
-                <td>${esc(line.description)}</td>
-                <td class="num">${esc(line.qty)}</td>
-                <td class="num">${money(line.unitPrice, currency)}</td>
-                <td class="num">${money(lineTotal, currency)}</td>
-              </tr>`;
-            })
-            .join("")}
-        </tbody>
-      </table>
-      <div class="q-totals">
-        <div><span>Total HT</span><span>${money(tot.ht, currency)}</span></div>
-        <div><span>TVA (${tot.rate}%)</span><span>${money(tot.tva, currency)}</span></div>
-        <div><span>Acomptes</span><span>${money(invoicePaid(invoice), currency)}</span></div>
-        <div class="q-ttc"><span>Reste dû</span><span>${money(invoiceBalance(invoice), currency)}</span></div>
-      </div>
-      ${invoice.notes ? `<div class="q-notes">${esc(invoice.notes)}</div>` : ""}
-      <div class="q-footer">Facture CX Systems — acomptes mentionnés ci-dessus.</div>
-    `;
+    quoteSheetBody.innerHTML = window.CXDevis.renderDocument({
+      kind: "invoice",
+      client,
+      doc: { ...invoice, status: liveInvoiceStatus(invoice) },
+    });
     quoteSheet.showModal();
   }
 
@@ -1737,7 +1744,10 @@
       document.getElementById("tab-clients").hidden = tab !== "clients";
       document.getElementById("tab-projects").hidden = tab !== "projects";
       document.getElementById("tab-offers").hidden = tab !== "offers";
+      const quotesTab = document.getElementById("tab-quotes");
+      if (quotesTab) quotesTab.hidden = tab !== "quotes";
       setDash(tab);
+      if (tab === "quotes") renderQuoteBoard();
       renderStats();
     });
   });
@@ -1899,9 +1909,11 @@
       return;
     }
 
+    const quoteOwner = (el) => getClient(el.getAttribute("data-open-quote-client") || selectedClientId);
+
     const waQuote = e.target.closest("[data-wa-quote]");
     if (waQuote) {
-      const client = getClient(selectedClientId);
+      const client = quoteOwner(waQuote);
       const quote = client?.quotes?.find((q) => q.id === waQuote.getAttribute("data-wa-quote"));
       if (client && quote) sendQuoteWhatsApp(client, quote);
       return;
@@ -1909,7 +1921,7 @@
 
     const mailQuote = e.target.closest("[data-mail-quote]");
     if (mailQuote) {
-      const client = getClient(selectedClientId);
+      const client = quoteOwner(mailQuote);
       const quote = client?.quotes?.find((q) => q.id === mailQuote.getAttribute("data-mail-quote"));
       if (client && quote) sendQuoteEmail(client, quote);
       return;
@@ -1917,11 +1929,12 @@
 
     const invoiceFrom = e.target.closest("[data-invoice-from-quote]");
     if (invoiceFrom) {
-      const client = getClient(selectedClientId);
+      const client = quoteOwner(invoiceFrom);
       const quote = client?.quotes?.find((q) => q.id === invoiceFrom.getAttribute("data-invoice-from-quote"));
       if (client && quote) {
+        selectedClientId = client.id;
         clientPane = "invoices";
-        openInvoice(selectedClientId, invoiceFromQuote(quote));
+        openInvoice(client.id, invoiceFromQuote(quote));
       }
       return;
     }
@@ -2003,17 +2016,36 @@
 
     const editQuote = e.target.closest("[data-edit-quote]");
     if (editQuote) {
-      const client = getClient(selectedClientId);
+      const client = quoteOwner(editQuote);
       const quote = client?.quotes?.find((q) => q.id === editQuote.getAttribute("data-edit-quote"));
-      if (quote) openQuote(selectedClientId, quote);
+      if (client && quote) {
+        selectedClientId = client.id;
+        openQuote(client.id, quote);
+      }
       return;
     }
 
     const printQuote = e.target.closest("[data-print-quote]");
     if (printQuote) {
-      const client = getClient(selectedClientId);
+      const client = quoteOwner(printQuote);
       const quote = client?.quotes?.find((q) => q.id === printQuote.getAttribute("data-print-quote"));
       if (client && quote) openQuotePrint(client, quote);
+      return;
+    }
+
+    const dupQuote = e.target.closest("[data-dup-quote]");
+    if (dupQuote) {
+      const client = quoteOwner(dupQuote);
+      const quote = client?.quotes?.find((q) => q.id === dupQuote.getAttribute("data-dup-quote"));
+      if (client && quote) {
+        const copy = duplicateQuote(quote);
+        client.quotes = [copy, ...(client.quotes || [])];
+        selectedClientId = client.id;
+        clientPane = "quotes";
+        logHistory(client, "devis", `Devis dupliqué : ${quote.number} → ${copy.number}`);
+        await saveStore();
+        openQuote(client.id, copy);
+      }
       return;
     }
 
@@ -2071,6 +2103,54 @@
       await saveStore();
       render();
     }
+  });
+
+  ["quote-search", "quote-filter-from", "quote-filter-to"].forEach((id) => {
+    document.getElementById(id)?.addEventListener("input", () => {
+      renderQuoteBoard();
+      renderStats();
+    });
+  });
+  ["quote-filter-status", "quote-filter-client"].forEach((id) => {
+    document.getElementById(id)?.addEventListener("change", () => {
+      renderQuoteBoard();
+      renderStats();
+    });
+  });
+
+  document.getElementById("tab-quotes")?.addEventListener("click", async (e) => {
+    const btn = e.target.closest("[data-print-quote], [data-dup-quote], [data-edit-quote], [data-invoice-from-quote]");
+    if (!btn) return;
+    const client = getClient(btn.getAttribute("data-open-quote-client"));
+    if (!client) return;
+    selectedClientId = client.id;
+    const quoteId =
+      btn.getAttribute("data-print-quote") ||
+      btn.getAttribute("data-dup-quote") ||
+      btn.getAttribute("data-edit-quote") ||
+      btn.getAttribute("data-invoice-from-quote");
+    const quote = (client.quotes || []).find((q) => q.id === quoteId);
+    if (!quote) return;
+    if (btn.hasAttribute("data-print-quote")) {
+      openQuotePrint(client, quote);
+      return;
+    }
+    if (btn.hasAttribute("data-edit-quote")) {
+      openQuote(client.id, quote);
+      return;
+    }
+    if (btn.hasAttribute("data-invoice-from-quote")) {
+      clientPane = "invoices";
+      openInvoice(client.id, invoiceFromQuote(quote));
+      return;
+    }
+    const copy = duplicateQuote(quote);
+    client.quotes = [copy, ...(client.quotes || [])];
+    clientPane = "quotes";
+    logHistory(client, "devis", `Devis dupliqué : ${quote.number} → ${copy.number}`);
+    await saveStore();
+    renderQuoteBoard();
+    openQuote(client.id, copy);
   });
 
   document.getElementById("quote-sheet-close")?.addEventListener("click", () => quoteSheet.close());
@@ -2291,8 +2371,17 @@
         currency: editorForm.quoteCurrency.value || "MAD",
         taxRate: Number(editorForm.quoteTax.value) || 0,
         notes: editorForm.quoteNotes.value.trim(),
+        terms: editorForm.quoteTerms?.value.trim() || "",
+        depositPercent: Number(editorForm.quoteDeposit?.value) || 0,
         workId: editorForm.quoteWork.value || "",
         lines: collectLines(),
+        revisions: [
+          {
+            at: new Date().toISOString(),
+            summary: `${prevQuote.number ? "Modification" : "Création"} · ${editorForm.quoteStatus.value} · ${quoteTotals({ lines: collectLines(), taxRate: Number(editorForm.quoteTax.value) || 0 }).ttc}`,
+          },
+          ...(prevQuote.revisions || []),
+        ].slice(0, 20),
         shareToken: editorForm.dataset.shareToken || prevQuote.shareToken || uid(),
         signedAt: editorForm.dataset.signedAt || prevQuote.signedAt || "",
         signerName: editorForm.dataset.signerName || prevQuote.signerName || "",

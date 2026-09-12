@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/admin/admin.css" />
+  <link rel="stylesheet" href="/admin/devis.css" />
 </head>
 <body class="admin-page">
   <div id="login-view" class="admin-login">
@@ -47,6 +48,7 @@
         <button type="button" class="admin-tab is-active" data-tab="clients">01 Clients</button>
         <button type="button" class="admin-tab" data-tab="projects">02 Projets</button>
         <button type="button" class="admin-tab" data-tab="offers">03 Offres</button>
+        <button type="button" class="admin-tab" data-tab="quotes">04 Devis</button>
       </nav>
       <div class="search" id="client-search-wrap">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
@@ -85,6 +87,37 @@
       <section id="tab-offers" class="cx-catalog" hidden>
         <div class="admin-grid admin-grid--offers" id="offer-list"></div>
       </section>
+
+      <section id="tab-quotes" class="quote-board" hidden>
+        <div class="quote-filters">
+          <label>Recherche
+            <input type="search" id="quote-search" placeholder="N° devis ou nom client…" autocomplete="off" />
+          </label>
+          <label>Statut
+            <select id="quote-filter-status">
+              <option value="">Tous</option>
+              <option value="draft">Brouillon</option>
+              <option value="sent">Envoyé</option>
+              <option value="accepted">Accepté</option>
+              <option value="rejected">Refusé</option>
+              <option value="expired">Expiré</option>
+              <option value="paid">Payé</option>
+            </select>
+          </label>
+          <label>Client
+            <select id="quote-filter-client">
+              <option value="">Tous</option>
+            </select>
+          </label>
+          <label>Du
+            <input type="date" id="quote-filter-from" />
+          </label>
+          <label>Au
+            <input type="date" id="quote-filter-to" />
+          </label>
+        </div>
+        <div class="quote-table-wrap" id="quote-board"></div>
+      </section>
     </div>
   </div>
 
@@ -101,6 +134,7 @@
   </dialog>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="/lib/devis.js"></script>
   <script src="/admin/admin.js"></script>
 </body>
 </html>
