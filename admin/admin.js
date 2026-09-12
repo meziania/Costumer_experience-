@@ -730,32 +730,69 @@
     });
   }
 
+  function readCachedStore() {
+    try {
+      return JSON.parse(localStorage.getItem(LOCAL_KEY) || "null");
+    } catch {
+      return null;
+    }
+  }
+
+  function sameCatalog(a = [], b = []) {
+    try {
+      return JSON.stringify(a) === JSON.stringify(b);
+    } catch {
+      return false;
+    }
+  }
+
   async function loadStore() {
+    const cached = readCachedStore();
+    let fromApi = false;
+    let apiProjects = null;
+
     if (!localMode) {
       try {
         const res = await fetch("/api/store", { headers: headers() });
         if (res.ok) {
           store = await res.json();
-          store.clients = (store.clients || []).map(normalizeClient);
-          store.projects = store.projects || [];
-          store.offers = store.offers || [];
-          localStorage.setItem(LOCAL_KEY, JSON.stringify(store));
-          return;
+          apiProjects = store.projects || [];
+          fromApi = true;
         }
       } catch {
         /* fallback */
       }
     }
-    const cached = localStorage.getItem(LOCAL_KEY);
-    if (cached) {
-      store = JSON.parse(cached);
-    } else {
-      const res = await fetch("/data/store.json");
-      store = res.ok ? await res.json() : { clients: [], projects: [], offers: [] };
+
+    if (!fromApi) {
+      if (cached) store = cached;
+      else {
+        const res = await fetch("/data/store.json");
+        store = res.ok ? await res.json() : { clients: [], projects: [], offers: [] };
+      }
     }
+
     store.clients = (store.clients || []).map(normalizeClient);
-    store.projects = store.projects || [];
     store.offers = store.offers || [];
+    if (cached && Array.isArray(cached.projects) && cached.projects.length) {
+      store.projects = cached.projects;
+    } else {
+      store.projects = store.projects || [];
+    }
+
+    localStorage.setItem(LOCAL_KEY, JSON.stringify(store));
+
+    if (fromApi && !localMode && cached?.projects?.length && !sameCatalog(apiProjects, store.projects)) {
+      try {
+        await fetch("/api/store", {
+          method: "PUT",
+          headers: headers(),
+          body: JSON.stringify(store),
+        });
+      } catch {
+        /* keep local projects */
+      }
+    }
   }
 
   async function saveStore() {
