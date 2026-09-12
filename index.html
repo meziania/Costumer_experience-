@@ -53,14 +53,18 @@
             <a class="btn btn--line" href="#work" data-i18n="hero.cta2">Voir les réalisations</a>
           </div>
         </div>
-        <figure class="hero-orbit-wrap">
-          <div class="hero-orbit" id="hero-orbit" aria-hidden="false">
-            <div class="hero-orbit__track"></div>
-            <div class="hero-orbit__ring" id="hero-orbit-ring"></div>
-            <div class="hero-orbit__core">
-              <img src="assets/logo-mark.svg" alt="" width="40" height="40" />
+        <figure class="hero-reel" id="hero-reel">
+          <div class="hero-reel__stage">
+            <button type="button" class="hero-reel__frame" id="hero-reel-frame">
+              <img id="hero-reel-img" alt="" />
+            </button>
+            <figcaption class="hero-reel__meta">
               <span data-i18n="hero.shots">Projets en production</span>
-            </div>
+              <strong id="hero-reel-title"></strong>
+            </figcaption>
+          </div>
+          <div class="hero-reel__strip" id="hero-reel-strip" aria-hidden="true">
+            <div class="hero-reel__track" id="hero-reel-track"></div>
           </div>
         </figure>
       </div>

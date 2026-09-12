@@ -316,28 +316,17 @@
         .join("");
     }
 
-    const orbit = document.getElementById("hero-orbit-ring");
-    if (orbit) {
-      const shots = (store.projects || [])
-        .filter((p) => p.published === true)
-        .flatMap((p) =>
-          (p.photos || [])
-            .filter(Boolean)
-            .slice(0, 1)
-            .map((src) => ({ src, title: pick(p, "title", "titleEn") }))
-        )
-        .slice(0, 8);
-      orbit.innerHTML = shots
-        .map((shot, i) => {
-          const a = `${(360 / shots.length) * i}deg`;
-          return `<div class="hero-orbit__item" style="--a:${a}">
-            <button type="button" class="hero-orbit__card" data-photo="${esc(shot.src)}" aria-label="${esc(shot.title)}">
-              <img src="${esc(shot.src)}" alt="${esc(shot.title)}" />
-            </button>
-          </div>`;
-        })
-        .join("");
-    }
+    const reelShots = (store.projects || [])
+      .filter((p) => p.published === true)
+      .flatMap((p) =>
+        (p.photos || [])
+          .filter(Boolean)
+          .slice(0, 1)
+          .map((src) => ({ src, title: pick(p, "title", "titleEn") }))
+      )
+      .slice(0, 8);
+    window.CX_HERO_SHOTS = reelShots;
+    renderHeroReel(reelShots);
 
     if (offersWrap) {
       const offers = (store.offers || []).filter((o) => o.published === true);
@@ -356,6 +345,52 @@
     }
   };
 
+  let heroReelTimer = 0;
+  let heroReelIndex = 0;
+
+  function showHeroShot(index) {
+    const shots = window.CX_HERO_SHOTS || [];
+    if (!shots.length) return;
+    heroReelIndex = ((index % shots.length) + shots.length) % shots.length;
+    const shot = shots[heroReelIndex];
+    const frame = document.getElementById("hero-reel-frame");
+    const img = document.getElementById("hero-reel-img");
+    const title = document.getElementById("hero-reel-title");
+    if (img) {
+      img.src = shot.src;
+      img.alt = shot.title;
+    }
+    if (title) title.textContent = shot.title;
+    if (frame) {
+      frame.dataset.photo = shot.src;
+      frame.classList.remove("is-swap");
+      void frame.offsetWidth;
+      frame.classList.add("is-swap");
+    }
+    document.querySelectorAll(".hero-reel__thumb").forEach((thumb, i) => {
+      thumb.classList.toggle("is-active", i % shots.length === heroReelIndex);
+    });
+  }
+
+  function renderHeroReel(shots) {
+    const track = document.getElementById("hero-reel-track");
+    if (!track) return;
+    window.clearInterval(heroReelTimer);
+    if (!shots.length) {
+      track.innerHTML = "";
+      return;
+    }
+    const cell = (shot, i) =>
+      `<button type="button" class="hero-reel__thumb" data-reel-index="${i}" data-photo="${esc(shot.src)}" aria-label="${esc(shot.title)}">
+        <img src="${esc(shot.src)}" alt="" />
+      </button>`;
+    track.innerHTML = `${shots.map(cell).join("")}${shots.map(cell).join("")}`;
+    showHeroShot(0);
+    if (shots.length > 1) {
+      heroReelTimer = window.setInterval(() => showHeroShot(heroReelIndex + 1), 4200);
+    }
+  }
+
   const openPhoto = (src) => {
     const modal = document.getElementById("photo-modal");
     const img = document.getElementById("photo-modal-img");
@@ -368,9 +403,14 @@
     const btn = e.target.closest("[data-photo]");
     if (btn) openPhoto(btn.getAttribute("data-photo"));
   });
-  document.getElementById("hero-orbit")?.addEventListener("click", (e) => {
-    const btn = e.target.closest("[data-photo]");
-    if (btn) openPhoto(btn.getAttribute("data-photo"));
+  document.getElementById("hero-reel")?.addEventListener("click", (e) => {
+    const thumb = e.target.closest("[data-reel-index]");
+    if (thumb) {
+      showHeroShot(Number(thumb.getAttribute("data-reel-index")));
+      return;
+    }
+    const frame = e.target.closest("[data-photo]");
+    if (frame) openPhoto(frame.getAttribute("data-photo"));
   });
   document.getElementById("photo-modal-close")?.addEventListener("click", () => {
     document.getElementById("photo-modal")?.close();
