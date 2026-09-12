@@ -25,6 +25,47 @@
 
   const uid = () => `${Date.now().toString(16)}-${Math.random().toString(16).slice(2, 8)}`;
 
+  const WORK_STATUSES = [
+    ["new", "Nouveau"],
+    ["discovery", "Cadrage"],
+    ["design", "Conception"],
+    ["build", "En construction"],
+    ["launch", "Mise en production"],
+    ["live", "En production"],
+    ["support", "Suivi"],
+    ["paused", "En pause"],
+    ["done", "Terminé"],
+  ];
+
+  const statusLabel = (id) => WORK_STATUSES.find((item) => item[0] === id)?.[1] || "Nouveau";
+
+  const statusOptions = (selected) =>
+    WORK_STATUSES.map(
+      ([id, label]) => `<option value="${id}" ${id === selected ? "selected" : ""}>${label}</option>`
+    ).join("");
+
+  const workRowHtml = (work) => `
+    <div class="work-row" data-work-row data-work-id="${esc(work.id || uid())}">
+      <label>Projet / livrable
+        <input name="workTitle" value="${esc(work.title)}" placeholder="Ex. Caisse 2R Parts" />
+      </label>
+      <label>Statut d’évolution
+        <select name="workStatus">${statusOptions(work.status || "new")}</select>
+      </label>
+      <label>Note interne
+        <input name="workNote" value="${esc(work.note)}" placeholder="Prochaine étape, blocage…" />
+      </label>
+      <button type="button" class="danger" data-remove-work>Retirer</button>
+    </div>`;
+
+  const collectWorks = () =>
+    [...editorForm.querySelectorAll("[data-work-row]")].map((row) => ({
+      id: row.getAttribute("data-work-id") || uid(),
+      title: row.querySelector("[name='workTitle']")?.value.trim() || "",
+      status: row.querySelector("[name='workStatus']")?.value || "new",
+      note: row.querySelector("[name='workNote']")?.value.trim() || "",
+    })).filter((item) => item.title || item.note);
+
   const esc = (value) =>
     String(value || "")
       .replace(/&/g, "&amp;")
@@ -153,20 +194,27 @@
 
   function render() {
     document.getElementById("client-list").innerHTML = store.clients
-      .map(
-        (c) => `
+      .map((c) => {
+        const works = Array.isArray(c.works) ? c.works : [];
+        const workLine = works.length
+          ? works
+              .map((w) => `<span class="status-pill status-pill--${esc(w.status || "new")}">${esc(statusLabel(w.status))}${w.title ? ` · ${esc(w.title)}` : ""}</span>`)
+              .join("")
+          : `<span class="status-pill status-pill--new">Aucun projet suivi</span>`;
+        return `
       <article class="case">
         ${c.profileImage ? `<img class="admin-thumb" src="${esc(c.profileImage)}" alt="">` : ""}
-        <p class="case-sector">${c.published === false ? "Brouillon" : "Publié"}</p>
+        <p class="case-sector">Dossier privé</p>
         <h3>${esc(c.name) || "Sans nom"}</h3>
         <p>${esc(snippet(c.needClean || c.need) || "Besoin non renseigné")}</p>
+        <div class="status-row">${workLine}</div>
         <div class="case-actions">
           <button class="ghost" data-edit-client="${esc(c.id)}">Éditer</button>
           <button class="danger" data-del-client="${esc(c.id)}">Suppr.</button>
         </div>
-      </article>`
-      )
-      .join("") || `<p class="lede">Aucun client. Ajoutez un nom, un besoin, un profil et un PDF.</p>`;
+      </article>`;
+      })
+      .join("") || `<p class="lede">Aucun client. Les dossiers restent privés — ils n’apparaissent jamais sur le site.</p>`;
 
     document.getElementById("project-list").innerHTML = store.projects
       .map(
@@ -233,7 +281,11 @@
       <div class="actions">
         <button type="button" class="ghost-btn" id="ai-btn">Reformuler avec l’IA</button>
       </div>
-      <label class="check"><input type="checkbox" name="published" ${client.published !== false ? "checked" : ""} /> Afficher sur le site</label>
+      <p class="hint">Projets de ce client — suivi interne, jamais publié.</p>
+      <div id="client-works">${(client.works || []).map(workRowHtml).join("") || workRowHtml({ id: uid(), title: "", status: "new", note: "" })}</div>
+      <div class="actions">
+        <button type="button" class="ghost-btn" id="add-work">+ Ajouter un projet</button>
+      </div>
       <div class="actions">
         <button type="submit" class="btn btn--solid btn--light">Enregistrer</button>
         <button type="button" class="ghost-btn" id="cancel">Annuler</button>
@@ -394,7 +446,7 @@
   });
 
   document.getElementById("new-client").addEventListener("click", () => {
-    openClient({ id: uid(), name: "", need: "", needClean: "", published: true });
+    openClient({ id: uid(), name: "", need: "", needClean: "", works: [] });
   });
   document.getElementById("new-project").addEventListener("click", () => {
     openProject({
@@ -470,6 +522,18 @@
     if (e.target.id === "cancel") {
       e.preventDefault();
       closeEditor();
+      return;
+    }
+    if (e.target.id === "add-work") {
+      e.preventDefault();
+      const wrap = document.getElementById("client-works");
+      if (wrap) wrap.insertAdjacentHTML("beforeend", workRowHtml({ id: uid(), title: "", status: "new", note: "" }));
+      return;
+    }
+    const dropWork = e.target.closest("[data-remove-work]");
+    if (dropWork) {
+      e.preventDefault();
+      dropWork.closest("[data-work-row]")?.remove();
       return;
     }
     const remove = e.target.closest("[data-remove-photo]");
@@ -582,7 +646,7 @@
         needClean: editorForm.needClean.value.trim(),
         pdfName: editorForm.dataset.pdfName || "",
         pdfData: editorForm.dataset.pdfData || "",
-        published: editorForm.published.checked,
+        works: collectWorks(),
       };
       const idx = store.clients.findIndex((c) => c.id === currentId);
       if (idx >= 0) store.clients[idx] = next;

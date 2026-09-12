@@ -182,7 +182,7 @@
     return false;
   });
 
-  const revealEls = document.querySelectorAll(".offer-card, .case, .method-list li, .contact-shell > *, .client-card");
+  const revealEls = document.querySelectorAll(".offer-card, .case, .method-list li, .contact-shell > *");
   revealEls.forEach((el) => el.classList.add("reveal"));
 
   if ("IntersectionObserver" in window) {
@@ -225,13 +225,9 @@
   const pad = (n) => String(n).padStart(2, "0");
 
   window.renderCxCatalog = function renderCxCatalog() {
-    const store = window.CX_STORE || { clients: [], projects: [], offers: [] };
+    const store = window.CX_STORE || { projects: [], offers: [] };
     const work = document.getElementById("work-list");
     const offersWrap = document.getElementById("offer-list");
-    const clientsWrap = document.getElementById("client-list");
-    const clientsSec = document.getElementById("clients");
-    const navClients = document.getElementById("nav-clients");
-    const footerClients = document.querySelectorAll(".footer-clients");
     const dict = window.CX_I18N?.[window.CX_LANG || "fr"] || {};
 
     if (work) {
@@ -267,27 +263,6 @@
           </article>`)
         .join("");
     }
-
-    const clients = (store.clients || []).filter((c) => c.published !== false);
-    const showClients = clients.length > 0;
-    if (clientsSec) clientsSec.hidden = !showClients;
-    if (navClients) navClients.hidden = !showClients;
-    footerClients.forEach((el) => {
-      el.hidden = !showClients;
-    });
-    if (clientsWrap) {
-      clientsWrap.innerHTML = clients
-        .map(
-          (c) => `<article class="client-card reveal is-in">
-            <div class="client-profile">${c.profileImage ? `<img src="${esc(c.profileImage)}" alt="">` : `<span>${esc((c.name || "C").slice(0, 1))}</span>`}</div>
-            <div>
-              <h3>${esc(c.name)}</h3>
-              <p>${esc(c.needClean || c.need)}</p>
-            </div>
-          </article>`
-        )
-        .join("");
-    }
   };
 
   const openPhoto = (src) => {
@@ -321,14 +296,14 @@
         const res = await fetch("data/store.json");
         if (res.ok) window.CX_STORE = await res.json();
       } catch {
-        window.CX_STORE = { clients: [], projects: [], offers: [] };
+        window.CX_STORE = { projects: [], offers: [] };
       }
     }
     try {
       const local = localStorage.getItem("cx-store");
       if (local) {
         const parsed = JSON.parse(local);
-        const incoming = window.CX_STORE || { clients: [], projects: [], offers: [] };
+        const incoming = window.CX_STORE || { projects: [], offers: [] };
         parsed.projects = (parsed.projects || []).map((project) => {
           if (project.photos?.length) return project;
           const fresh = (incoming.projects || []).find((item) => item.id === project.id);
