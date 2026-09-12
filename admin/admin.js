@@ -1669,7 +1669,7 @@
     const err = document.getElementById("login-err");
     const btn = document.getElementById("login-btn");
     err.hidden = true;
-    const password = document.getElementById("login-pass").value;
+    const password = document.getElementById("login-pass").value.trim();
     if (btn) {
       btn.disabled = true;
       btn.textContent = "Entrée…";
@@ -1681,6 +1681,11 @@
       sessionStorage.setItem(TOKEN_KEY, nextToken);
       await loadStore();
       showApp();
+    };
+
+    const fail = (message) => {
+      err.textContent = message || "Mot de passe incorrect";
+      err.hidden = false;
     };
 
     try {
@@ -1698,13 +1703,18 @@
         await enter("local", true);
         return;
       }
-      err.hidden = false;
-    } catch {
+      fail(data.error || "Mot de passe incorrect");
+    } catch (error) {
       if (password === LOCAL_PASS) {
-        await enter("local", true);
-      } else {
-        err.hidden = false;
+        try {
+          await enter("local", true);
+          return;
+        } catch {
+          fail("Connexion impossible. Rechargez la page.");
+          return;
+        }
       }
+      fail(error && error.message ? "Connexion impossible. Rechargez la page." : "Mot de passe incorrect");
     } finally {
       if (btn) {
         btn.disabled = false;

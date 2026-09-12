@@ -1,40 +1,44 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap");
-
 :root {
-  --bg-base: #101215;
-  --bg-panel: #15181d;
-  --bg-elevated: #1c2026;
-  --bg-hover: #22262d;
-  --border: #2a2e36;
-  --border-soft: #20242b;
-  --text: #eae7e0;
-  --text-muted: #8b909a;
-  --text-faint: #565b64;
-  --accent: #e0a340;
-  --accent-dim: #4a3d24;
-  --blue: #5b8def;
-  --violet: #a78bfa;
-  --teal: #3ecbbd;
-  --green: #4ade80;
-  --grey: #7b818c;
-  --red: #f2685f;
+  --bg: #f7f8f8;
+  --bg-base: #f7f8f8;
+  --bg-panel: #ffffff;
+  --bg-elevated: #ffffff;
+  --bg-hover: #eef2f3;
+  --border: rgba(12, 18, 24, 0.12);
+  --border-soft: rgba(12, 18, 24, 0.08);
+  --text: #0c1218;
+  --ink: #0c1218;
+  --text-muted: #5c6b76;
+  --text-faint: #7a8791;
+  --accent: #0b8f98;
+  --accent-dim: #d7eef0;
+  --blue: #2a3f8f;
+  --violet: #4a3f8f;
+  --teal: #0b8f98;
+  --green: #1b6b3a;
+  --grey: #5c6b76;
+  --red: #9f3a2f;
+  --sans: "Plus Jakarta Sans", "Segoe UI", sans-serif;
+  --serif: "Newsreader", "Times New Roman", serif;
 }
 
 * { box-sizing: border-box; }
+
+[hidden] { display: none !important; }
 
 html, body {
   margin: 0;
   height: 100%;
   background: var(--bg-base);
   color: var(--text);
-  font-family: Inter, system-ui, sans-serif;
+  font-family: var(--sans);
   font-size: 14px;
   -webkit-font-smoothing: antialiased;
 }
 
 .admin-page { min-height: 100%; }
 
-.mono { font-family: "JetBrains Mono", monospace; }
+.mono { font-family: var(--sans); font-variant-numeric: tabular-nums; }
 
 .visually-hidden {
   position: absolute;
@@ -57,7 +61,7 @@ html, body {
   width: 20px;
   height: 20px;
   border-radius: 4px;
-  background: conic-gradient(from 220deg, var(--accent), var(--teal), var(--accent));
+  background: var(--accent);
 }
 
 .brand .sep { color: var(--text-faint); }
@@ -72,9 +76,16 @@ html, body {
 
 .admin-login-panel {
   padding: clamp(4rem, 10vw, 7rem) clamp(2rem, 5vw, 4.5rem);
-  background: var(--bg-panel);
-  border-right: 1px solid var(--border);
+  background: #081018;
+  color: #f3f0ea;
+  border-right: 0;
 }
+
+.admin-login-panel .brand .section,
+.admin-login-panel .brand .sep { color: rgba(243, 240, 234, 0.55); }
+
+.admin-login-panel .admin-login-lede,
+.admin-login-panel .admin-login-points { color: rgba(243, 240, 234, 0.62); }
 
 .admin-login h1 {
   margin: 2rem 0 1rem;
@@ -230,7 +241,7 @@ html, body {
 .counter { text-align: right; }
 .counter b {
   display: block;
-  font-family: "JetBrains Mono", monospace;
+  font-variant-numeric: tabular-nums;
   font-size: 16px;
   font-weight: 600;
 }
@@ -284,7 +295,7 @@ html, body {
   height: 7px;
   border-radius: 50%;
   background: var(--accent);
-  box-shadow: 0 0 0 4px rgba(224, 163, 64, 0.15);
+  box-shadow: 0 0 0 4px rgba(11, 143, 152, 0.16);
   flex-shrink: 0;
 }
 
@@ -307,7 +318,7 @@ html, body {
 
 .btn.primary {
   background: var(--accent);
-  color: #20160a;
+  color: #fff;
   margin-left: 0;
 }
 
@@ -412,7 +423,7 @@ html, body {
   border-radius: 99px;
   font-weight: 600;
 }
-.badge.tocadrer { background: rgba(224, 163, 64, 0.15); color: var(--accent); }
+.badge.tocadrer { background: rgba(11, 143, 152, 0.12); color: var(--accent); }
 .badge.live { background: rgba(74, 222, 128, 0.12); color: var(--green); }
 .badge.draft { background: rgba(123, 129, 140, 0.15); color: var(--grey); }
 
@@ -503,8 +514,8 @@ th {
 }
 td { padding: 10px; border-top: 1px solid var(--border-soft); vertical-align: top; }
 tr:hover td { background: var(--bg-hover); }
-.num { text-align: right; font-family: "JetBrains Mono", monospace; }
-.devis-id { font-family: "JetBrains Mono", monospace; font-size: 12px; color: var(--text-muted); }
+.num { text-align: right; font-variant-numeric: tabular-nums; }
+.devis-id { font-size: 12px; color: var(--text-muted); font-variant-numeric: tabular-nums; }
 
 .pill {
   display: inline-flex;
@@ -519,8 +530,8 @@ tr:hover td { background: var(--bg-hover); }
 .pill.grey { background: rgba(123, 129, 140, 0.15); color: var(--grey); }
 .pill.blue { background: rgba(91, 141, 239, 0.15); color: var(--blue); }
 .pill.violet { background: rgba(167, 139, 250, 0.15); color: var(--violet); }
-.pill.amber { background: rgba(224, 163, 64, 0.15); color: var(--accent); }
-.pill.teal { background: rgba(62, 203, 189, 0.15); color: var(--teal); }
+.pill.amber { background: rgba(11, 143, 152, 0.12); color: var(--accent); }
+.pill.teal { background: rgba(11, 143, 152, 0.12); color: var(--teal); }
 .pill.green { background: rgba(74, 222, 128, 0.15); color: var(--green); }
 .pill.red { background: rgba(242, 104, 95, 0.15); color: var(--red); }
 
@@ -542,7 +553,7 @@ tr:hover td { background: var(--bg-hover); }
   text-transform: uppercase;
   letter-spacing: 0.4px;
 }
-.summary-row div b { font-family: "JetBrains Mono", monospace; font-size: 14px; }
+.summary-row div b { font-variant-numeric: tabular-nums; font-size: 14px; }
 
 .row-actions { display: flex; flex-wrap: wrap; gap: 6px; justify-content: flex-end; }
 
