@@ -5,52 +5,35 @@
   const header = document.querySelector(".header");
   const onScroll = () => {
     if (!header) return;
-    header.classList.toggle("is-scrolled", window.scrollY > 24);
+    header.classList.toggle("is-scrolled", window.scrollY > 16);
   };
   onScroll();
   window.addEventListener("scroll", onScroll, { passive: true });
 
   const menuBtn = document.querySelector(".menu-btn");
-  const sidebar = document.getElementById("sidebar");
-  const siteNav = document.getElementById("site-nav");
-  const PANEL_IDS = ["home", "offers", "capabilities", "work", "clients", "method", "contact"];
+  const nav = document.getElementById("site-nav") || document.querySelector(".nav");
 
   const closeMenu = () => {
-    sidebar?.classList.remove("is-open");
+    nav?.classList.remove("is-open");
     menuBtn?.classList.remove("is-open");
     menuBtn?.setAttribute("aria-expanded", "false");
   };
 
-  const showPanel = (id) => {
-    let targetId = PANEL_IDS.includes(id) ? id : "home";
-    const panel = document.getElementById(targetId);
-    if (!panel || panel.hidden) targetId = "home";
-    document.querySelectorAll("section.panel").forEach((sec) => {
-      sec.classList.toggle("is-active", sec.id === targetId);
-    });
-    siteNav?.querySelectorAll("a").forEach((a) => {
-      a.classList.toggle("is-active", a.getAttribute("href") === `#${targetId}`);
-    });
-    if (location.hash !== `#${targetId}`) {
-      history.replaceState(null, "", `#${targetId}`);
-    }
-    window.scrollTo(0, 0);
-    closeMenu();
-  };
-
-  window.showCxPanel = showPanel;
-
-  if (menuBtn && sidebar) {
+  if (menuBtn && nav) {
     menuBtn.addEventListener("click", (e) => {
       e.stopPropagation();
-      const open = sidebar.classList.toggle("is-open");
+      const open = nav.classList.toggle("is-open");
       menuBtn.classList.toggle("is-open", open);
       menuBtn.setAttribute("aria-expanded", String(open));
     });
 
+    nav.querySelectorAll("a").forEach((a) => {
+      a.addEventListener("click", closeMenu);
+    });
+
     document.addEventListener("click", (e) => {
-      if (!sidebar.classList.contains("is-open")) return;
-      if (sidebar.contains(e.target) || menuBtn.contains(e.target)) return;
+      if (!nav.classList.contains("is-open")) return;
+      if (nav.contains(e.target) || menuBtn.contains(e.target)) return;
       closeMenu();
     });
 
@@ -59,27 +42,15 @@
     });
   }
 
-  document.addEventListener("click", (e) => {
-    const link = e.target.closest('a[href^="#"]');
-    if (!link) return;
-    const id = (link.getAttribute("href") || "").slice(1);
-    if (!PANEL_IDS.includes(id)) return;
-    e.preventDefault();
-    showPanel(id);
+  window.addEventListener("resize", () => {
+    if (window.innerWidth > 980) closeMenu();
   });
-
-  window.addEventListener("hashchange", () => {
-    showPanel(location.hash.replace("#", "") || "home");
-  });
-
-  showPanel(location.hash.replace("#", "") || "home");
 
   const t = (key) => {
     const lang = window.CX_LANG || "fr";
     return window.CX_I18N?.[lang]?.[key] || window.CX_I18N?.fr?.[key] || key;
   };
 
-  // Language switch FR / EN
   const savedLang = localStorage.getItem("cx-lang") || "fr";
   if (typeof window.applyCxLang === "function") {
     window.applyCxLang(savedLang);
@@ -98,8 +69,6 @@
   const submitBtn = document.getElementById("submit-btn");
   const formStatus = document.getElementById("form-status");
   const toast = document.getElementById("toast");
-
-  // Destination inbox — not shown in the UI
   const inbox = ["a.meziani.dev", "gmail.com"].join("@");
 
   const waUrl = () => {
@@ -135,11 +104,6 @@
   waBtn?.addEventListener("click", (e) => {
     e.preventDefault();
     window.open(waUrl(), "_blank", "noopener,noreferrer");
-  });
-
-  // Close mobile menu when switching to desktop
-  window.addEventListener("resize", () => {
-    if (window.innerWidth > 980) closeMenu();
   });
 
   const showToast = (message) => {
@@ -218,9 +182,7 @@
     return false;
   });
 
-  const revealEls = document.querySelectorAll(
-    ".cap, .case, .method-list li, .contact-shell > *, .client-card"
-  );
+  const revealEls = document.querySelectorAll(".offer-card, .case, .method-list li, .contact-shell > *, .client-card");
   revealEls.forEach((el) => el.classList.add("reveal"));
 
   if ("IntersectionObserver" in window) {
@@ -233,7 +195,7 @@
           }
         });
       },
-      { threshold: 0.12, rootMargin: "0px 0px -48px 0px" }
+      { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
     );
     revealEls.forEach((el) => io.observe(el));
     window.cxObserve = (els) => {
@@ -275,42 +237,20 @@
     if (work) {
       const projects = (store.projects || []).filter((p) => p.published !== false);
       work.innerHTML = projects
-        .map((p, i) => {
-          const featuredId = projects.find((item) => item.featured)?.id;
-          const featured = p.featured || (!featuredId && i === 0);
+        .map((p) => {
           const photos = (p.photos || []).filter(Boolean);
-          const tags = (p.tags || []).map((tag) => `<li>${esc(tag)}</li>`).join("");
           const wip = /développ|wip|dev/i.test(p.status || "");
-          const visual = photos.length
-            ? `<div class="case-visual"><button type="button" class="case-photo" data-photo="${esc(photos[0])}"><img src="${esc(photos[0])}" alt=""></button>${
-                photos.length > 1
-                  ? `<div class="case-thumbs">${photos
-                      .map((src) => `<button type="button" data-photo="${esc(src)}"><img src="${esc(src)}" alt=""></button>`)
-                      .join("")}</div>`
-                  : ""
-              }</div>`
-            : featured
-              ? `<div class="case-visual" aria-hidden="true"><div class="mock"><div class="mock-stat"><strong>128</strong><span>${esc(
-                  dict["case.mock.visits"] || ""
-                )}</span></div><div class="mock-stat"><strong>42</strong><span>${esc(
-                  dict["case.mock.points"] || ""
-                )}</span></div><div class="mock-row"></div><div class="mock-row mock-row--short"></div></div></div>`
-              : "";
-          const copy = `
-            <p class="case-sector">${esc(pick(p, "sector", "sectorEn"))}</p>
-            <h3>${esc(pick(p, "title", "titleEn"))}</h3>
-            <p>${esc(pick(p, "description", "descriptionEn"))}</p>
-            ${tags ? `<ul class="tags">${tags}</ul>` : ""}`;
-          if (featured) {
-            return `<article class="case case--hero reveal is-in">
-              <div class="case-top"><span class="case-num">${pad(i + 1)}</span><span class="case-status">${esc(pick(p, "status", "statusEn"))}</span></div>
-              <div class="case-body"><div class="case-copy">${copy}</div>${visual}</div>
-            </article>`;
-          }
+          const photo = photos[0]
+            ? `<button type="button" class="case-cover" data-photo="${esc(photos[0])}"><img src="${esc(photos[0])}" alt=""></button>`
+            : "";
           return `<article class="case reveal is-in">
-            <div class="case-top"><span class="case-num">${pad(i + 1)}</span><span class="case-status${wip ? " case-status--wip" : ""}">${esc(pick(p, "status", "statusEn"))}</span></div>
-            ${copy}
-            ${photos[0] ? `<button type="button" class="case-inline-photo" data-photo="${esc(photos[0])}"><img src="${esc(photos[0])}" alt=""></button>` : ""}
+            ${photo}
+            <div class="case-body">
+              <p class="case-sector">${esc(pick(p, "sector", "sectorEn"))}</p>
+              <h3>${esc(pick(p, "title", "titleEn"))}</h3>
+              <p>${esc(pick(p, "description", "descriptionEn"))}</p>
+              <p class="case-status${wip ? " case-status--wip" : ""}">${esc(pick(p, "status", "statusEn"))}</p>
+            </div>
           </article>`;
         })
         .join("");
@@ -319,16 +259,12 @@
     if (offersWrap) {
       const offers = (store.offers || []).filter((o) => o.published !== false);
       offersWrap.innerHTML = offers
-        .map((o, i) => {
-          const details = pick(o, "details", "detailsEn");
-          return `<article class="offer-card reveal is-in">
+        .map((o, i) => `<article class="offer-card reveal is-in">
             <span class="offer-idx">${pad(i + 1)}</span>
             <h3>${esc(pick(o, "title", "titleEn"))}</h3>
             <p>${esc(pick(o, "description", "descriptionEn"))}</p>
-            ${details ? `<p class="offer-details">${esc(details)}</p>` : ""}
             <a class="offer-cta" href="#contact">${esc(dict["offers.cta"] || "En parler")}</a>
-          </article>`;
-        })
+          </article>`)
         .join("");
     }
 
@@ -352,9 +288,6 @@
         )
         .join("");
     }
-
-    const current = location.hash.replace("#", "") || "home";
-    showPanel(current === "clients" && !showClients ? "home" : current);
   };
 
   const openPhoto = (src) => {

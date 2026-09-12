@@ -8,53 +8,43 @@
   <link rel="icon" type="image/svg+xml" href="assets/logo-mark.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body class="has-sidebar">
-  <div class="noise" aria-hidden="true"></div>
-
-  <aside class="sidebar" id="sidebar">
-    <a class="logo" href="#home" aria-label="CX Systems — Accueil">
-      <img src="assets/logo-mark.svg" alt="" class="logo-mark" width="40" height="40" />
-      <span class="logo-text">
-        <strong>CX Systems</strong>
-        <em data-i18n="logo.tag">Engineering Digital Systems</em>
-      </span>
-    </a>
-    <p class="sidebar-studio"><span class="live-dot" aria-hidden="true"></span><span data-i18n="sidebar.studio">Casablanca · Maroc</span></p>
-    <nav class="nav" id="site-nav" aria-label="Principal">
-      <a href="#home" class="is-active"><span class="nav-idx">01</span><span data-i18n="nav.home">Accueil</span></a>
-      <a href="#offers"><span class="nav-idx">02</span><span data-i18n="nav.offers">Notre offre</span></a>
-      <a href="#capabilities"><span class="nav-idx">03</span><span data-i18n="nav.expertise">Expertise</span></a>
-      <a href="#work"><span class="nav-idx">04</span><span data-i18n="nav.work">Réalisations</span></a>
-      <a href="#clients" id="nav-clients" hidden><span class="nav-idx">05</span><span data-i18n="nav.clients">Clients</span></a>
-      <a href="#method"><span class="nav-idx">06</span><span data-i18n="nav.method">Méthode</span></a>
-      <a href="#contact"><span class="nav-idx">07</span><span data-i18n="nav.contact">Contact</span></a>
-    </nav>
-    <div class="sidebar-foot">
+<body>
+  <header class="header" id="top">
+    <div class="header-inner">
+      <a class="logo" href="#home" aria-label="CX Systems — Accueil">
+        <img src="assets/logo-mark.svg" alt="" class="logo-mark" width="40" height="40" />
+        <span class="logo-text">
+          <strong>CX Systems</strong>
+          <em data-i18n="logo.tag">Engineering Digital Systems</em>
+        </span>
+      </a>
+      <nav class="nav" id="site-nav" aria-label="Principal">
+        <a href="#offers" data-i18n="nav.offers">Notre offre</a>
+        <a href="#work" data-i18n="nav.work">Réalisations</a>
+        <a href="#clients" id="nav-clients" hidden data-i18n="nav.clients">Clients</a>
+        <a href="#method" data-i18n="nav.method">Méthode</a>
+        <a href="#contact" data-i18n="nav.contact">Contact</a>
+        <a class="nav-cta-mobile" href="#contact" data-i18n="nav.cta">Parler du besoin</a>
+      </nav>
       <div class="lang-switch" role="group" aria-label="Language">
         <button type="button" class="lang-btn is-active" data-lang="fr" aria-pressed="true">FR</button>
         <button type="button" class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
       </div>
-      <a class="header-cta" href="#contact" data-i18n="nav.cta">Parler à un expert</a>
+      <a class="header-cta" href="#contact" data-i18n="nav.cta">Parler du besoin</a>
+      <button class="menu-btn" type="button" data-i18n-aria="nav.menu" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="site-nav">
+        <span></span><span></span>
+      </button>
     </div>
-  </aside>
+  </header>
 
-  <button class="menu-btn" type="button" data-i18n-aria="nav.menu" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="sidebar">
-    <span></span><span></span>
-  </button>
-
-  <main class="site-main">
-    <section class="hero panel is-active" id="home">
-      <div class="hero-media" aria-hidden="true">
-        <div class="hero-wash"></div>
-        <div class="hero-lines"></div>
-        <div class="hero-glow"></div>
-      </div>
-      <div class="hero-inner">
+  <main>
+    <section class="hero" id="home">
+      <div class="shell hero-inner">
         <div class="hero-copy">
-          <p class="hero-kicker"><span class="live-dot" aria-hidden="true"></span><span data-i18n="hero.kicker">Atelier logiciel · Casablanca</span></p>
+          <p class="hero-kicker" data-i18n="hero.kicker">Casablanca · Maroc</p>
           <h1 data-i18n="hero.title">On remplace Excel pour les commerces et distributeurs au Maroc.</h1>
           <p class="hero-sub" data-i18n="hero.sub">
             Caisse, stock, fidélité, data — conçus à Casablanca, utilisés tous les jours en production. Pas une démo : un outil que vos équipes ouvrent le lundi matin.
@@ -63,68 +53,15 @@
             <a class="btn btn--solid" href="#contact" data-i18n="hero.cta1">Parler du besoin</a>
             <a class="btn btn--line" href="#work" data-i18n="hero.cta2">Voir les réalisations</a>
           </div>
-          <ul class="proof">
-            <li>
-              <strong data-i18n="hero.proof1.v">Production</strong>
-              <span data-i18n="hero.proof1.l">Outils déjà utilisés</span>
-            </li>
-            <li>
-              <strong data-i18n="hero.proof2.v">Casablanca</strong>
-              <span data-i18n="hero.proof2.l">Conçu au Maroc</span>
-            </li>
-            <li>
-              <strong data-i18n="hero.proof3.v">Suivi</strong>
-              <span data-i18n="hero.proof3.l">Livraison &amp; support</span>
-            </li>
-          </ul>
         </div>
-        <div class="hero-shots">
-          <p class="hero-shots-label" data-i18n="hero.shots">Captures réelles — FidApp · 2R Parts · Opti Gest</p>
-          <div class="hero-shots-row">
-            <figure class="shot-frame">
-              <div class="shot-chrome" aria-hidden="true"><span></span><span></span><span></span></div>
-              <img src="assets/shot-fidapp.png" alt="FidApp — dashboard de fidélité" />
-              <figcaption>FidApp</figcaption>
-            </figure>
-            <figure class="shot-frame">
-              <div class="shot-chrome" aria-hidden="true"><span></span><span></span><span></span></div>
-              <img src="assets/shot-2rparts.png" alt="2R Parts — logiciel de comptoir" />
-              <figcaption>2R Parts</figcaption>
-            </figure>
-            <figure class="shot-frame">
-              <div class="shot-chrome" aria-hidden="true"><span></span><span></span><span></span></div>
-              <img src="assets/shot-optigest.png" alt="Opti Gest — gestion d’optique" />
-              <figcaption>Opti Gest</figcaption>
-            </figure>
-          </div>
-        </div>
-      </div>
-      <div class="hero-footer">
-        <p data-i18n="hero.footer">Casablanca · Maroc · 2024 — 2026</p>
-        <p class="hero-avail" data-i18n="hero.avail">Systèmes en production — pas une démo.</p>
+        <figure class="hero-shot">
+          <img src="assets/shot-fidapp.png" alt="FidApp — dashboard de fidélité" />
+          <figcaption data-i18n="hero.shots">FidApp — en production</figcaption>
+        </figure>
       </div>
     </section>
 
-    <section class="strip" aria-label="Domaines">
-      <div class="strip-track">
-        <span data-i18n="strip.web">Applications Web</span><span aria-hidden="true">·</span>
-        <span data-i18n="strip.saas">Plateformes SaaS</span><span aria-hidden="true">·</span>
-        <span data-i18n="strip.mobile">Mobile &amp; PWA</span><span aria-hidden="true">·</span>
-        <span data-i18n="strip.desktop">Logiciels Desktop</span><span aria-hidden="true">·</span>
-        <span data-i18n="strip.data">Data &amp; BI</span><span aria-hidden="true">·</span>
-        <span data-i18n="strip.erp">ERP / CRM</span><span aria-hidden="true">·</span>
-        <span data-i18n="strip.api">API &amp; Intégrations</span><span aria-hidden="true">·</span>
-        <span data-i18n="strip.web">Applications Web</span><span aria-hidden="true">·</span>
-        <span data-i18n="strip.saas">Plateformes SaaS</span><span aria-hidden="true">·</span>
-        <span data-i18n="strip.mobile">Mobile &amp; PWA</span><span aria-hidden="true">·</span>
-        <span data-i18n="strip.desktop">Logiciels Desktop</span><span aria-hidden="true">·</span>
-        <span data-i18n="strip.data">Data &amp; BI</span><span aria-hidden="true">·</span>
-        <span data-i18n="strip.erp">ERP / CRM</span><span aria-hidden="true">·</span>
-        <span data-i18n="strip.api">API &amp; Intégrations</span>
-      </div>
-    </section>
-
-    <section class="offers-sec panel" id="offers">
+    <section class="offers-sec" id="offers">
       <div class="shell">
         <div class="section-intro">
           <p class="kicker" data-i18n="offers.kicker">Notre offre</p>
@@ -137,68 +74,20 @@
       </div>
     </section>
 
-    <section class="capabilities panel" id="capabilities">
+    <section class="work" id="work">
       <div class="shell">
         <div class="section-intro">
-          <p class="kicker" data-i18n="cap.kicker">Expertise</p>
-          <h2 data-i18n="cap.title">Des capacités de bout en bout pour transformer vos opérations.</h2>
-          <p class="lede" data-i18n="cap.lede">
-            Nous intervenons là où la technologie crée de la valeur mesurable — produits digitaux, systèmes métier et intelligence des données.
-          </p>
-        </div>
-
-        <div class="cap-grid">
-          <article class="cap">
-            <span class="cap-idx">01</span>
-            <h3 data-i18n="cap.1.t">Ingénierie produit</h3>
-            <p data-i18n="cap.1.p">Applications web et plateformes SaaS multi-tenant, conçues pour la performance, la sécurité et la croissance.</p>
-          </article>
-          <article class="cap">
-            <span class="cap-idx">02</span>
-            <h3 data-i18n="cap.2.t">Expériences mobile</h3>
-            <p data-i18n="cap.2.p">PWA et parcours mobiles : QR, géolocalisation, offline-first — sans friction pour l’utilisateur final.</p>
-          </article>
-          <article class="cap">
-            <span class="cap-idx">03</span>
-            <h3 data-i18n="cap.3.t">Desktop entreprise</h3>
-            <p data-i18n="cap.3.p">Logiciels Windows métier : POS, stock, facturation et reporting pour opérations critiques au quotidien.</p>
-          </article>
-          <article class="cap">
-            <span class="cap-idx">04</span>
-            <h3 data-i18n="cap.4.t">Data &amp; Intelligence</h3>
-            <p data-i18n="cap.4.p">Entrepôts de données, ETL, Power BI et intégration ERP/CRM (Dynamics 365 Business Central).</p>
-          </article>
-          <article class="cap">
-            <span class="cap-idx">05</span>
-            <h3 data-i18n="cap.5.t">Plateforme &amp; APIs</h3>
-            <p data-i18n="cap.5.p">Backends sécurisés, authentification, automatisations et intégration de votre stack existante.</p>
-          </article>
-          <article class="cap">
-            <span class="cap-idx">06</span>
-            <h3 data-i18n="cap.6.t">Livraison &amp; Support</h3>
-            <p data-i18n="cap.6.p">De la roadmap à la production : déploiement, formation, maintenance et évolution continue.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="work panel" id="work">
-      <div class="shell">
-        <div class="section-intro section-intro--row">
-          <div>
-            <p class="kicker" data-i18n="work.kicker">Réalisations</p>
-            <h2 data-i18n="work.title">Systèmes livrés. Impact réel.</h2>
-          </div>
+          <p class="kicker" data-i18n="work.kicker">Réalisations</p>
+          <h2 data-i18n="work.title">Systèmes livrés. Impact réel.</h2>
           <p class="lede" data-i18n="work.lede">
-            Des outils déjà en production : caisse, fidélité, data. Cliquez une fiche pour les captures et le détail.
+            Des outils déjà en production : caisse, fidélité, data. Cliquez une fiche pour les captures.
           </p>
         </div>
-
         <div class="cases" id="work-list"></div>
       </div>
     </section>
 
-    <section class="clients-sec panel" id="clients" hidden>
+    <section class="clients-sec" id="clients" hidden>
       <div class="shell">
         <div class="section-intro">
           <p class="kicker" data-i18n="clients.kicker">Clients</p>
@@ -211,7 +100,7 @@
       </div>
     </section>
 
-    <section class="method panel" id="method">
+    <section class="method" id="method">
       <div class="shell">
         <div class="section-intro">
           <p class="kicker" data-i18n="method.kicker">Méthode</p>
@@ -242,10 +131,10 @@
       </div>
     </section>
 
-    <section class="contact panel" id="contact">
+    <section class="contact" id="contact">
       <div class="shell contact-shell">
         <div class="contact-left">
-          <p class="kicker kicker--light" data-i18n="contact.kicker">Contact</p>
+          <p class="kicker" data-i18n="contact.kicker">Contact</p>
           <h2 data-i18n="contact.title">Prêts quand vous l’êtes.</h2>
           <p class="contact-lede" data-i18n="contact.lede">
             Décrivez votre besoin via le formulaire, ou contactez-nous directement sur WhatsApp.
@@ -256,16 +145,6 @@
             <span class="wa-direct__num">+212 699 254 247</span>
             <span class="wa-direct__cta" data-i18n="contact.waCta">Ouvrir la conversation →</span>
           </a>
-          <div class="social-row">
-            <a class="social-chip" href="https://www.linkedin.com/in/cx-systems-418985395/" target="_blank" rel="noopener noreferrer">
-              <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.47-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
-              LinkedIn
-            </a>
-            <a class="social-chip" href="https://www.instagram.com/cx_sys_tems/" target="_blank" rel="noopener noreferrer">
-              <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M12 2.16c3.2 0 3.58.01 4.85.07 3.25.15 4.77 1.69 4.92 4.92.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.15 3.23-1.66 4.77-4.92 4.92-1.27.06-1.64.07-4.85.07s-3.58-.01-4.85-.07c-3.26-.15-4.77-1.7-4.92-4.92-.06-1.27-.07-1.64-.07-4.85s.01-3.58.07-4.85C2.38 3.92 3.9 2.38 7.15 2.23 8.42 2.17 8.8 2.16 12 2.16M12 0C8.74 0 8.33.01 7.05.07 2.7.27.27 2.69.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.2 4.36 2.62 6.78 6.98 6.98C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c4.35-.2 6.78-2.62 6.98-6.98.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95C23.73 2.69 21.31.27 16.95.07 15.67.01 15.26 0 12 0zm0 5.84A6.16 6.16 0 1 0 18.16 12 6.16 6.16 0 0 0 12 5.84zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.41-10.85a1.44 1.44 0 1 0 1.44 1.44 1.44 1.44 0 0 0-1.44-1.44z"/></svg>
-              Instagram
-            </a>
-          </div>
         </div>
 
         <form class="form" id="contact-form" action="#" method="post" novalidate>
@@ -282,8 +161,8 @@
           <label><span data-i18n="form.message">Message</span><textarea name="message" rows="5" required data-i18n-placeholder="form.messagePh" placeholder="Contexte, objectifs, délais…"></textarea></label>
 
           <div class="form-actions">
-            <button type="submit" class="btn btn--solid btn--light" id="submit-btn" data-i18n="form.submit">Envoyer le message</button>
-            <a class="btn btn--wa" id="whatsapp-btn" href="https://wa.me/212699254247" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+            <button type="submit" class="btn btn--solid" id="submit-btn" data-i18n="form.submit">Envoyer le message</button>
+            <a class="btn btn--line" id="whatsapp-btn" href="https://wa.me/212699254247" target="_blank" rel="noopener noreferrer">WhatsApp</a>
           </div>
           <p class="form-status" id="form-status" role="status" aria-live="polite" hidden></p>
         </form>
@@ -304,7 +183,7 @@
   <footer class="footer">
     <div class="shell footer-grid">
       <div class="footer-brand">
-        <img src="assets/logo-mark.svg" alt="" width="44" height="44" />
+        <img src="assets/logo-mark.svg" alt="" width="40" height="40" />
         <div>
           <strong>CX Systems</strong>
           <p data-i18n="logo.tag">Engineering Digital Systems</p>
@@ -314,7 +193,6 @@
         <div>
           <h4 data-i18n="footer.company">Société</h4>
           <a href="#offers" data-i18n="nav.offers">Notre offre</a>
-          <a href="#capabilities" data-i18n="nav.expertise">Expertise</a>
           <a href="#work" data-i18n="nav.work">Réalisations</a>
           <a href="#clients" class="footer-clients" hidden data-i18n="nav.clients">Clients</a>
           <a href="#method" data-i18n="nav.method">Méthode</a>
@@ -325,27 +203,14 @@
           <a href="#contact" data-i18n="footer.form">Formulaire</a>
         </div>
         <div>
-          <h4 data-i18n="footer.social">Réseaux</h4>
-          <a href="https://www.linkedin.com/in/cx-systems-418985395/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-          <a href="https://www.instagram.com/cx_sys_tems/" target="_blank" rel="noopener noreferrer">Instagram</a>
-        </div>
-        <div>
           <h4 data-i18n="footer.loc">Localisation</h4>
           <p data-i18n="footer.city">Casablanca, Maroc</p>
-          <p data-i18n="footer.remote">Livraison remote-ready</p>
+          <p data-i18n="hero.footer">Casablanca · Maroc · 2024 — 2026</p>
         </div>
       </div>
     </div>
     <div class="shell footer-bottom">
       <p>© <span id="year"></span> CX Systems. <span data-i18n="footer.rights">Tous droits réservés.</span></p>
-      <div class="footer-social">
-        <a href="https://www.linkedin.com/in/cx-systems-418985395/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn CX Systems">
-          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.47-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
-        </a>
-        <a href="https://www.instagram.com/cx_sys_tems/" target="_blank" rel="noopener noreferrer" aria-label="Instagram CX Systems">
-          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M12 2.16c3.2 0 3.58.01 4.85.07 3.25.15 4.77 1.69 4.92 4.92.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.15 3.23-1.66 4.77-4.92 4.92-1.27.06-1.64.07-4.85.07s-3.58-.01-4.85-.07c-3.26-.15-4.77-1.7-4.92-4.92-.06-1.27-.07-1.64-.07-4.85s.01-3.58.07-4.85C2.38 3.92 3.9 2.38 7.15 2.23 8.42 2.17 8.8 2.16 12 2.16M12 0C8.74 0 8.33.01 7.05.07 2.7.27.27 2.69.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.2 4.36 2.62 6.78 6.98 6.98C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c4.35-.2 6.78-2.62 6.98-6.98.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95C23.73 2.69 21.31.27 16.95.07 15.67.01 15.26 0 12 0zm0 5.84A6.16 6.16 0 1 0 18.16 12 6.16 6.16 0 0 0 12 5.84zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.41-10.85a1.44 1.44 0 1 0 1.44 1.44 1.44 1.44 0 0 0-1.44-1.44z"/></svg>
-        </a>
-      </div>
       <p data-i18n="footer.built">Conçu pour la delivery entreprise.</p>
     </div>
   </footer>
