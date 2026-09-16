@@ -6,7 +6,6 @@
   const onScroll = () => {
     if (!header) return;
     header.classList.toggle("is-scrolled", window.scrollY > 16);
-    document.documentElement.style.setProperty("--scroll-y", String(window.scrollY));
   };
   onScroll();
   window.addEventListener("scroll", onScroll, { passive: true });
@@ -72,13 +71,20 @@
   }
 
   if (document.body.classList.contains("mode-3d") && !flatten3d()) {
+    let camRaf = 0;
+    let camX = 0;
+    let camY = 0;
     window.addEventListener(
       "pointermove",
       (e) => {
-        const x = e.clientX / window.innerWidth - 0.5;
-        const y = e.clientY / window.innerHeight - 0.5;
-        document.documentElement.style.setProperty("--cam-x", x.toFixed(3));
-        document.documentElement.style.setProperty("--cam-y", y.toFixed(3));
+        camX = e.clientX / window.innerWidth - 0.5;
+        camY = e.clientY / window.innerHeight - 0.5;
+        if (camRaf) return;
+        camRaf = window.requestAnimationFrame(() => {
+          camRaf = 0;
+          document.documentElement.style.setProperty("--cam-x", camX.toFixed(3));
+          document.documentElement.style.setProperty("--cam-y", camY.toFixed(3));
+        });
       },
       { passive: true }
     );
