@@ -6,6 +6,7 @@
   const onScroll = () => {
     if (!header) return;
     header.classList.toggle("is-scrolled", window.scrollY > 16);
+    document.documentElement.style.setProperty("--scroll-y", String(window.scrollY));
   };
   onScroll();
   window.addEventListener("scroll", onScroll, { passive: true });
@@ -45,6 +46,44 @@
   window.addEventListener("resize", () => {
     if (window.innerWidth > 980) closeMenu();
   });
+
+  const flatten3d = () =>
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+    window.matchMedia("(max-width: 980px)").matches;
+
+  function bindSiteTilt() {
+    if (flatten3d() || !document.body.classList.contains("mode-3d")) return;
+    document.querySelectorAll("[data-tilt]").forEach((el) => {
+      if (el.dataset.tiltBound === "1") return;
+      el.dataset.tiltBound = "1";
+      el.addEventListener("pointermove", (e) => {
+        const r = el.getBoundingClientRect();
+        if (!r.width || !r.height) return;
+        const x = (e.clientX - r.left) / r.width - 0.5;
+        const y = (e.clientY - r.top) / r.height - 0.5;
+        el.style.setProperty("--tilt-x", `${(-y * 10).toFixed(2)}deg`);
+        el.style.setProperty("--tilt-y", `${(x * 12).toFixed(2)}deg`);
+      });
+      el.addEventListener("pointerleave", () => {
+        el.style.setProperty("--tilt-x", "0deg");
+        el.style.setProperty("--tilt-y", "0deg");
+      });
+    });
+  }
+
+  if (document.body.classList.contains("mode-3d") && !flatten3d()) {
+    window.addEventListener(
+      "pointermove",
+      (e) => {
+        const x = e.clientX / window.innerWidth - 0.5;
+        const y = e.clientY / window.innerHeight - 0.5;
+        document.documentElement.style.setProperty("--cam-x", x.toFixed(3));
+        document.documentElement.style.setProperty("--cam-y", y.toFixed(3));
+      },
+      { passive: true }
+    );
+  }
+  bindSiteTilt();
 
   const t = (key) => {
     const lang = window.CX_LANG || "fr";
@@ -303,7 +342,7 @@
           const photo = photos[0]
             ? `<button type="button" class="case-cover" data-photo="${esc(photos[0])}"><img src="${esc(photos[0])}" alt=""></button>`
             : "";
-          return `<article class="case reveal is-in">
+          return `<article class="case reveal is-in" data-tilt>
             ${photo}
             <div class="case-body">
               <p class="case-sector">${esc(pick(p, "sector", "sectorEn"))}</p>
@@ -333,7 +372,7 @@
       offersWrap.innerHTML = offers
         .map((o, i) => {
           const details = pick(o, "details", "detailsEn");
-          return `<article class="offer-card reveal is-in">
+          return `<article class="offer-card reveal is-in" data-tilt>
             <span class="offer-idx">${pad(i + 1)}</span>
             <h3>${esc(pick(o, "title", "titleEn"))}</h3>
             <p>${esc(pick(o, "description", "descriptionEn"))}</p>
@@ -343,6 +382,7 @@
         })
         .join("");
     }
+    bindSiteTilt();
   };
 
   let heroStageTimer = 0;

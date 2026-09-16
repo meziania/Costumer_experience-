@@ -1242,3 +1242,189 @@ a {
     gap: 1.75rem;
   }
 }
+
+/* ——— 3D spatial mode (public site only) ——— */
+:root {
+  --cam-x: 0;
+  --cam-y: 0;
+  --scroll-y: 0;
+}
+
+body.mode-3d {
+  background:
+    radial-gradient(1100px 520px at 82% 8%, rgba(11, 143, 152, 0.09), transparent 58%),
+    radial-gradient(900px 480px at 8% 88%, rgba(12, 18, 24, 0.05), transparent 52%),
+    #f2f4f5;
+}
+
+body.mode-3d main,
+body.mode-3d .footer {
+  position: relative;
+  z-index: 1;
+}
+
+.world3d {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  perspective: 920px;
+}
+
+.world3d__room {
+  position: absolute;
+  left: 50%;
+  top: 42%;
+  width: 240%;
+  height: 240%;
+  transform-style: preserve-3d;
+  transform:
+    translate(-50%, -18%)
+    rotateX(calc(64deg + var(--cam-y) * 7deg))
+    rotateZ(calc(var(--cam-x) * 10deg))
+    translateY(calc(var(--scroll-y) * 0.04px));
+  transition: transform 0.25s var(--ease);
+}
+
+.world3d__floor {
+  width: 100%;
+  height: 100%;
+  background-image:
+    linear-gradient(rgba(11, 143, 152, 0.16) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(11, 143, 152, 0.16) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(ellipse at 50% 28%, #000 18%, transparent 72%);
+}
+
+.world3d__glow {
+  position: absolute;
+  inset: auto 18% -12% 18%;
+  height: 42%;
+  background: radial-gradient(ellipse at 50% 0%, rgba(11, 143, 152, 0.16), transparent 68%);
+}
+
+body.mode-3d .header {
+  background: rgba(247, 248, 248, 0.78);
+}
+
+body.mode-3d .work,
+body.mode-3d .method,
+body.mode-3d .footer {
+  background: rgba(255, 255, 255, 0.58);
+  backdrop-filter: blur(16px);
+}
+
+body.mode-3d .offer-grid,
+body.mode-3d .cases,
+body.mode-3d .method-list,
+body.mode-3d .contact-shell {
+  perspective: 1400px;
+}
+
+body.mode-3d .offer-card,
+body.mode-3d .case,
+body.mode-3d .method-list li,
+body.mode-3d .wa-direct {
+  position: relative;
+  transform:
+    perspective(1100px)
+    rotateX(var(--tilt-x, 0deg))
+    rotateY(calc(var(--rest-y, 0deg) + var(--tilt-y, 0deg)))
+    translateZ(var(--rest-z, 0px));
+  transform-style: preserve-3d;
+  transition: transform 0.45s var(--ease), box-shadow 0.45s var(--ease);
+  will-change: transform;
+}
+
+body.mode-3d .offer-card {
+  padding: 1.3rem 1.2rem 1.35rem;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid var(--line);
+  border-top: 2px solid var(--ink);
+  border-radius: 12px;
+  box-shadow: 0 16px 36px rgba(12, 18, 24, 0.08);
+}
+
+body.mode-3d .offer-card:nth-child(1) { --rest-y: -7deg; --rest-z: 18px; }
+body.mode-3d .offer-card:nth-child(2) { --rest-y: -2deg; --rest-z: 36px; }
+body.mode-3d .offer-card:nth-child(3) { --rest-y: 3deg; --rest-z: 22px; }
+body.mode-3d .offer-card:nth-child(4) { --rest-y: 8deg; --rest-z: 10px; }
+
+body.mode-3d .case {
+  overflow: visible;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 18px 40px rgba(12, 18, 24, 0.1);
+}
+
+body.mode-3d .case-cover {
+  overflow: hidden;
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+
+body.mode-3d .case:nth-child(odd) { --rest-y: -5deg; --rest-z: 16px; }
+body.mode-3d .case:nth-child(even) { --rest-y: 5deg; --rest-z: 8px; }
+
+body.mode-3d .method-list li {
+  padding: 1.1rem 1rem 1.15rem;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: 0 14px 30px rgba(12, 18, 24, 0.07);
+}
+
+body.mode-3d .method-list li:nth-child(1) { --rest-y: -8deg; --rest-z: 28px; }
+body.mode-3d .method-list li:nth-child(2) { --rest-y: -4deg; --rest-z: 18px; }
+body.mode-3d .method-list li:nth-child(3) { --rest-y: 0deg; --rest-z: 36px; }
+body.mode-3d .method-list li:nth-child(4) { --rest-y: 4deg; --rest-z: 16px; }
+body.mode-3d .method-list li:nth-child(5) { --rest-y: 8deg; --rest-z: 8px; }
+
+body.mode-3d .form {
+  box-shadow: 0 18px 40px rgba(12, 18, 24, 0.08);
+}
+
+body.mode-3d .wa-direct {
+  box-shadow: 0 18px 40px rgba(12, 18, 24, 0.08);
+  --rest-y: 4deg;
+  --rest-z: 18px;
+}
+
+body.mode-3d .offer-card:hover,
+body.mode-3d .case:hover,
+body.mode-3d .method-list li:hover,
+body.mode-3d .wa-direct:hover,
+body.mode-3d [data-tilt]:hover {
+  transition: transform 0.1s linear, box-shadow 0.1s linear;
+  box-shadow: 0 28px 56px rgba(12, 18, 24, 0.16);
+}
+
+@media (max-width: 980px) {
+  body.mode-3d .offer-card,
+  body.mode-3d .case,
+  body.mode-3d .method-list li,
+  body.mode-3d .wa-direct {
+    --rest-y: 0deg;
+    --rest-z: 0px;
+    transform: none;
+  }
+
+  .world3d__room {
+    transform: translate(-50%, -10%) rotateX(70deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .world3d {
+    display: none;
+  }
+
+  body.mode-3d .offer-card,
+  body.mode-3d .case,
+  body.mode-3d .method-list li,
+  body.mode-3d .wa-direct,
+  body.mode-3d .form,
+  body.mode-3d .reveal,
+  body.mode-3d .reveal.is-in {
+    transform: none;
+  }
+}

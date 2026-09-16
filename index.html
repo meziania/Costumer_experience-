@@ -11,7 +11,13 @@
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
+<body class="mode-3d">
+  <div class="world3d" aria-hidden="true">
+    <div class="world3d__room">
+      <div class="world3d__floor"></div>
+    </div>
+    <div class="world3d__glow"></div>
+  </div>
   <header class="header" id="top">
     <div class="header-inner">
       <a class="logo" href="#home" aria-label="CX Systems — Accueil">
@@ -98,23 +104,23 @@
           <h2 data-i18n="method.title">Une livraison structurée, de l’intention à l’exploitation.</h2>
         </div>
         <ol class="method-list">
-          <li>
+          <li data-tilt>
             <strong data-i18n="method.1.t">Découvrir</strong>
             <span data-i18n="method.1.p">Cadrage métier, risques, objectifs et critères de succès.</span>
           </li>
-          <li>
+          <li data-tilt>
             <strong data-i18n="method.2.t">Concevoir</strong>
             <span data-i18n="method.2.p">Architecture, expérience utilisateur et plan de livraison.</span>
           </li>
-          <li>
+          <li data-tilt>
             <strong data-i18n="method.3.t">Construire</strong>
             <span data-i18n="method.3.p">Développement itératif, qualité, sécurité dès la conception.</span>
           </li>
-          <li>
+          <li data-tilt>
             <strong data-i18n="method.4.t">Lancer</strong>
             <span data-i18n="method.4.p">Mise en production, formation et transfert opérationnel.</span>
           </li>
-          <li>
+          <li data-tilt>
             <strong data-i18n="method.5.t">Faire évoluer</strong>
             <span data-i18n="method.5.p">Support, monitoring et évolutions produit.</span>
           </li>
@@ -131,7 +137,7 @@
             Précisez l’offre, le contexte et l’échéance — on saura quoi vous proposer. WhatsApp aussi, si vous préférez.
           </p>
           <p class="contact-trust" data-i18n="contact.trust">Réponse sous 24 h. WhatsApp ou formulaire — vous choisissez.</p>
-          <a class="wa-direct" href="https://wa.me/212699254247" target="_blank" rel="noopener noreferrer">
+          <a class="wa-direct" data-tilt href="https://wa.me/212699254247" target="_blank" rel="noopener noreferrer">
             <span class="wa-direct__label" data-i18n="contact.waLabel">WhatsApp direct</span>
             <span class="wa-direct__num">+212 699 254 247</span>
             <span class="wa-direct__cta" data-i18n="contact.waCta">Ouvrir la conversation →</span>
